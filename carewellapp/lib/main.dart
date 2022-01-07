@@ -11,6 +11,7 @@ import 'navigation_elements/video_hub.dart';
 void main() {
   runApp(MyApp());
 }
+String appBarText = "CareWell";
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -19,18 +20,10 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
         primarySwatch: Colors.grey,
       ),
       home: MyHomePage(title: 'CareWell'),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
@@ -80,7 +73,7 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
-        title: Text(widget.title),
+        title: Text(appBarText),
       ),
       drawer: SideNav( // To change the selected index based on the navigation page user is on.
           (int index){ // Declarign a function and passing it in the constructor.
@@ -145,6 +138,7 @@ class SideNav extends StatelessWidget{
             title: Text("Dashboard",style: TextStyle(fontSize: 21)),
             onTap: (){
               onIndexChanged(0); // Function call.
+              appBarText = "Dashboard";
             },
           ),
           Divider(
@@ -154,6 +148,7 @@ class SideNav extends StatelessWidget{
               title: Text("Education",style: TextStyle(fontSize: 21)),
             onTap: (){
               onIndexChanged(1);
+              appBarText = "Education";
             },
           ),
           Divider(
@@ -163,6 +158,7 @@ class SideNav extends StatelessWidget{
               title: Text("Managing Care",style: TextStyle(fontSize: 21)),
             onTap: (){
               onIndexChanged(2);
+              appBarText = "Managing Care";
             },
           ),
           Divider(
@@ -172,6 +168,7 @@ class SideNav extends StatelessWidget{
               title: Text("Video Hub",style: TextStyle(fontSize: 21)),
             onTap: (){
               onIndexChanged(3);
+              appBarText = "Video Hub";
             },
           ),
           Divider(
@@ -181,6 +178,7 @@ class SideNav extends StatelessWidget{
               title: Text("Reminders",style: TextStyle(fontSize: 21)),
             onTap: (){
               onIndexChanged(4);
+              appBarText = "Reminders";
             },
           ),
           Divider(
@@ -190,6 +188,7 @@ class SideNav extends StatelessWidget{
               title: Text("Community",style: TextStyle(fontSize: 21)),
             onTap: (){
               onIndexChanged(5);
+              appBarText = "Community";
             },
           ),
           Divider(
@@ -199,6 +198,7 @@ class SideNav extends StatelessWidget{
               title: Text("Troubleshooting",style: TextStyle(fontSize: 21)),
             onTap: (){
               onIndexChanged(6);
+              appBarText = "Troubleshooting";
             },
           ),
           Divider(
