@@ -14,8 +14,12 @@ import 'navigation_elements/troubleshooting.dart';
 import 'navigation_elements/video_hub.dart';
 import 'package:googleapis/storage/v1.dart';
 import 'package:googleapis/drive/v3.dart' as ga;
+import 'package:gsheets/gsheets.dart';
+import 'models/google_sheets.dart';
 
-void main() {
+Future main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await googleSheetsAPI.init();
   runApp(MyApp());
 }
 
@@ -40,7 +44,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+  MyHomePage({required this.title});
 
   final String title;
 

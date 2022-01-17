@@ -2,6 +2,7 @@ import 'package:carewellapp/models/initial_assessment.dart';
 import 'package:carewellapp/navigation_elements/home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:gsheets/gsheets.dart';
 
 /*
 * Initially created by : Shehjar Sadhu
@@ -27,6 +28,8 @@ class init_question_controller extends StatefulWidget {
 * Questionnaire controller class to handle questions navigations.
 */
 class _init_question_controller extends State<init_question_controller> {
+  // Google sheets API set up.
+
   var range = init_ques.questions_list.length -
       1; // Gets the length of questions from initial_questionnaire class.
   var _questionNumber = 0; // counter for question number.
@@ -291,7 +294,7 @@ class _init_question_controller extends State<init_question_controller> {
       init_ques.answers[_questionNumber] = _currentValue;
       print("${TAG} PD class answers variable : ${init_ques.answers}");
       /* ----------- ----------- ----------- ----------- 
-                  TODO: Save this to goofgle drive
+                  TODO: Save this to goofgle sheets
       ----------- ----------- ----------- ----------------  */
 
       //check to see if there is a next question
@@ -306,7 +309,7 @@ class _init_question_controller extends State<init_question_controller> {
         _questionNumber = 0; //Set the questions counter back to 0 .
         //Go to home once the initial questionnaire is done.
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => MyHome1Page()));
+            context, MaterialPageRoute(builder: (context) => MyHome1Page("")));
       }
     });
   }

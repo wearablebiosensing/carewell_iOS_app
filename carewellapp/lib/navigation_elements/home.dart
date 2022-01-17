@@ -12,7 +12,7 @@ import 'package:flutter/material.dart';
 import '../main.dart';
 
 class MyHome1Page extends StatefulWidget {
-  MyHome1Page({Key key, this.title}) : super(key: key);
+  MyHome1Page(this.title);
 
   final String title;
 
@@ -41,7 +41,7 @@ class _MyHomePage1State extends State<MyHome1Page> {
                 // do something
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => MyHome1Page()),
+                  MaterialPageRoute(builder: (context) => MyHome1Page("")),
                 );
               },
             )
