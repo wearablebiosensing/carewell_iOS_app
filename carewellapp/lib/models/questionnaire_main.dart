@@ -32,7 +32,6 @@ class _init_question_controller extends State<init_question_controller> {
   var _questionNumber = 0; // counter for question number.
   double progress_indicator = 0;
   String _inputAnswer = "";
-  // var timer_obj = timer(proList[proTypeSelection].questions_list.length);
 
   @override
   void initState() {
@@ -73,83 +72,84 @@ class _init_question_controller extends State<init_question_controller> {
                         overflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.center,
                         textScaleFactor: deviceTextScaleFactor,
-                        style: TextStyle(fontSize: 25),
+                        style:
+                            TextStyle(fontSize: 41 / deviceTextScaleFactor + 2),
                       ),
                     ),
                   ),
                 ),
               ),
               SizedBox(
-                  // Answer input box
-                  height: size.height * 0.35,
-                  width: 150,
-                  child: Container(
-                    child: ListView.builder(
-                      itemCount: init_ques.options[0].length,
-                      itemBuilder: (context, index) {
-                        selected = 0;
-                        var changeColor = false;
-                        return SizedBox(
-                          height: 150,
-                          width: 120,
-                          child: Card(
-                            color: null,
-                            child: Semantics(
-                              value:
-                                  '${init_ques.options[_questionNumber][index].toString()}',
-                              child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  padding: EdgeInsets.all(12),
-                                  primary: (init_ques.options[_questionNumber]
+                //Answer input box
+                height: 500 * 0.35,
+                width: 820,
+                child: ListView.builder(
+                  padding: EdgeInsets.only(
+                      left: 155), // foPadding for left side of Yes button/.
+                  scrollDirection: Axis.horizontal,
+                  itemCount: init_ques
+                      .options[0].length, // Length of Options avaliable.
+                  itemBuilder: (context, index) {
+                    selected = 0;
+                    return Container(
+                      height: 80,
+                      width: 250,
+                      padding: EdgeInsets.all(
+                          15), // For padding between the buttons.
+                      child: Semantics(
+                        value: // Options of initial assessment.
+                            '${init_ques.options[_questionNumber][index].toString()}',
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            // padding: EdgeInsets.all(12),
+                            primary: (init_ques.options[_questionNumber][index]
+                                        .toString() ==
+                                    _inputAnswer)
+                                ? Color(0xFFd9d5d4)
+                                : Color(0xFFffffff),
+                            shape: new RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.circular(10.0),
+                            ),
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              // set the answer entered by the users
+                              _inputAnswer = init_ques.options[_questionNumber]
+                                      [index]
+                                  .toString();
+                              print(
+                                  "${TAG} input answer list function: ${_inputAnswer} == ${init_ques.options[_questionNumber][index].toString()}");
+                            });
+                          },
+                          child: ListTile(
+                            title: Center(
+                              child: Text(
+                                // Text for the quesiton options.
+                                init_ques.options[_questionNumber][index]
+                                    .toString(),
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  // Change the color based on the selected value by the user.
+                                  color: init_ques.options[_questionNumber]
                                                   [index]
                                               .toString() ==
-                                          _inputAnswer)
-                                      ? Color(0xFF00bac7)
-                                      : Color(0xFFffffff),
-                                  shape: new RoundedRectangleBorder(
-                                    borderRadius:
-                                        new BorderRadius.circular(10.0),
-                                  ),
-                                ),
-                                onPressed: () {
-                                  setState(() {
-                                    _inputAnswer = init_ques
-                                        .options[_questionNumber][index]
-                                        .toString();
-                                    print(
-                                        "${TAG} input answer list function: ${_inputAnswer} == ${init_ques.options[_questionNumber][index].toString()}");
-                                  });
-                                },
-                                child: ListTile(
-                                  title: Center(
-                                    child: Text(
-                                      init_ques.options[_questionNumber][index]
-                                          .toString(),
-                                      textAlign: TextAlign.center,
-                                      style: TextStyle(
-                                        color: init_ques
-                                                    .options[_questionNumber]
-                                                        [index]
-                                                    .toString() ==
-                                                _inputAnswer
-                                            ? Color(0xFF606D9F)
-                                            : Color(0xFFFBD491),
-                                        fontSize:
-                                            20 / deviceTextScaleFactor + 2,
-                                        fontFamily: "Nunito",
-                                      ),
-                                    ),
-                                  ),
+                                          _inputAnswer
+                                      ? Color(0xFF000000)
+                                      : Color(0xFF000000),
+                                  fontSize: 50 / deviceTextScaleFactor + 2,
+                                  fontFamily: "Nunito",
                                 ),
                               ),
                             ),
                           ),
-                        );
-                      },
-                    ),
-                  )),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
               SizedBox(
-                height: 60 / 4,
+                height: 300 / 4,
                 width: double.maxFinite,
               ),
               Container(
@@ -158,13 +158,11 @@ class _init_question_controller extends State<init_question_controller> {
                   children: [
                     Spacer(),
                     SizedBox(
-                      height: 60,
-                      width: 180,
+                      height: 75,
+                      width: 200,
                       child: ElevatedButton(
-                        // style: navButtonStyle,
                         onPressed: () {
                           prevQuestionList(_inputAnswer);
-                          //setState(() {
                           for (int i = 0;
                               i < init_ques.options[0].length;
                               i++) {
@@ -191,15 +189,16 @@ class _init_question_controller extends State<init_question_controller> {
                         },
                         child: new Text(
                           "Previous",
+                          style: TextStyle(
+                              fontSize: 38 / deviceTextScaleFactor + 2),
                         ),
                       ),
                     ),
                     Spacer(),
                     SizedBox(
-                      height: 60,
-                      width: 180,
+                      height: 75,
+                      width: 200,
                       child: ElevatedButton(
-                        // style: navButtonStyle,
                         onPressed: () {
                           nextQuestionAll(_inputAnswer);
                           if (init_ques.answers[_questionNumber] == "") {
@@ -214,7 +213,6 @@ class _init_question_controller extends State<init_question_controller> {
                                   _inputAnswer = init_ques
                                       .options[_questionNumber][i]
                                       .toString();
-                                  //nextQuestionAll(_inputAnswer);
                                 });
                               }
                             }
@@ -234,7 +232,8 @@ class _init_question_controller extends State<init_question_controller> {
                         },
                         child: new Text(
                           "Next",
-                          // style: navButtonText,
+                          style: TextStyle(
+                              fontSize: 40 / deviceTextScaleFactor + 2),
                         ),
                       ),
                     ),
@@ -243,12 +242,13 @@ class _init_question_controller extends State<init_question_controller> {
                 ),
               ),
               Spacer(),
-              Expanded(
+              SizedBox(
+                height: 55,
                 child: LinearProgressIndicator(
                   value: progress_indicator,
-                  // 0.5, // Change this value on click of next button.
+                  // Change this value on click of next button.
                   backgroundColor: Color(0xFF959595),
-                  valueColor: AlwaysStoppedAnimation<Color>(Color(0xFFFFA200)),
+                  valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF62b300)),
                   semanticsLabel: "Question number",
                   semanticsValue: "${_questionNumber}",
                 ),

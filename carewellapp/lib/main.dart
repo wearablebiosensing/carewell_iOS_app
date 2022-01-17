@@ -1,5 +1,8 @@
+import 'dart:core';
+
 import 'package:flutter/material.dart';
 
+import 'models/questionnaire_main.dart';
 import 'navigation_elements/community.dart';
 import 'navigation_elements/dashboard.dart';
 import 'navigation_elements/debug.dart';
@@ -9,12 +12,17 @@ import 'navigation_elements/managing_care.dart';
 import 'navigation_elements/reminders.dart';
 import 'navigation_elements/troubleshooting.dart';
 import 'navigation_elements/video_hub.dart';
+import 'package:googleapis/storage/v1.dart';
+import 'package:googleapis/drive/v3.dart' as ga;
 
 void main() {
   runApp(MyApp());
 }
 
 String appBarText = "CareWell";
+const GoogleDriveAPIClientID =
+    "887867959629-ke74pgdm06mg9ul66pfuk3b729isslfu.apps.googleusercontent.com";
+const _scopes = [ga.DriveApi.driveFileScope];
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
@@ -46,66 +54,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          // Here we take the value from the MyHomePage object that was created by
-          // the App.build method, and use it to set our appbar title.
-          title: Text(appBarText),
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(
-                Icons.home,
-                color: Colors.black,
-              ),
-              onPressed: () {
-                // do something
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => MyHome1Page()),
-                );
-              },
-            )
-          ],
-        ),
-        drawer: SideNav(
-            // To change the selected index based on the navigation page user is on.
-            (int index) {
-          // Declarign a function and passing it in the constructor.
-          setState(() {
-            selectIndex = index;
-          });
-        }),
-        //Taken in on changed function as parameter/.
-
-        body: Builder(
-          builder: (contex) {
-            if (selectIndex == 0) {
-              return dashboard();
-            }
-            if (selectIndex == 1) {
-              return education();
-            }
-            if (selectIndex == 2) {
-              return managing_care();
-            }
-            if (selectIndex == 3) {
-              return video_hub();
-            }
-            if (selectIndex == 4) {
-              return reminders();
-            }
-            if (selectIndex == 5) {
-              return community();
-            }
-            if (selectIndex == 6) {
-              return troubleshooting();
-            }
-            if (selectIndex == 7) {
-              return debug();
-            }
-            return Container();
-          },
-        ));
+    return init_question_controller();
   }
 }
 
@@ -119,11 +68,16 @@ class SideNav extends StatelessWidget {
   SideNav(this.onIndexChanged);
   @override
   Widget build(BuildContext contex) {
+    Size size =
+        MediaQuery.of(contex).size; // Size(411.4, 774.9) for google pixel only
+    var deviceTextScaleFactor = MediaQuery.of(contex).textScaleFactor;
+
     return Drawer(
         child: ListView(
       children: [
         ListTile(
-          title: Text("Dashboard", style: TextStyle(fontSize: 21)),
+          title: Text("Dashboard",
+              style: TextStyle(fontSize: 21 / deviceTextScaleFactor + 2)),
           onTap: () {
             onIndexChanged(0); // Function call.
             appBarText = "Dashboard";
@@ -133,7 +87,8 @@ class SideNav extends StatelessWidget {
           color: Colors.black,
         ),
         ListTile(
-          title: Text("Education", style: TextStyle(fontSize: 21)),
+          title: Text("Education",
+              style: TextStyle(fontSize: 21 / deviceTextScaleFactor + 2)),
           onTap: () {
             onIndexChanged(1);
             appBarText = "Education";
@@ -143,7 +98,8 @@ class SideNav extends StatelessWidget {
           color: Colors.black,
         ),
         ListTile(
-          title: Text("Managing Care", style: TextStyle(fontSize: 21)),
+          title: Text("Managing Care",
+              style: TextStyle(fontSize: 21 / deviceTextScaleFactor + 2)),
           onTap: () {
             onIndexChanged(2);
             appBarText = "Managing Care";
@@ -153,7 +109,8 @@ class SideNav extends StatelessWidget {
           color: Colors.black,
         ),
         ListTile(
-          title: Text("Video Hub", style: TextStyle(fontSize: 21)),
+          title: Text("Video Hub",
+              style: TextStyle(fontSize: 21 / deviceTextScaleFactor + 2)),
           onTap: () {
             onIndexChanged(3);
             appBarText = "Video Hub";
@@ -163,7 +120,8 @@ class SideNav extends StatelessWidget {
           color: Colors.black,
         ),
         ListTile(
-          title: Text("Reminders", style: TextStyle(fontSize: 21)),
+          title: Text("Reminders",
+              style: TextStyle(fontSize: 21 / deviceTextScaleFactor + 2)),
           onTap: () {
             onIndexChanged(4);
             appBarText = "Reminders";
@@ -173,7 +131,8 @@ class SideNav extends StatelessWidget {
           color: Colors.black,
         ),
         ListTile(
-          title: Text("Community", style: TextStyle(fontSize: 21)),
+          title: Text("Community",
+              style: TextStyle(fontSize: 21 / deviceTextScaleFactor + 2)),
           onTap: () {
             onIndexChanged(5);
             appBarText = "Community";
@@ -183,7 +142,8 @@ class SideNav extends StatelessWidget {
           color: Colors.black,
         ),
         ListTile(
-          title: Text("Troubleshooting", style: TextStyle(fontSize: 21)),
+          title: Text("Troubleshooting",
+              style: TextStyle(fontSize: 21 / deviceTextScaleFactor + 2)),
           onTap: () {
             onIndexChanged(6);
             appBarText = "Troubleshooting";
@@ -193,7 +153,8 @@ class SideNav extends StatelessWidget {
           color: Colors.black,
         ),
         ListTile(
-          title: Text("Debug", style: TextStyle(fontSize: 21)),
+          title: Text("Debug",
+              style: TextStyle(fontSize: 21 / deviceTextScaleFactor + 2)),
           onTap: () {
             onIndexChanged(7);
           },

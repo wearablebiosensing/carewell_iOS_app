@@ -10,10 +10,10 @@ class debug extends StatelessWidget {
         body: Center(
       child: ElevatedButton(
         onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => init_question_controller()),
-          );
+          // Navigator.push(
+          //   context,
+          //   MaterialPageRoute(builder: (context) => init_question_controller()),
+          // );
         },
         child: Text("Click to begin"),
       ),
