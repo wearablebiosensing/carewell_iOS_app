@@ -3,6 +3,9 @@ import 'package:carewellapp/navigation_elements/home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gsheets/gsheets.dart';
+import 'package:carewellapp/models/google_sheets.dart';
+
+import 'google_sheets_init_ass_model.dart';
 
 /*
 * Initially created by : Shehjar Sadhu
@@ -202,7 +205,21 @@ class _init_question_controller extends State<init_question_controller> {
                       height: 75,
                       width: 200,
                       child: ElevatedButton(
-                        onPressed: () {
+                        onPressed: () async {
+                          /* ----------- ----------- ----------- ----------- 
+                                             Save this to google sheets
+                          ----------- ----------- ----------- ----------------  */
+                          final init_ass = {
+                            InitAssessmentModelGS.PatientID: 1,
+                            InitAssessmentModelGS.Timestamp:
+                                DateTime.now().millisecondsSinceEpoch,
+                            InitAssessmentModelGS.Init_Question:
+                                init_ques.questions_list[_questionNumber],
+                            InitAssessmentModelGS.Response: _inputAnswer
+                          };
+
+                          await googleSheetsAPI.insert([init_ass]);
+
                           nextQuestionAll(_inputAnswer);
                           if (init_ques.answers[_questionNumber] == "") {
                             _inputAnswer = "";
@@ -221,6 +238,7 @@ class _init_question_controller extends State<init_question_controller> {
                             }
                             _inputAnswer =
                                 init_ques.answers[_questionNumber].toString();
+                            print("Input Anser by user ${_inputAnswer}");
 
                             int index = 0;
                             if (init_ques.answers[_questionNumber] ==
@@ -293,9 +311,6 @@ class _init_question_controller extends State<init_question_controller> {
       print("${TAG} current input value for list view : ${_currentValue}");
       init_ques.answers[_questionNumber] = _currentValue;
       print("${TAG} PD class answers variable : ${init_ques.answers}");
-      /* ----------- ----------- ----------- ----------- 
-                  TODO: Save this to goofgle sheets
-      ----------- ----------- ----------- ----------------  */
 
       //check to see if there is a next question
       //else finish pro and go to trends
@@ -310,6 +325,8 @@ class _init_question_controller extends State<init_question_controller> {
         //Go to home once the initial questionnaire is done.
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => MyHome1Page("")));
+        //Enter all the data in google sheets once initial assessment is done.
+
       }
     });
   }
