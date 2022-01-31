@@ -1,5 +1,4 @@
-import 'package:carewellapp/models/initial_assessment.dart';
-import 'package:carewellapp/models/questionnaire_main.dart';
+import 'package:carewellapp/questionnaire/weekly_assessment_controller.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -9,12 +8,7 @@ class debug extends StatelessWidget {
     return Scaffold(
         body: Center(
       child: ElevatedButton(
-        onPressed: () {
-          // Navigator.push(
-          //   context,
-          //   MaterialPageRoute(builder: (context) => init_question_controller()),
-          // );
-        },
+        onPressed: () {},
         child: Text("Click to begin"),
       ),
     ));

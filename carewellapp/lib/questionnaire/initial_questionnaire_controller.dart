@@ -1,11 +1,16 @@
-import 'package:carewellapp/models/initial_assessment.dart';
+// import 'dart:html';
+import 'package:carewellapp/cloud_models/google_sheets.dart';
+
+import 'package:carewellapp/cloud_models/google_sheets_init_ass_model.dart';
 import 'package:carewellapp/navigation_elements/home.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:gsheets/gsheets.dart';
-import 'package:carewellapp/models/google_sheets.dart';
+import 'package:platform_device_id/platform_device_id.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
-import 'google_sheets_init_ass_model.dart';
+import 'initial_assessment.dart';
 
 /*
 * Initially created by : Shehjar Sadhu
@@ -31,13 +36,12 @@ class init_question_controller extends StatefulWidget {
 * Questionnaire controller class to handle questions navigations.
 */
 class _init_question_controller extends State<init_question_controller> {
-  // Google sheets API set up.
-
   var range = init_ques.questions_list.length -
       1; // Gets the length of questions from initial_questionnaire class.
   var _questionNumber = 0; // counter for question number.
   double progress_indicator = 0;
   String _inputAnswer = "";
+  String? _deviceId;
 
   @override
   void initState() {
@@ -126,6 +130,7 @@ class _init_question_controller extends State<init_question_controller> {
                               print(
                                   "${TAG} input answer list function: ${_inputAnswer} == ${init_ques.options[_questionNumber][index].toString()}");
                             });
+                            // IF YES IS PRESSED THEN CHANGE DISPLAY ADDITIONAL OPTIONS.
                           },
                           child: ListTile(
                             title: Center(
@@ -164,7 +169,7 @@ class _init_question_controller extends State<init_question_controller> {
                   children: [
                     Spacer(),
                     SizedBox(
-                      height: 75,
+                      height: 60,
                       width: 200,
                       child: ElevatedButton(
                         onPressed: () {
@@ -202,23 +207,29 @@ class _init_question_controller extends State<init_question_controller> {
                     ),
                     Spacer(),
                     SizedBox(
-                      height: 75,
+                      height: 60,
                       width: 200,
                       child: ElevatedButton(
                         onPressed: () async {
+                          // Get uniquw device ID.
+                          initPlatformState();
                           /* ----------- ----------- ----------- ----------- 
                                              Save this to google sheets
                           ----------- ----------- ----------- ----------------  */
                           final init_ass = {
-                            InitAssessmentModelGS.PatientID: 1,
+                            InitAssessmentModelGS.PatientID: _deviceId,
                             InitAssessmentModelGS.Timestamp:
                                 DateTime.now().millisecondsSinceEpoch,
                             InitAssessmentModelGS.Init_Question:
                                 init_ques.questions_list[_questionNumber],
                             InitAssessmentModelGS.Response: _inputAnswer
                           };
-
-                          await googleSheetsAPI.insert([init_ass]);
+                          print(
+                              "init_ques ${init_ques.questions_list[_questionNumber]}");
+                          print("${TAG} INITIAL ASSESSMENT JSON ${init_ass}");
+                          try {
+                            await googleSheetsAPI.insert([init_ass]);
+                          } catch (e) {}
 
                           nextQuestionAll(_inputAnswer);
                           if (init_ques.answers[_questionNumber] == "") {
@@ -328,6 +339,27 @@ class _init_question_controller extends State<init_question_controller> {
         //Enter all the data in google sheets once initial assessment is done.
 
       }
+    });
+  }
+
+  // Platform messages are asynchronous, so we initialize in an async method.
+  Future<void> initPlatformState() async {
+    String? deviceId;
+    // Platform messages may fail, so we use a try/catch PlatformException.
+    try {
+      deviceId = await PlatformDeviceId.getDeviceId;
+    } on PlatformException {
+      deviceId = 'Failed to get deviceId.';
+    }
+
+    // If the widget was removed from the tree while the asynchronous platform
+    // message was in flight, we want to discard the reply rather than calling
+    // setState to update our non-existent appearance.
+    if (!mounted) return;
+
+    setState(() {
+      _deviceId = deviceId;
+      print("deviceId->$_deviceId");
     });
   }
 }

@@ -1,5 +1,8 @@
-import 'package:carewellapp/models/google_sheets_init_ass_model.dart';
+import 'package:carewellapp/cloud_models/google_sheets_usage_data.dart';
+import 'package:carewellapp/cloud_models/google_sheets_weekly_assessment.dart';
 import 'package:gsheets/gsheets.dart';
+
+import 'google_sheets_init_ass_model.dart';
 
 class googleSheetsAPI {
   static const credentials_google_sheets = r''' 
@@ -19,16 +22,24 @@ class googleSheetsAPI {
   static const google_sheet_id = "1yVeplaUTfh1F_CGDEJkGaL3EyNy7NiXN7J29Gl2kSNg";
   static final _gsheets = GSheets(credentials_google_sheets);
   static Worksheet? _initAssSheet;
-
+  static Worksheet? _weeklyAssSheet;
+  static Worksheet? _UsagedataSheet;
   static Future init() async {
     try {
       final spreadsheet = await _gsheets.spreadsheet(google_sheet_id);
       _initAssSheet = await _getWorkSheet(spreadsheet,
           title:
               'InitialAssessment'); //Multiple sheets in one excel file.This is the InitialAssessment
+      _weeklyAssSheet =
+          await _getWorkSheet(spreadsheet, title: 'WeeklyAssessment');
+      _UsagedataSheet = await _getWorkSheet(spreadsheet, title: 'UsageData');
       final firstRow = InitAssessmentModelGS.get_fields();
-      // takes in row number, and values
-      _initAssSheet!.values.insertRow(2, firstRow);
+      // takes in row number, and values.
+      final firstRowWA = WeeklyAssessmentModelGS.get_fields();
+      final firstRowUD = UsageDataModelGS.get_fields();
+      _initAssSheet!.values.insertRow(1, firstRow);
+      _weeklyAssSheet!.values.insertRow(1, firstRowWA);
+      _UsagedataSheet!.values.insertRow(1, firstRowUD);
     } catch (e) {
       print("Init error $e");
     }
@@ -51,5 +62,13 @@ class googleSheetsAPI {
 
   static Future insert(List<Map<String, dynamic>> rowList) async {
     _initAssSheet!.values.map.appendRows(rowList);
+  }
+
+  static Future insertWA(List<Map<String, dynamic>> rowList) async {
+    _weeklyAssSheet!.values.map.appendRows(rowList);
+  }
+
+  static Future insertUD(List<Map<String, dynamic>> rowList) async {
+    _UsagedataSheet!.values.map.appendRows(rowList);
   }
 }
