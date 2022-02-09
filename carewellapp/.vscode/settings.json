@@ -6,7 +6,7 @@
                 "name": "Flutter",
                 "request": "launch",
                 "type": "dart",
-                "flutterMode": "profile"
+                // "flutterMode": "profile"
               }
         ],
         "compounds": []
