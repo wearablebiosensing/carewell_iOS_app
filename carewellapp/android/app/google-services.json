@@ -1,77 +1,34 @@
 {
   "project_info": {
-    "project_number": "937529806462",
-    "project_id": "chat-app-cce2e",
-    "storage_bucket": "chat-app-cce2e.appspot.com"
+    "project_number": "608224292745",
+    "project_id": "officialcarewell",
+    "storage_bucket": "officialcarewell.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:937529806462:android:345e53b304b57f2b69922f",
+        "mobilesdk_app_id": "1:608224292745:android:7b9702efcf4769dc30bb58",
         "android_client_info": {
           "package_name": "com.example.carewellapp"
         }
       },
       "oauth_client": [
         {
-          "client_id": "937529806462-kuec3g74njifftqs28b5p244akrn8q0t.apps.googleusercontent.com",
+          "client_id": "608224292745-naqm613p9sb3tk6is2sfasodv7p412mv.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCNHNTIyuDUS-q1aahg71mVNc_kBHhuQYs"
+          "current_key": "AIzaSyD6aYrN1XqnJTqjXSFreovvrLTJmCF8rV8"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "937529806462-kuec3g74njifftqs28b5p244akrn8q0t.apps.googleusercontent.com",
+              "client_id": "608224292745-naqm613p9sb3tk6is2sfasodv7p412mv.apps.googleusercontent.com",
               "client_type": 3
-            },
-            {
-              "client_id": "937529806462-af04e6j1c66ur3jgrr9iqoli91qrhkl9.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "chatApplication"
-              }
-            }
-          ]
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:937529806462:android:bda77264c30b66c769922f",
-        "android_client_info": {
-          "package_name": "com.example.chat_application"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "937529806462-kuec3g74njifftqs28b5p244akrn8q0t.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyCNHNTIyuDUS-q1aahg71mVNc_kBHhuQYs"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "937529806462-kuec3g74njifftqs28b5p244akrn8q0t.apps.googleusercontent.com",
-              "client_type": 3
-            },
-            {
-              "client_id": "937529806462-af04e6j1c66ur3jgrr9iqoli91qrhkl9.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "chatApplication"
-              }
             }
           ]
         }

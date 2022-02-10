@@ -26,7 +26,10 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        return macos;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for macos - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
     }
 
     throw UnsupportedError(
@@ -53,23 +56,11 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyBb6I77uisVYCBwyeMVl6d_LEpJ8gVsg80',
-    appId: '1:937529806462:ios:0744c772e664297a69922f',
+    appId: '1:937529806462:ios:9f2aa0389836b68069922f',
     messagingSenderId: '937529806462',
     projectId: 'chat-app-cce2e',
     storageBucket: 'chat-app-cce2e.appspot.com',
-    iosClientId:
-        '937529806462-af04e6j1c66ur3jgrr9iqoli91qrhkl9.apps.googleusercontent.com',
-    iosBundleId: 'chatApplication',
-  );
-
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyBb6I77uisVYCBwyeMVl6d_LEpJ8gVsg80',
-    appId: '1:937529806462:ios:6869dd46445d5bda69922f',
-    messagingSenderId: '937529806462',
-    projectId: 'chat-app-cce2e',
-    storageBucket: 'chat-app-cce2e.appspot.com',
-    iosClientId:
-        '937529806462-shitsnvfapovvf0mqovc233qdjqv7lvu.apps.googleusercontent.com',
-    iosBundleId: 'iosChatApp',
+    iosClientId: '937529806462-v5fdikl7c23fcn3e0dm3ti80c9n69g1u.apps.googleusercontent.com',
+    iosBundleId: 'carewellapp',
   );
 }

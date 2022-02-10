@@ -61,7 +61,7 @@ class _ChatInformationState extends State<ChatInformation> {
                 size: 50,
               ),
               onPressed: () {
-                final String message = messageTextEditingController.text.trim();
+                String message = messageTextEditingController.text.trim();
 
                 if (message.isEmpty) {
                   print("Message is empty");
@@ -69,6 +69,7 @@ class _ChatInformationState extends State<ChatInformation> {
                   FirebaseFirestore.instance
                       .collection('Chats')
                       .add({'message': message});
+                  messageTextEditingController.clear();
                 }
               },
             ),

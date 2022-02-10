@@ -91,6 +91,7 @@ class _SignUpState extends State<SignUp> {
                           message = "Password is empty";
                         });
                       } else {
+                        print("HERE");
                         FirebaseAuth.instance
                             .authStateChanges()
                             .listen((User? user) async {
