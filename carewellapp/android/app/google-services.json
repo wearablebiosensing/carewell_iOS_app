@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "608224292745",
+    "project_id": "officialcarewell",
+    "storage_bucket": "officialcarewell.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:608224292745:android:7b9702efcf4769dc30bb58",
+        "android_client_info": {
+          "package_name": "com.example.carewellapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "608224292745-naqm613p9sb3tk6is2sfasodv7p412mv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD6aYrN1XqnJTqjXSFreovvrLTJmCF8rV8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "608224292745-naqm613p9sb3tk6is2sfasodv7p412mv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

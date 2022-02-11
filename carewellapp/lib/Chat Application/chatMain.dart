@@ -1,8 +1,3 @@
-import 'package:carewellapp/Chat%20Application/chatMain.dart';
-import 'package:carewellapp/Chat%20Application/chatViews/signup.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-
 import 'package:carewellapp/Chat%20Application/chatViews/signin.dart';
 import 'package:carewellapp/Chat%20Application/services/auth_services.dart';
 import 'package:carewellapp/firebase_options.dart';
@@ -64,15 +59,5 @@ class MyApp extends StatelessWidget {
           ),
           home: AuthWrapper(),
         ));
-  }
-}
-
-class community extends StatelessWidget {
-  @override
-  Widget build(BuildContext contex) {
-    chatMain();
-    return Container(
-      child: MyApp(),
-    );
   }
 }
