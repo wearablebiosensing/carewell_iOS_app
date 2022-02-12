@@ -9,8 +9,10 @@ class ChatInformation extends StatefulWidget {
 }
 
 class _ChatInformationState extends State<ChatInformation> {
-  final Stream<QuerySnapshot> _usersStream =
-      FirebaseFirestore.instance.collection('Chats').snapshots();
+  final Stream<QuerySnapshot> _usersStream = FirebaseFirestore.instance
+      .collection('Chats')
+      .orderBy('time')
+      .snapshots();
 
   @override
   Widget build(BuildContext context) {
@@ -21,43 +23,20 @@ class _ChatInformationState extends State<ChatInformation> {
 
     return Scaffold(
       body: Container(
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
         padding: EdgeInsets.all(5.0),
         child: Column(
           children: [
             Container(
-              height: 600,
-              width: 300,
+              height: MediaQuery.of(context).size.height * 0.9,
+              width: MediaQuery.of(context).size.width,
               child: SingleChildScrollView(
                 child: Column(children: [
                   messageStream(_usersStream),
                 ]),
               ),
             ),
-            /*  TextField(
-              controller: messageTextEditingController,
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                hintText: 'Enter a message',
-              ),
-            ), 
-            FloatingActionButton(
-              child: const Icon(
-                Icons.arrow_right_rounded,
-                size: 50,
-              ),
-              onPressed: () {
-                String message = messageTextEditingController.text.trim();
-
-                if (message.isEmpty) {
-                  print("Message is empty");
-                } else {
-                  FirebaseFirestore.instance
-                      .collection('Chats')
-                      .add({'message': message});
-                  messageTextEditingController.clear();
-                }
-              },
-            ), */
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -84,9 +63,10 @@ class _ChatInformationState extends State<ChatInformation> {
                     if (message.isEmpty) {
                       print("Message is empty");
                     } else {
-                      FirebaseFirestore.instance
-                          .collection('Chats')
-                          .add({'message': message});
+                      //new Timestamp.now();
+
+                      FirebaseFirestore.instance.collection('Chats').add(
+                          {'message': message, 'time': new Timestamp.now()});
                       messageTextEditingController.clear();
                     }
                   },
@@ -121,7 +101,7 @@ StreamBuilder<QuerySnapshot> messageStream(
           Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
           return ListTile(
             title: Text(data['message']),
-            // subtitle: Text(data['username']),
+            subtitle: Text(data['time'].toString()),
           );
         }).toList(),
       );
