@@ -24,10 +24,7 @@ class DefaultFirebaseOptions {
       case TargetPlatform.android:
         return android;
       case TargetPlatform.iOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for ios - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return ios;
       case TargetPlatform.macOS:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for macos - '
@@ -41,20 +38,29 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyDWOFkpNziTsGYnFB4TiVxJeR7hvCoQR4k',
-    appId: '1:887672134071:web:fb32cd8c0e8bc291bfb032',
-    messagingSenderId: '887672134071',
-    projectId: 'testing-84f41',
-    authDomain: 'testing-84f41.firebaseapp.com',
-    storageBucket: 'testing-84f41.appspot.com',
-    measurementId: 'G-1KM2CWN8T0',
+    apiKey: 'AIzaSyDPeZgAwXhtxzTsdevqZVfKQCJWX23pd6g',
+    appId: '1:937529806462:web:2ec78dd2e405ac4269922f',
+    messagingSenderId: '937529806462',
+    projectId: 'chat-app-cce2e',
+    authDomain: 'chat-app-cce2e.firebaseapp.com',
+    storageBucket: 'chat-app-cce2e.appspot.com',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyA6SdAfe4nvkoKKYD_kGviKY81ihobt8nI',
-    appId: '1:887672134071:android:2f8dd88580ded085bfb032',
-    messagingSenderId: '887672134071',
-    projectId: 'testing-84f41',
-    storageBucket: 'testing-84f41.appspot.com',
+    apiKey: 'AIzaSyCNHNTIyuDUS-q1aahg71mVNc_kBHhuQYs',
+    appId: '1:937529806462:android:345e53b304b57f2b69922f',
+    messagingSenderId: '937529806462',
+    projectId: 'chat-app-cce2e',
+    storageBucket: 'chat-app-cce2e.appspot.com',
+  );
+
+  static const FirebaseOptions ios = FirebaseOptions(
+    apiKey: 'AIzaSyBb6I77uisVYCBwyeMVl6d_LEpJ8gVsg80',
+    appId: '1:937529806462:ios:8b1b7a1969869b4e69922f',
+    messagingSenderId: '937529806462',
+    projectId: 'chat-app-cce2e',
+    storageBucket: 'chat-app-cce2e.appspot.com',
+    iosClientId: '937529806462-ebu3gt65joph655mno9eolh6caoedkmu.apps.googleusercontent.com',
+    iosBundleId: 'com.chatapp.app',
   );
 }
