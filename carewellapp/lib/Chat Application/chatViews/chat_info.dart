@@ -101,7 +101,10 @@ StreamBuilder<QuerySnapshot> messageStream(
           Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
           return ListTile(
             title: Text(data['message']),
-            subtitle: Text(data['time'].toString()),
+
+            //  subtitle: Text(DateTime.parse(data['time'].toDate().toString())),
+
+            subtitle: Text(data['time'].toDate().toString()),
           );
         }).toList(),
       );
