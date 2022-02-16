@@ -29,7 +29,7 @@ class _ChatInformationState extends State<ChatInformation> {
         child: Column(
           children: [
             Container(
-              height: MediaQuery.of(context).size.height * 0.9,
+              height: MediaQuery.of(context).size.height * 0.825,
               width: MediaQuery.of(context).size.width,
               child: SingleChildScrollView(
                 child: Column(children: [

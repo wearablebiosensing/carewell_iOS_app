@@ -20,8 +20,6 @@ void chatMain() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-
-  runApp(MyApp());
 }
 
 class AuthWrapper extends StatefulWidget {
