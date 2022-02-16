@@ -56,11 +56,11 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyBb6I77uisVYCBwyeMVl6d_LEpJ8gVsg80',
-    appId: '1:937529806462:ios:9f2aa0389836b68069922f',
+    appId: '1:937529806462:ios:8b1b7a1969869b4e69922f',
     messagingSenderId: '937529806462',
     projectId: 'chat-app-cce2e',
     storageBucket: 'chat-app-cce2e.appspot.com',
-    iosClientId: '937529806462-v5fdikl7c23fcn3e0dm3ti80c9n69g1u.apps.googleusercontent.com',
-    iosBundleId: 'carewellapp',
+    iosClientId: '937529806462-ebu3gt65joph655mno9eolh6caoedkmu.apps.googleusercontent.com',
+    iosBundleId: 'com.chatapp.app',
   );
 }

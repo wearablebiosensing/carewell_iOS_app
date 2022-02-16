@@ -1,5 +1,6 @@
 import 'package:carewellapp/Chat%20Application/chatViews/chat_info.dart';
 import 'package:carewellapp/Chat%20Application/chatViews/signup.dart';
+import 'package:carewellapp/Chat%20Application/chatViews/userinfo.dart';
 import 'package:carewellapp/Chat%20Application/widgets/widget.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
