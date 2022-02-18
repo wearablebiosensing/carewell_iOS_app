@@ -107,8 +107,8 @@ StreamBuilder<QuerySnapshot> messageStream(
 
             //  subtitle: Text(DateTime.parse(data['time'].toDate().toString())),
 
-            subtitle:
-                Text(data['user'] + '   ' + data['time'].toDate().toString()),
+            subtitle: Text(
+                data['user'] + '          ' + data['time'].toDate().toString()),
           );
         }).toList(),
       );
