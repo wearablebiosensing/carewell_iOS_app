@@ -7,7 +7,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 FirebaseAuth chatuser = FirebaseAuth.instance;
-String username = '';
+//String username = '';
 String email = 'Not actually signed in';
 
 String message = '';
@@ -102,6 +102,7 @@ class _SignUpState extends State<SignUp> {
                               email: email,
                               password: password,
                             );
+                            username = email;
                           } on FirebaseAuthException catch (e) {
                             if (e.code == 'weak-password') {
                               print('The password provided is too weak.');
@@ -150,6 +151,7 @@ class _SignUpState extends State<SignUp> {
                         FirebaseFirestore.instance
                             .collection('Users')
                             .add({'username': email});
+                        username = email;
                       }
                     }
                   },

@@ -137,6 +137,7 @@ class _SignInState extends State<SignIn> {
                         FirebaseFirestore.instance
                             .collection('Users')
                             .add({'username': email});
+                        username = email;
                       }
                     }
                     // ChatRoom();
@@ -175,6 +176,7 @@ class _SignInState extends State<SignIn> {
                         FirebaseFirestore.instance
                             .collection('Users')
                             .add({'username': email, 'password': password});
+                        username = email;
                       }
                     }
                   },

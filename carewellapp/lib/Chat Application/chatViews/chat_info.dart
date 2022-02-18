@@ -65,8 +65,11 @@ class _ChatInformationState extends State<ChatInformation> {
                     } else {
                       //new Timestamp.now();
 
-                      FirebaseFirestore.instance.collection('Chats').add(
-                          {'message': message, 'time': new Timestamp.now()});
+                      FirebaseFirestore.instance.collection('Chats').add({
+                        'message': message,
+                        'time': new Timestamp.now(),
+                        'user': username
+                      });
                       messageTextEditingController.clear();
                     }
                   },
@@ -104,7 +107,8 @@ StreamBuilder<QuerySnapshot> messageStream(
 
             //  subtitle: Text(DateTime.parse(data['time'].toDate().toString())),
 
-            subtitle: Text(data['time'].toDate().toString()),
+            subtitle:
+                Text(data['user'] + '   ' + data['time'].toDate().toString()),
           );
         }).toList(),
       );
