@@ -1,4 +1,5 @@
 import 'package:carewellapp/Chat%20Application/chatViews/chat_info.dart';
+import 'package:carewellapp/Chat%20Application/chatViews/feed.dart';
 import 'package:carewellapp/Chat%20Application/chatViews/signin.dart';
 import 'package:carewellapp/Chat%20Application/widgets/widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -127,8 +128,7 @@ class _SignUpState extends State<SignUp> {
 
                             Navigator.pushReplacement(
                               context,
-                              MaterialPageRoute(
-                                  builder: (context) => ChatInformation()),
+                              MaterialPageRoute(builder: (context) => Feed()),
                             );
                           }
                         });
