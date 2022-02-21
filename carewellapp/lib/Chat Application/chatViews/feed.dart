@@ -1,3 +1,4 @@
+import 'package:carewellapp/Chat%20Application/chatViews/expanded.dart';
 import 'package:carewellapp/Chat%20Application/chatViews/signin.dart';
 import 'package:carewellapp/main.dart';
 import 'package:carewellapp/navigation_elements/community.dart';
@@ -9,6 +10,8 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 String selection = 'General';
+String post = '';
+bool isComment = false;
 
 class Feed extends StatefulWidget {
   @override
@@ -77,6 +80,7 @@ class _FeedState extends State<Feed> {
                             color: Colors.red[900],
                             fontSize: 15 /*/ deviceTextScaleFactor + 2 */)),
                     onTap: () async {
+                      isComment = false;
                       var startManagingCare =
                           DateTime.now().millisecondsSinceEpoch;
                       //  onIndexChanged(2);
@@ -118,10 +122,21 @@ StreamBuilder<QuerySnapshot> messageStream(
         shrinkWrap: true,
         children: snapshot.data!.docs.map((DocumentSnapshot document) {
           Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
+
           return ListTile(
             title: Text(data['message']),
             subtitle: Text(
                 data['user'] + '          ' + data['time'].toDate().toString()),
+            onTap: () async {
+              isComment = true;
+              post = document.id;
+
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => Comments()),
+              );
+              ;
+            },
           );
         }).toList(),
       );
@@ -156,7 +171,7 @@ Container feed(
           width: MediaQuery.of(context).size.width,
           child: SingleChildScrollView(
             child: Column(children: [
-              messageStream(getStream()),
+              messageStream(_usersStream),
             ]),
           ),
         ),
@@ -168,7 +183,7 @@ Container feed(
                 controller: messageTextEditingController,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
-                  hintText: 'Enter a message',
+                  hintText: isComment ? "Add comment" : 'Enter a message',
                 ),
               ),
             ),
@@ -186,12 +201,25 @@ Container feed(
                 if (message.isEmpty) {
                   print("Message is empty");
                 } else {
-                  FirebaseFirestore.instance.collection(selection).add({
-                    'message': message,
-                    'time': new Timestamp.now(),
-                    'user': username
-                  });
+                  if (!isComment) {
+                    FirebaseFirestore.instance.collection(selection).add({
+                      'message': message,
+                      'time': new Timestamp.now(),
+                      'user': username,
+                    });
+                  } else {
+                    FirebaseFirestore.instance
+                        .collection(selection)
+                        .doc(post)
+                        .collection("comments")
+                        .add({
+                      'message': message,
+                      'time': new Timestamp.now(),
+                      'user': username,
+                    });
+                  }
                 }
+
                 messageTextEditingController.clear();
               },
             ),
@@ -203,6 +231,14 @@ Container feed(
 }
 
 Stream<QuerySnapshot> getStream() {
+  if (isComment) {
+    return FirebaseFirestore.instance
+        .collection(selection)
+        .doc(post)
+        .collection("comments")
+        .orderBy('time')
+        .snapshots();
+  }
   return FirebaseFirestore.instance
       .collection(selection)
       .orderBy('time')
