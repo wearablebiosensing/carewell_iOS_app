@@ -8,17 +8,14 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
+String selection = 'General';
+
 class Feed extends StatefulWidget {
   @override
   _FeedState createState() => _FeedState();
 }
 
 class _FeedState extends State<Feed> {
-  final Stream<QuerySnapshot> _usersStream = FirebaseFirestore.instance
-      .collection('Chats')
-      .orderBy('time')
-      .snapshots();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,14 +34,9 @@ class _FeedState extends State<Feed> {
                             color: Colors.white70,
                             fontSize: 15 /*/ deviceTextScaleFactor + 2*/)),
                     onTap: () async {
-                      var startDashboard =
-                          DateTime.now().millisecondsSinceEpoch;
-
-                      appBarText = "General";
-
-                      var stopDashboard = DateTime.now().millisecondsSinceEpoch;
-
-                      final usage_data_dasboard = {};
+                      setState(() {
+                        selection = "General";
+                      });
                     },
                   ),
                   ListTile(
@@ -53,11 +45,9 @@ class _FeedState extends State<Feed> {
                             color: Colors.white70,
                             fontSize: 15 /* /  deviceTextScaleFactor + 2 */)),
                     onTap: () async {
-                      var startEducation =
-                          DateTime.now().millisecondsSinceEpoch;
-                      //  onIndexChanged(1);
-                      appBarText = "Social";
-                      var stopEducation = DateTime.now().millisecondsSinceEpoch;
+                      setState(() {
+                        selection = "Social";
+                      });
                     },
                   ),
                   ListTile(
@@ -66,12 +56,9 @@ class _FeedState extends State<Feed> {
                             color: Colors.white70,
                             fontSize: 15 /*/ deviceTextScaleFactor + 2 */)),
                     onTap: () async {
-                      var startManagingCare =
-                          DateTime.now().millisecondsSinceEpoch;
-                      //  onIndexChanged(2);
-                      appBarText = "Managing Care";
-                      var stopManagingCare =
-                          DateTime.now().millisecondsSinceEpoch;
+                      setState(() {
+                        selection = "Managing Care";
+                      });
                     },
                   ),
                   SizedBox(
@@ -82,14 +69,7 @@ class _FeedState extends State<Feed> {
                         style: TextStyle(
                             color: Colors.white70,
                             fontSize: 15 /*/ deviceTextScaleFactor + 2 */)),
-                    onTap: () async {
-                      var startManagingCare =
-                          DateTime.now().millisecondsSinceEpoch;
-                      //  onIndexChanged(2);
-                      appBarText = "Notifications";
-                      var stopManagingCare =
-                          DateTime.now().millisecondsSinceEpoch;
-                    },
+                    onTap: () async {},
                   ),
                   ListTile(
                     title: Text("Sign Out",
@@ -113,7 +93,7 @@ class _FeedState extends State<Feed> {
                 ],
               )),
         ]),
-        feed(context, _usersStream),
+        feed(context, getStream()),
       ],
     ));
   }
@@ -156,15 +136,27 @@ Container feed(
   return Container(
     height: MediaQuery.of(context).size.height,
     width: MediaQuery.of(context).size.width * 0.80,
-    padding: EdgeInsets.all(5.0),
+    //padding: EdgeInsets.all(5.0),
     child: Column(
       children: [
         Container(
-          height: MediaQuery.of(context).size.height * 0.825,
+            height: MediaQuery.of(context).size.height * 0.1,
+            width: MediaQuery.of(context).size.width,
+            color: Colors.blue[900],
+            child: Align(
+              alignment: Alignment.center,
+              child: Text(
+                selection,
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 25),
+              ),
+            )),
+        Container(
+          height: MediaQuery.of(context).size.height * 0.75,
           width: MediaQuery.of(context).size.width,
           child: SingleChildScrollView(
             child: Column(children: [
-              messageStream(_usersStream),
+              messageStream(getStream()),
             ]),
           ),
         ),
@@ -194,15 +186,13 @@ Container feed(
                 if (message.isEmpty) {
                   print("Message is empty");
                 } else {
-                  //new Timestamp.now();
-
-                  FirebaseFirestore.instance.collection('Chats').add({
+                  FirebaseFirestore.instance.collection(selection).add({
                     'message': message,
                     'time': new Timestamp.now(),
                     'user': username
                   });
-                  messageTextEditingController.clear();
                 }
+                messageTextEditingController.clear();
               },
             ),
           ],
@@ -210,6 +200,13 @@ Container feed(
       ],
     ),
   );
+}
+
+Stream<QuerySnapshot> getStream() {
+  return FirebaseFirestore.instance
+      .collection(selection)
+      .orderBy('time')
+      .snapshots();
 }
 
 Future<void> _signOut() async {
