@@ -160,11 +160,16 @@ StreamBuilder<QuerySnapshot> messageStream(
 
 Container feed(
     BuildContext context, Stream<QuerySnapshot<Object?>> _usersStream) {
+  if (isComment) {
+    selection = "Comments";
+  }
+  ;
   TextEditingController messageTextEditingController =
       new TextEditingController();
   return Container(
     height: MediaQuery.of(context).size.height,
     width: MediaQuery.of(context).size.width * 0.80,
+
     //padding: EdgeInsets.all(5.0),
     child: SingleChildScrollView(
       child: Column(
