@@ -160,10 +160,6 @@ StreamBuilder<QuerySnapshot> messageStream(
 
 Container feed(
     BuildContext context, Stream<QuerySnapshot<Object?>> _usersStream) {
-  if (isComment) {
-    selection = "Comments";
-  }
-  ;
   TextEditingController messageTextEditingController =
       new TextEditingController();
   return Container(
@@ -181,7 +177,7 @@ Container feed(
               child: Align(
                 alignment: Alignment.center,
                 child: Text(
-                  selection,
+                  isComment ? "Comments" : selection,
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 25),
                 ),
