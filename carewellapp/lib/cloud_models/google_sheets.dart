@@ -1,3 +1,4 @@
+import 'package:carewellapp/cloud_models/google_sheets_carewell_chat.dart';
 import 'package:carewellapp/cloud_models/google_sheets_usage_data.dart';
 import 'package:carewellapp/cloud_models/google_sheets_weekly_assessment.dart';
 import 'package:gsheets/gsheets.dart';
@@ -24,22 +25,28 @@ class googleSheetsAPI {
   static Worksheet? _initAssSheet;
   static Worksheet? _weeklyAssSheet;
   static Worksheet? _UsagedataSheet;
+  static Worksheet? _ChatSheet;
   static Future init() async {
     try {
       final spreadsheet = await _gsheets.spreadsheet(google_sheet_id);
+
+      _ChatSheet = await _getWorkSheet(spreadsheet, title: 'CareWellChat');
       _initAssSheet = await _getWorkSheet(spreadsheet,
           title:
               'InitialAssessment'); //Multiple sheets in one excel file.This is the InitialAssessment
       _weeklyAssSheet =
           await _getWorkSheet(spreadsheet, title: 'WeeklyAssessment');
       _UsagedataSheet = await _getWorkSheet(spreadsheet, title: 'UsageData');
+
       final firstRow = InitAssessmentModelGS.get_fields();
       // takes in row number, and values.
       final firstRowWA = WeeklyAssessmentModelGS.get_fields();
       final firstRowUD = UsageDataModelGS.get_fields();
+      final firstRowCS = CarewellChatModelGS.get_fields();
       _initAssSheet!.values.insertRow(1, firstRow);
       _weeklyAssSheet!.values.insertRow(1, firstRowWA);
       _UsagedataSheet!.values.insertRow(1, firstRowUD);
+      _ChatSheet!.values.insertRow(1, firstRowCS);
     } catch (e) {
       print("Init error $e");
     }
@@ -70,5 +77,9 @@ class googleSheetsAPI {
 
   static Future insertUD(List<Map<String, dynamic>> rowList) async {
     _UsagedataSheet!.values.map.appendRows(rowList);
+  }
+
+  static Future insertCS(List<Map<String, dynamic>> rowList) async {
+    _ChatSheet!.values.map.appendRows(rowList);
   }
 }
