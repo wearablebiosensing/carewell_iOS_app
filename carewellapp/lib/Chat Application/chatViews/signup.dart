@@ -2,12 +2,13 @@ import 'package:carewellapp/Chat%20Application/chatViews/chat_info.dart';
 import 'package:carewellapp/Chat%20Application/chatViews/feed.dart';
 import 'package:carewellapp/Chat%20Application/chatViews/signin.dart';
 import 'package:carewellapp/Chat%20Application/widgets/widget.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:carewellapp/cloud_models/google_sheets_carewell_chat.dart';
+import 'package:carewellapp/cloud_models/google_sheets_usage_data.dart';
+import 'package:carewellapp/cloud_models/google_sheets.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-FirebaseAuth chatuser = FirebaseAuth.instance;
+//FirebaseAuth chatuser = FirebaseAuth.instance;
 //String username = '';
 String email = 'Not actually signed in';
 
@@ -93,65 +94,20 @@ class _SignUpState extends State<SignUp> {
                         });
                       } else {
                         print("HERE");
-                        FirebaseAuth.instance
-                            .authStateChanges()
-                            .listen((User? user) async {
-                          try {
-                            UserCredential userCredential = await FirebaseAuth
-                                .instance
-                                .createUserWithEmailAndPassword(
-                              email: email,
-                              password: password,
-                            );
-                            username = email;
-                          } on FirebaseAuthException catch (e) {
-                            if (e.code == 'weak-password') {
-                              print('The password provided is too weak.');
-                              setState(() {
-                                message = 'The password provided is too weak.';
-                              });
-                            } else if (e.code == 'email-already-in-use') {
-                              print(
-                                  'The account already exists for that email.');
-                              setState(() {
-                                message =
-                                    'The account already exists for that email.';
-                              });
-                            }
-                          } catch (e) {
-                            print(e);
-                          }
-                          if (user == null) {
-                            print('User is currently signed out!');
-                          } else {
-                            print('User is signed in!');
+                        //initPlatformState();
+                        final sign_up_data_dasboard = {
+                          // PatientID, StartTimestamp, StopTimestamp, Section
+                          SignUpModelGS.DeviceID: "temp",
+                          SignUpModelGS.Email: email,
+                          SignUpModelGS.HashPassword: password,
+                          SignUpModelGS.Timestamp: "00:00"
+                        };
+                        await googleSheetsAPI.insertSU([sign_up_data_dasboard]);
 
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(builder: (context) => Feed()),
-                            );
-                          }
-                        });
-
-                        /* context
-                            .read<AuthService>()
-                            .login(email, password)
-                            .then((value) async {
-                          chatuser = FirebaseAuth.instance;
-
-                          await FirebaseFirestore.instance
-                              .collection('Users')
-                              .doc(chatuser.currentUser?.uid)
-                              .set({
-                            'uid': chatuser.currentUser?.uid,
-                            'email': email,
-                            'password': password,
-                          });
-                        }); */
-                        FirebaseFirestore.instance
-                            .collection('Users')
-                            .add({'username': email});
-                        username = email;
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(builder: (context) => Feed()),
+                        );
                       }
                     }
                   },
@@ -186,9 +142,9 @@ class _SignUpState extends State<SignUp> {
                       if (password.isEmpty) {
                         print("Password is empty");
                       } else {
-                        FirebaseFirestore.instance
-                            .collection('Users')
-                            .add({'username': email, 'password': password});
+                        // FirebaseFirestore.instance
+                        //     .collection('Users')
+                        //     .add({'username': email, 'password': password});
                       }
                     }
                   },

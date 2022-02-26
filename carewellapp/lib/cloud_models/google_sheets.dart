@@ -26,11 +26,13 @@ class googleSheetsAPI {
   static Worksheet? _weeklyAssSheet;
   static Worksheet? _UsagedataSheet;
   static Worksheet? _ChatSheet;
+  static Worksheet? _SignUpSheet;
   static Future init() async {
     try {
       final spreadsheet = await _gsheets.spreadsheet(google_sheet_id);
 
       _ChatSheet = await _getWorkSheet(spreadsheet, title: 'CareWellChat');
+      _SignUpSheet = await _getWorkSheet(spreadsheet, title: 'SignIn');
       _initAssSheet = await _getWorkSheet(spreadsheet,
           title:
               'InitialAssessment'); //Multiple sheets in one excel file.This is the InitialAssessment
@@ -43,10 +45,12 @@ class googleSheetsAPI {
       final firstRowWA = WeeklyAssessmentModelGS.get_fields();
       final firstRowUD = UsageDataModelGS.get_fields();
       final firstRowCS = CarewellChatModelGS.get_fields();
+      final firstRowSU = SignUpModelGS.get_fields();
       _initAssSheet!.values.insertRow(1, firstRow);
       _weeklyAssSheet!.values.insertRow(1, firstRowWA);
       _UsagedataSheet!.values.insertRow(1, firstRowUD);
       _ChatSheet!.values.insertRow(1, firstRowCS);
+      _SignUpSheet!.values.insertRow(1, firstRowSU);
     } catch (e) {
       print("Init error $e");
     }
@@ -81,5 +85,9 @@ class googleSheetsAPI {
 
   static Future insertCS(List<Map<String, dynamic>> rowList) async {
     _ChatSheet!.values.map.appendRows(rowList);
+  }
+
+  static Future insertSU(List<Map<String, dynamic>> rowList) async {
+    _SignUpSheet!.values.map.appendRows(rowList);
   }
 }
