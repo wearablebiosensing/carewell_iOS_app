@@ -14,7 +14,7 @@ import 'package:firebase_core/firebase_core.dart';
 
 FirebaseAuth chatuser = FirebaseAuth.instance;
 String username = '';
-String email = 'Not actually signed in';
+//String email = 'Not actually signed in';
 
 class SignIn extends StatefulWidget {
   const SignIn({Key? key}) : super(key: key);

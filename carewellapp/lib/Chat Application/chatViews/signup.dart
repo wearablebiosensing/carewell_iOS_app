@@ -7,6 +7,8 @@ import 'package:carewellapp/cloud_models/google_sheets_usage_data.dart';
 import 'package:carewellapp/cloud_models/google_sheets.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:crypto/crypto.dart';
+import 'dart:convert';
 
 //FirebaseAuth chatuser = FirebaseAuth.instance;
 //String username = '';
@@ -76,7 +78,7 @@ class _SignUpState extends State<SignUp> {
 
                 GestureDetector(
                   onTap: () async {
-                    final String email = emailTextEditingController.text.trim();
+                    email = emailTextEditingController.text.trim();
 
                     final String password =
                         passwordTextEditingController.text.trim();
@@ -94,13 +96,18 @@ class _SignUpState extends State<SignUp> {
                         });
                       } else {
                         print("HERE");
+
+                        var bytes = utf8.encode(password); // data being hashed
+
+                        var digest = sha1.convert(bytes).toString();
+
                         //initPlatformState();
                         final sign_up_data_dasboard = {
                           // PatientID, StartTimestamp, StopTimestamp, Section
                           SignUpModelGS.DeviceID: "temp",
                           SignUpModelGS.Email: email,
-                          SignUpModelGS.HashPassword: password,
-                          SignUpModelGS.Timestamp: "00:00"
+                          SignUpModelGS.HashPassword: digest,
+                          SignUpModelGS.Timestamp: DateTime.now().toString()
                         };
                         await googleSheetsAPI.insertSU([sign_up_data_dasboard]);
 
