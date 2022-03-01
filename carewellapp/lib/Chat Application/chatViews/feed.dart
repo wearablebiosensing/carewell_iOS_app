@@ -1,5 +1,8 @@
+import 'dart:html';
+
 import 'package:carewellapp/Chat%20Application/chatViews/expanded.dart';
-import 'package:carewellapp/Chat%20Application/chatViews/signin.dart';
+import 'package:carewellapp/Chat%20Application/chatViews/signup.dart';
+import 'package:carewellapp/cloud_models/google_sheets_carewell_chat.dart';
 import 'package:carewellapp/main.dart';
 import 'package:carewellapp/navigation_elements/community.dart';
 import 'package:carewellapp/navigation_elements/dashboard.dart';
@@ -8,6 +11,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:carewellapp/cloud_models/google_sheets.dart';
 
 String selection = 'General';
 String post = '';
@@ -211,18 +215,24 @@ Container feed(
                   Icons.arrow_right_rounded,
                   size: 50,
                 ),
-                onPressed: () {
+                onPressed: () async {
                   String message = messageTextEditingController.text.trim();
 
                   if (message.isEmpty) {
                     print("Message is empty");
                   } else {
                     if (!isComment) {
-                      FirebaseFirestore.instance.collection(selection).add({
-                        'message': message,
-                        'time': new Timestamp.now(),
-                        'user': username,
-                      });
+                      final message_dashboard = {
+                        // PatientID, StartTimestamp, StopTimestamp, Section
+                        CarewellChatModelGS.PatientID: deviceID,
+                        CarewellChatModelGS.UserID: email,
+                        CarewellChatModelGS.Timestamp:
+                            DateTime.now().toString(),
+                        CarewellChatModelGS.Channel: selection,
+                        CarewellChatModelGS.Message: message,
+                      };
+
+                      await googleSheetsAPI.insertCS([message_dashboard]);
                     } else {
                       FirebaseFirestore.instance
                           .collection(selection)
@@ -231,7 +241,7 @@ Container feed(
                           .add({
                         'message': message,
                         'time': new Timestamp.now(),
-                        'user': username,
+                        'user': email,
                       });
                     }
                   }

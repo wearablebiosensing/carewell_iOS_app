@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:carewellapp/cloud_models/google_sheets.dart';
 
 String username = '';
-String email = 'Not actually signed in';
+//String email = 'Not actually signed in';
 
 class SignIn extends StatefulWidget {
   const SignIn({Key? key}) : super(key: key);
