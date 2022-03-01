@@ -1,9 +1,6 @@
-import 'package:carewellapp/Chat%20Application/chatViews/chat_info.dart';
-import 'package:carewellapp/Chat%20Application/chatViews/feed.dart';
 import 'package:carewellapp/Chat%20Application/chatViews/signin.dart';
 import 'package:carewellapp/Chat%20Application/widgets/widget.dart';
 import 'package:carewellapp/cloud_models/google_sheets_carewell_chat.dart';
-import 'package:carewellapp/cloud_models/google_sheets_usage_data.dart';
 import 'package:carewellapp/cloud_models/google_sheets.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -93,7 +90,6 @@ class _SignUpState extends State<SignUp> {
                           message = "Password is empty";
                         });
                       } else {
-                        print("HERE");
                         //initPlatformState();
                         final sign_up_data_dasboard = {
                           // PatientID, StartTimestamp, StopTimestamp, Section
@@ -106,7 +102,7 @@ class _SignUpState extends State<SignUp> {
 
                         Navigator.pushReplacement(
                           context,
-                          MaterialPageRoute(builder: (context) => Feed()),
+                          MaterialPageRoute(builder: (context) => SignIn()),
                         );
                       }
                     }

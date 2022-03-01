@@ -1,3 +1,4 @@
+import 'package:carewellapp/Chat%20Application/chatViews/signup.dart';
 import 'package:carewellapp/cloud_models/google_sheets_carewell_chat.dart';
 import 'package:carewellapp/cloud_models/google_sheets_usage_data.dart';
 import 'package:carewellapp/cloud_models/google_sheets_weekly_assessment.dart';
@@ -32,7 +33,7 @@ class googleSheetsAPI {
       final spreadsheet = await _gsheets.spreadsheet(google_sheet_id);
 
       _ChatSheet = await _getWorkSheet(spreadsheet, title: 'CareWellChat');
-      _SignUpSheet = await _getWorkSheet(spreadsheet, title: 'SignIn');
+      _SignUpSheet = await _getWorkSheet(spreadsheet, title: 'SignUp');
       _initAssSheet = await _getWorkSheet(spreadsheet,
           title:
               'InitialAssessment'); //Multiple sheets in one excel file.This is the InitialAssessment
@@ -89,5 +90,21 @@ class googleSheetsAPI {
 
   static Future insertSU(List<Map<String, dynamic>> rowList) async {
     _SignUpSheet!.values.map.appendRows(rowList);
+  }
+
+  static Future<bool?> verifyLogin(String email, String password) async {
+    if (_SignUpSheet == null) return null;
+
+    Future<List<List<String>>>? sheet = _SignUpSheet?.values.allRows();
+
+    List<List<String>>? list = await sheet;
+
+    for (int i = 0; i < list!.length; i++) {
+      if (list[i][1] == email && list[i][2] == password) {
+        print(list[i][1] + " and " + list[i][2]);
+        return Future<bool>.value(true);
+      }
+    }
+    return false;
   }
 }
