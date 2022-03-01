@@ -3,6 +3,8 @@ import 'package:carewellapp/Chat%20Application/chatViews/signup.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:carewellapp/cloud_models/google_sheets.dart';
+import 'dart:convert';
+import 'package:crypto/crypto.dart';
 
 String username = '';
 //String email = 'Not actually signed in';
@@ -70,7 +72,10 @@ class _SignInState extends State<SignIn> {
                   if (password.isEmpty) {
                     print("Password is empty");
                   } else {
-                    if ((await googleSheetsAPI.verifyLogin(email, password)) ==
+                    var bytes = utf8.encode(password); // data being hashed
+
+                    var digest = sha1.convert(bytes).toString();
+                    if ((await googleSheetsAPI.verifyLogin(email, digest)) ==
                         true) {
                       username = email;
 
