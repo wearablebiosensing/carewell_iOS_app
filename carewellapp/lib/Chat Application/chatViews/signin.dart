@@ -1,5 +1,6 @@
 import 'package:carewellapp/Chat%20Application/chatViews/feed.dart';
 import 'package:carewellapp/Chat%20Application/chatViews/signup.dart';
+import 'package:carewellapp/cloud_models/google_sheets_carewell_chat.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:carewellapp/cloud_models/google_sheets.dart';
@@ -79,6 +80,18 @@ class _SignInState extends State<SignIn> {
                         true) {
                       username = email;
 
+                      var bytes = utf8.encode(password); // data being hashed
+
+                      var digest = sha1.convert(bytes).toString();
+                      //initPlatformState();
+                      final sign_in_data_dasboard = {
+                        // PatientID, StartTimestamp, StopTimestamp, Section
+                        SignUpModelGS.DeviceID: "temp",
+                        SignUpModelGS.Email: email,
+                        SignUpModelGS.HashPassword: digest,
+                        SignUpModelGS.Timestamp: DateTime.now().toString()
+                      };
+                      await googleSheetsAPI.insertSI([sign_in_data_dasboard]);
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(builder: (context) => Feed()),
