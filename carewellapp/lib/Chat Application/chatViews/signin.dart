@@ -92,6 +92,7 @@ class _SignInState extends State<SignIn> {
                         SignUpModelGS.Timestamp: DateTime.now().toString()
                       };
                       await googleSheetsAPI.insertSI([sign_in_data_dasboard]);
+
                       Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(builder: (context) => Feed()),

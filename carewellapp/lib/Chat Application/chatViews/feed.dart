@@ -233,6 +233,7 @@ Container feed(
                       };
 
                       await googleSheetsAPI.insertCS([message_dashboard]);
+                      Future<List<Chat>> msg = getDataFromGoogleSheet();
                     } else {
                       FirebaseFirestore.instance
                           .collection(selection)

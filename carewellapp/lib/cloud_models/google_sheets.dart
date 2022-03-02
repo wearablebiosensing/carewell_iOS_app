@@ -1,10 +1,17 @@
+import 'dart:html';
+import 'dart:math';
+
 import 'package:carewellapp/Chat%20Application/chatViews/signup.dart';
 import 'package:carewellapp/cloud_models/google_sheets_carewell_chat.dart';
 import 'package:carewellapp/cloud_models/google_sheets_usage_data.dart';
 import 'package:carewellapp/cloud_models/google_sheets_weekly_assessment.dart';
+import 'package:flutter/widgets.dart';
 import 'package:gsheets/gsheets.dart';
+import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
 
 import 'google_sheets_init_ass_model.dart';
+import 'dart:convert' as convert;
 
 class googleSheetsAPI {
   static const credentials_google_sheets = r''' 
@@ -115,4 +122,43 @@ class googleSheetsAPI {
     }
     return false;
   }
+}
+
+class Chat {
+  Chat({
+    this.message = '',
+    this.timestamp = '',
+    this.userID = '',
+  });
+
+  String? message;
+  String? userID;
+  String? timestamp;
+}
+
+Future<List<Chat>> getDataFromGoogleSheet() async {
+  Response data = await http.get(
+    Uri.parse(
+        "https://script.google.com/macros/s/AKfycbzfMFl2IKR4lgdiHeUmyLb0nVYP0DdHghXhgb-zsQseQXafeus/exec"),
+  );
+
+  dynamic jsonAppData = convert.jsonDecode(data.body);
+
+  final List<Chat> appointmentData = [];
+
+  for (dynamic data in jsonAppData) {
+    Chat meetingData = Chat(
+      message: data['Message'],
+      userID: data['UserID'],
+      timestamp: data['Timestamp'],
+    );
+
+    appointmentData.add(meetingData);
+    print(data.length.toString());
+  }
+  return appointmentData;
+}
+
+DateTime _convertDateFromString(String date) {
+  return DateTime.parse(date);
 }
