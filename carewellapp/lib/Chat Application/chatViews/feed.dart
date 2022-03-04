@@ -23,6 +23,33 @@ class Feed extends StatefulWidget {
 }
 
 class _FeedState extends State<Feed> {
+  final _formKey = GlobalKey<FormState>();
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+
+  void _submitForm() {
+    // Validate returns true if the form is valid, or false
+    // otherwise.
+    if (_formKey.currentState!.validate()) {
+      // If the form is valid, proceed.
+      ChatForm feedbackForm = ChatForm(
+        deviceID,
+        email,
+        DateTime.now().toString(),
+        selection,
+        message,
+      );
+
+      ChatController chatController = ChatController();
+
+      //  _showSnackbar("Submitting Feedback");
+
+      // Submit 'feedbackForm' and save it in Google Sheets.
+      chatController.submitForm(feedbackForm, (String response) {
+        print("Response: $response");
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -117,6 +144,8 @@ class _FeedState extends State<Feed> {
     );
   }
 }
+
+_FeedState fs = new _FeedState();
 
 StreamBuilder<QuerySnapshot> messageStream(
     Stream<QuerySnapshot<Object?>> _usersStream) {
@@ -231,6 +260,10 @@ Container feed(
                         CarewellChatModelGS.Channel: selection,
                         CarewellChatModelGS.Message: message,
                       };
+
+                      fs._submitForm();
+
+                      // Cha_submitForm();
 
                       await googleSheetsAPI.insertCS([message_dashboard]);
                       Future<List<Chat>> msg = getDataFromGoogleSheet();

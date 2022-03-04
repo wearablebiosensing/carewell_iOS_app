@@ -56,7 +56,7 @@ class googleSheetsAPI {
       final firstRowUD = UsageDataModelGS.get_fields();
       final firstRowCS = CarewellChatModelGS.get_fields();
       final firstRowSU = SignUpModelGS.get_fields();
-      final firstRowSI = SignUpModelGS.get_fields();
+      // final firstRowSI = SignUpModelGS.get_fields();
       _initAssSheet!.values.insertRow(1, firstRow);
       _weeklyAssSheet!.values.insertRow(1, firstRowWA);
       _UsagedataSheet!.values.insertRow(1, firstRowUD);
