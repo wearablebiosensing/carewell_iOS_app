@@ -172,22 +172,43 @@ Container feed(
       child: Column(
         children: [
           Container(
-              height: MediaQuery.of(context).size.height * 0.1,
-              width: MediaQuery.of(context).size.width,
-              color: Colors.blue[900],
-              child: Align(
-                alignment: Alignment.center,
-                child: Text(
-                  isComment ? "Comments" : selection,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 25),
+            height: MediaQuery.of(context).size.height * 0.1,
+            width: MediaQuery.of(context).size.width,
+            padding: EdgeInsets.fromLTRB(8, 8, 0, 0),
+            child: Column(
+              children: [
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Container(
+                    child: Text(
+                      isComment ? "Comments" : selection,
+                      textAlign: TextAlign.left,
+                      style:
+                          TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                    ),
+                  ),
                 ),
-              )),
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Container(
+                    child: Text(
+                      "About : Post about the topic managing care.",
+                      textAlign: TextAlign.left,
+                      style: TextStyle(fontSize: 25, color: Colors.black54),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
           Container(
             height: MediaQuery.of(context).size.height * 0.73,
             width: MediaQuery.of(context).size.width,
             child: SingleChildScrollView(
               child: Column(children: [
+                Divider(
+                  color: Colors.black54,
+                ),
                 messageStream(_usersStream),
               ]),
             ),
