@@ -1,4 +1,4 @@
-import 'package:carewellapp/Chat%20Application/chatViews/expanded.dart';
+import 'package:carewellapp/Chat%20Application/chatViews/feed.dart';
 import 'package:carewellapp/Chat%20Application/chatViews/signin.dart';
 import 'package:carewellapp/main.dart';
 import 'package:carewellapp/navigation_elements/community.dart';

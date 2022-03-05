@@ -1,6 +1,6 @@
 import 'package:carewellapp/Chat%20Application/chatViews/chat_info.dart';
-import 'package:carewellapp/Chat%20Application/chatViews/expanded.dart';
 import 'package:carewellapp/Chat%20Application/chatViews/feed.dart';
+import 'package:carewellapp/Chat%20Application/chatViews/feed_widgets.dart';
 import 'package:carewellapp/Chat%20Application/chatViews/signup.dart';
 import 'package:carewellapp/Chat%20Application/chatViews/userinfo.dart';
 import 'package:carewellapp/Chat%20Application/widgets/widget.dart';

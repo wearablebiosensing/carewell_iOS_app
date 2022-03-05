@@ -1,5 +1,5 @@
-import 'package:carewellapp/Chat%20Application/chatViews/expanded.dart';
 import 'package:carewellapp/Chat%20Application/chatViews/feed.dart';
+import 'package:carewellapp/Chat%20Application/chatViews/feed_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:carewellapp/Chat%20Application/services/auth_services.dart';
 import 'package:carewellapp/firebase_options.dart';
