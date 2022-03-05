@@ -1,18 +1,10 @@
-import 'package:carewellapp/Chat%20Application/chatMain.dart';
+import 'package:carewellapp/Chat%20Application/chatViews/expanded.dart';
 import 'package:carewellapp/Chat%20Application/chatViews/feed.dart';
-import 'package:carewellapp/Chat%20Application/chatViews/signup.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import 'package:carewellapp/Chat%20Application/chatViews/signin.dart';
 import 'package:carewellapp/Chat%20Application/services/auth_services.dart';
 import 'package:carewellapp/firebase_options.dart';
-
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 import 'package:provider/provider.dart';
 
 void chatMain() async {

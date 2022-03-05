@@ -1,4 +1,5 @@
 import 'package:carewellapp/Chat%20Application/chatViews/chat_info.dart';
+import 'package:carewellapp/Chat%20Application/chatViews/expanded.dart';
 import 'package:carewellapp/Chat%20Application/chatViews/feed.dart';
 import 'package:carewellapp/Chat%20Application/chatViews/signup.dart';
 import 'package:carewellapp/Chat%20Application/chatViews/userinfo.dart';
@@ -114,7 +115,10 @@ class _SignInState extends State<SignIn> {
 
                             Navigator.pushReplacement(
                               context,
-                              MaterialPageRoute(builder: (context) => init_question_controller()),
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      //init_question_controller())
+                                      Feed()),
                             );
                           }
                         });

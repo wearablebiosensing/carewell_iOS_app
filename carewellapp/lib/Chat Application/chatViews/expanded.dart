@@ -5,97 +5,104 @@ import 'package:flutter/widgets.dart';
 
 import '../../main.dart';
 
-class Comments extends StatefulWidget {
-  const Comments({Key? key}) : super(key: key);
+class Feed extends StatefulWidget {
+  const Feed({Key? key}) : super(key: key);
 
   @override
-  _CommentsState createState() => _CommentsState();
+  _FeedState createState() => _FeedState();
 }
 
-class _CommentsState extends State<Comments> {
+class _FeedState extends State<Feed> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: Row(
       children: [
-        Column(children: [
-          Container(
-              color: Colors.blue[700],
-              height: MediaQuery.of(context).size.height * 0.923,
-              width: MediaQuery.of(context).size.width * 0.20,
-              child: ListView(
-                children: [
-                  ListTile(
-                    title: Text("General",
-                        style: TextStyle(
-                            color: Colors.white70,
-                            fontSize: 15 /*/ deviceTextScaleFactor + 2*/)),
-                    onTap: () async {
-                      setState(() {
-                        selection = "General";
-                        isComment = false;
-                      });
-                    },
-                  ),
-                  ListTile(
-                    title: Text("Social",
-                        style: TextStyle(
-                            color: Colors.white70,
-                            fontSize: 15 /* /  deviceTextScaleFactor + 2 */)),
-                    onTap: () async {
-                      setState(() {
-                        isComment = false;
-                        selection = "Social";
-                      });
-                    },
-                  ),
-                  ListTile(
-                    title: Text("Managing Care",
-                        style: TextStyle(
-                            color: Colors.white70,
-                            fontSize: 15 /*/ deviceTextScaleFactor + 2 */)),
-                    onTap: () async {
-                      setState(() {
-                        isComment = false;
-                        selection = "Managing Care";
-                      });
-                    },
-                  ),
-                  SizedBox(
-                    height: MediaQuery.of(context).size.height * 0.6,
-                  ),
-                  ListTile(
-                    title: Text("Notifications",
-                        style: TextStyle(
-                            color: Colors.white70,
-                            fontSize: 15 /*/ deviceTextScaleFactor + 2 */)),
-                    onTap: () async {
-                      isComment = false;
-                    },
-                  ),
-                  ListTile(
-                    title: Text("Sign Out",
-                        style: TextStyle(
-                            color: Colors.red[900],
-                            fontSize: 15 /*/ deviceTextScaleFactor + 2 */)),
-                    onTap: () async {
-                      isComment = false;
-                      var startManagingCare =
-                          DateTime.now().millisecondsSinceEpoch;
-                      //  onIndexChanged(2);
-                      appBarText = "Sign Out";
-                      var stopManagingCare =
-                          DateTime.now().millisecondsSinceEpoch;
-                      //  _signOut();
-                      Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(builder: (context) => dashboard()),
-                      );
-                    },
-                  ),
-                ],
-              )),
-        ]),
+        Expanded(
+          child: SingleChildScrollView(
+            child: Column(children: [
+              Container(
+                  //color: Colors.black,
+                  height: MediaQuery.of(context).size.height, // * 0.923,
+                  width: MediaQuery.of(context).size.width * 0.30,
+                  child: ListView(
+                    children: [
+                      Container(
+                        height: 25,
+                        color: Colors.black,
+                      ),
+                      Container(
+                        height: 50,
+                        child: ListTile(
+                          title: Text("Chat Topics",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize:
+                                      40 /*/ deviceTextScaleFactor + 2*/)),
+                          tileColor: Colors.black,
+                        ),
+                      ),
+                      Container(
+                        height: 25,
+                        color: Colors.black,
+                      ),
+                      ListTile(
+                        title: Text("General",
+                            style: TextStyle(
+                                color: Colors.white70,
+                                fontSize: 25 /*/ deviceTextScaleFactor + 2*/)),
+                        tileColor: selection == "General"
+                            ? Colors.blue[900]
+                            : Colors.black,
+                        onTap: () async {
+                          setState(() {
+                            isComment = false;
+                            selection = "General";
+                          });
+                        },
+                      ),
+                      ListTile(
+                        title: Text("Social",
+                            style: TextStyle(
+                                color: Colors.white70,
+                                fontSize:
+                                    25 /* /  deviceTextScaleFactor + 2 */)),
+                        tileColor: selection == "Social"
+                            ? Colors.blue[900]
+                            : Colors.black,
+                        onTap: () async {
+                          setState(() {
+                            isComment = false;
+                            selection = "Social";
+                          });
+                        },
+                      ),
+                      ListTile(
+                        title: Text("Managing Care",
+                            style: TextStyle(
+                                color: Colors.white70,
+                                fontSize: 25 /*/ deviceTextScaleFactor + 2 */)),
+                        tileColor: selection == "Managing Care"
+                            ? Colors.blue[900]
+                            : Colors.black,
+                        onTap: () async {
+                          setState(() {
+                            isComment = false;
+                            selection = "Managing Care";
+                          });
+                        },
+                      ),
+                      Container(
+                        height: MediaQuery.of(context).size.height,
+                        color: Colors.black,
+                      ),
+                    ],
+                  )),
+            ]),
+          ),
+        ),
         feed(context, getStream()),
       ],
     ));
