@@ -60,6 +60,7 @@ class _FeedState extends State<Feed> {
                           setState(() {
                             isComment = false;
                             selection = "General";
+                            about = 'Post about general topics.';
                           });
                         },
                       ),
@@ -76,6 +77,7 @@ class _FeedState extends State<Feed> {
                           setState(() {
                             isComment = false;
                             selection = "Social";
+                            about = 'Post about social topics.';
                           });
                         },
                       ),
@@ -91,6 +93,7 @@ class _FeedState extends State<Feed> {
                           setState(() {
                             isComment = false;
                             selection = "Managing Care";
+                            about = 'Post about managing care.';
                           });
                         },
                       ),
