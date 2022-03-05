@@ -1,16 +1,26 @@
 import 'dart:core';
 
 import 'package:carewellapp/cloud_models/google_sheets_usage_data.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:platform_device_id/platform_device_id.dart';
 import 'cloud_models/google_sheets.dart';
 
+import 'firebase_options.dart';
 import 'questionnaire/initial_questionnaire_controller.dart';
+
+import 'package:carewellapp/Chat%20Application/chatViews/signin.dart';
 
 var deviceID;
 Future main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
   WidgetsFlutterBinding.ensureInitialized();
   await googleSheetsAPI.init();
 
@@ -53,7 +63,8 @@ class _MyHomePageState extends State<MyHomePage> {
     // if (isMorning) {
     // If initial questionnaire is not complete
 
-    return init_question_controller();
+    //return init_question_controller();
+    return SignIn();
 
     // } else {
     //   return Text('Questionnaire Complete.');

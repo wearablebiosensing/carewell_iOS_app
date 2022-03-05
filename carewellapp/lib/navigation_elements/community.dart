@@ -1,4 +1,5 @@
 import 'package:carewellapp/Chat%20Application/chatMain.dart';
+import 'package:carewellapp/Chat%20Application/chatViews/feed.dart';
 import 'package:carewellapp/Chat%20Application/chatViews/signup.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -32,7 +33,7 @@ class AuthWrapper extends StatefulWidget {
 class _AuthWrapperState extends State<AuthWrapper> {
   @override
   Widget build(BuildContext context) {
-    return SignIn();
+    return Feed();
   }
 }
 
