@@ -34,23 +34,68 @@ StreamBuilder<QuerySnapshot> messageStream(
         children: snapshot.data!.docs.map((DocumentSnapshot document) {
           Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
 
-          return ListTile(
-            title: Text(data['message']),
-            subtitle: Text(
-                data['user'] + '          ' + data['time'].toDate().toString()),
-            onTap: () async {
-              if (isComment) {
-                return;
-              }
-              isComment = true;
-              post = document.id;
+          return Column(
+            children: [
+              Row(
+                children: [
+                  Text(
+                    ' ' + data["user"],
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 17,
+                    ),
+                  ),
+                  Text(
+                    '\n ' + data["time"].toDate().toString(),
+                    style: TextStyle(
+                      color: Colors.black54,
+                      fontSize: 10,
+                    ),
+                  )
+                ],
+              ),
+              ListTile(
+                title: Text(data['message']),
+                onTap: () async {
+                  if (isComment) {
+                    return;
+                  }
+                  isComment = true;
+                  post = document.id;
 
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => Feed()),
-              );
-              ;
-            },
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => Feed()),
+                  );
+                  ;
+                },
+              ),
+              Container(
+                //width: MediaQuery.of(context).size.width,
+                //padding: EdgeInsets.all(5.0),
+                alignment: Alignment.centerRight,
+                child: Row(
+                  children: [
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.6,
+                    ),
+                    Icon(
+                      Icons.comment,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(5.0),
+                    ),
+                    Icon(
+                      Icons.thumb_up,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(3.0),
+                    ),
+                    Text(data['likes'].toString())
+                  ],
+                ),
+              ),
+            ],
           );
         }).toList(),
       );
@@ -143,6 +188,7 @@ Container feed(
                         'message': message,
                         'time': new Timestamp.now(),
                         'user': username,
+                        'likes': 0,
                       });
                     } else {
                       FirebaseFirestore.instance
@@ -153,6 +199,7 @@ Container feed(
                         'message': message,
                         'time': new Timestamp.now(),
                         'user': username,
+                        'likes': 0,
                       });
                     }
                   }
