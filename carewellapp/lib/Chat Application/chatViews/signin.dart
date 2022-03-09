@@ -16,7 +16,7 @@ import 'package:firebase_core/firebase_core.dart';
 
 FirebaseAuth chatuser = FirebaseAuth.instance;
 String username = '';
-String email = 'Not actually signed in';
+String email = '';
 
 class SignIn extends StatefulWidget {
   const SignIn({Key? key}) : super(key: key);
@@ -81,7 +81,7 @@ class _SignInState extends State<SignIn> {
 
                 GestureDetector(
                   onTap: () async {
-                    final String email = emailTextEditingController.text.trim();
+                    email = emailTextEditingController.text.trim();
 
                     final String password =
                         passwordTextEditingController.text.trim();
@@ -139,10 +139,10 @@ class _SignInState extends State<SignIn> {
                           });
                         }); */
 
-                        FirebaseFirestore.instance
+                        /*  FirebaseFirestore.instance
                             .collection('Users')
                             .add({'username': email});
-                        username = email;
+                        username = email; */
                       }
                     }
                     // ChatRoom();
@@ -168,7 +168,7 @@ class _SignInState extends State<SignIn> {
 
                 GestureDetector(
                   onTap: () {
-                    final String email = emailTextEditingController.text.trim();
+                    email = emailTextEditingController.text.trim();
                     final String password =
                         passwordTextEditingController.text.trim();
 

@@ -76,18 +76,35 @@ StreamBuilder<QuerySnapshot> messageStream(
                 alignment: Alignment.centerRight,
                 child: Row(
                   children: [
-                    SizedBox(
+                    /*  SizedBox(
                       width: MediaQuery.of(context).size.width * 0.6,
-                    ),
+                    ), */
                     Icon(
                       Icons.comment,
                     ),
                     Padding(
                       padding: EdgeInsets.all(5.0),
                     ),
-                    Icon(
-                      Icons.thumb_up,
-                    ),
+                    checkIfLiked(document.id, data),
+                    /*   IconButton(
+                      icon: new Icon(Icons.thumb_up, color: Colors.white),
+                      onPressed: () {
+                        // color:
+                        print("The value of email is: " + email);
+                        FirebaseFirestore.instance
+                            .collection('Users')
+                            .doc(email)
+                            .collection("liked_posts")
+                            .add({
+                          'postid': document.id,
+                        });
+
+                        FirebaseFirestore.instance
+                            .collection(selection)
+                            .doc(document.id)
+                            .update({'likes': data['likes'] += 1});
+                      },
+                    ), */
                     Padding(
                       padding: EdgeInsets.all(3.0),
                     ),
@@ -232,4 +249,65 @@ Stream<QuerySnapshot> getStream() {
 
 Future<void> _signOut() async {
   await FirebaseAuth.instance.signOut();
+}
+
+bool liked = false;
+
+IconButton checkIfLiked(
+  String postID,
+  Map<String, dynamic> data,
+) {
+  print("HERE");
+  /* DocumentSnapshot doc = FirebaseFirestore.instance
+      .collection('Users')
+      .doc(email)
+      .collection('liked_posts')
+      .where('postid', isEqualTo: postID)
+      .get() as DocumentSnapshot; //Future<QuerySnapshot<Map<String, dynamic>>>; */
+  //print(doc);
+  if (liked) {
+    print("TRUE");
+    return IconButton(
+      icon: new Icon(Icons.thumb_up, color: Colors.green),
+      onPressed: () {
+        // color:
+
+        FirebaseFirestore.instance
+            .collection('Users')
+            .doc(email)
+            .collection("liked_posts")
+            .add({
+          'postid': postID,
+        });
+
+        FirebaseFirestore.instance
+            .collection(selection)
+            .doc(postID)
+            .update({'likes': data['likes'] -= 1});
+        liked = false;
+      },
+    );
+  } else {
+    print("False");
+    return IconButton(
+      icon: new Icon(Icons.thumb_up),
+      onPressed: () {
+        // color:
+
+        FirebaseFirestore.instance
+            .collection('Users')
+            .doc(email)
+            .collection("liked_posts")
+            .add({
+          'postid': postID,
+        });
+
+        FirebaseFirestore.instance
+            .collection(selection)
+            .doc(postID)
+            .update({'likes': data['likes'] += 1});
+        liked = true;
+      },
+    );
+  }
 }
