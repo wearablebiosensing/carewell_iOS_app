@@ -8,6 +8,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 String selection = 'General';
 String post = '';
@@ -38,6 +39,58 @@ StreamBuilder<QuerySnapshot> messageStream(
             children: [
               Row(
                 children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      border: Border(
+                        bottom: BorderSide(width: 1.0, color: Colors.black54),
+                      ),
+                    ),
+                    child: SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.27,
+                    ),
+                  ),
+                  Container(
+                      alignment: Alignment.center,
+                      width: MediaQuery.of(context).size.width * 0.16,
+                      height: MediaQuery.of(context).size.height * 0.03,
+                      //   padding: EdgeInsets.symmetric(vertical: 20),
+                      decoration: BoxDecoration(
+                          // ignore: prefer_const_constructors
+                          //gradient: LinearGradient(
+                          //blue color background
+                          //  colors: [Color(0xff007EF4), Color(0xff2A75BC)]),
+                          border: Border.all(color: Colors.black54),
+                          borderRadius: BorderRadius.circular(30)),
+                      child: Text(
+                        //  Header format below
+                        DateFormat('EEEE')
+                                .format(data["time"].toDate())
+                                .toString() +
+                            ', ' +
+                            DateFormat('MMMMd')
+                                .format(data["time"].toDate())
+                                .toString(),
+
+                        //  textAlign: TextAlign.justify,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 15,
+                        ),
+                      )),
+                  Container(
+                    decoration: BoxDecoration(
+                      border: Border(
+                        bottom: BorderSide(width: 1.0, color: Colors.black54),
+                      ),
+                    ),
+                    child: SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.27,
+                    ),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
                   Text(
                     ' ' + data["user"],
                     style: TextStyle(
@@ -46,7 +99,11 @@ StreamBuilder<QuerySnapshot> messageStream(
                     ),
                   ),
                   Text(
-                    '\n ' + data["time"].toDate().toString(),
+                    //  Header format below
+                    '\n ' +
+                        DateFormat('jm')
+                            .format(data["time"].toDate())
+                            .toString(),
                     style: TextStyle(
                       color: Colors.black54,
                       fontSize: 10,
@@ -76,9 +133,9 @@ StreamBuilder<QuerySnapshot> messageStream(
                 alignment: Alignment.centerRight,
                 child: Row(
                   children: [
-                    /*  SizedBox(
+                    SizedBox(
                       width: MediaQuery.of(context).size.width * 0.6,
-                    ), */
+                    ),
                     Icon(
                       Icons.comment,
                     ),
@@ -170,6 +227,9 @@ Container feed(
                 Divider(
                   color: Colors.black54,
                 ),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.02,
+                ),
                 messageStream(_usersStream),
               ]),
             ),
@@ -204,7 +264,7 @@ Container feed(
                       FirebaseFirestore.instance.collection(selection).add({
                         'message': message,
                         'time': new Timestamp.now(),
-                        'user': username,
+                        'user': email,
                         'likes': 0,
                       });
                     } else {

@@ -174,15 +174,14 @@ class _SignInState extends State<SignIn> {
 
                     if (email.isEmpty) {
                       print("Email is empty");
+                    } else if (password.isEmpty) {
+                      print("Password is empty");
                     } else {
-                      if (password.isEmpty) {
-                        print("Password is empty");
-                      } else {
-                        FirebaseFirestore.instance
-                            .collection('Users')
-                            .add({'username': email, 'password': password});
-                        username = email;
-                      }
+                      FirebaseFirestore.instance
+                          .collection('Users')
+                          .add({'username': email, 'password': password});
+                      username = email;
+                      print("LLLLLLLL" + username);
                     }
                   },
                   child: Container(
