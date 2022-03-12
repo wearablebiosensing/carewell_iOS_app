@@ -1,3 +1,5 @@
+//import 'dart:ffi';
+
 import 'package:carewellapp/Chat%20Application/chatViews/feed.dart';
 import 'package:carewellapp/Chat%20Application/chatViews/signin.dart';
 import 'package:carewellapp/main.dart';
@@ -14,6 +16,8 @@ String selection = 'General';
 String post = '';
 String about = 'Post about general topics.';
 bool isComment = false;
+
+List<String> dates = [];
 
 StreamBuilder<QuerySnapshot> messageStream(
     Stream<QuerySnapshot<Object?>> _usersStream) {
@@ -37,58 +41,62 @@ StreamBuilder<QuerySnapshot> messageStream(
 
           return Column(
             children: [
-              Row(
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      border: Border(
-                        bottom: BorderSide(width: 1.0, color: Colors.black54),
-                      ),
-                    ),
-                    child: SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.27,
-                    ),
-                  ),
-                  Container(
-                      alignment: Alignment.center,
-                      width: MediaQuery.of(context).size.width * 0.16,
-                      height: MediaQuery.of(context).size.height * 0.03,
-                      //   padding: EdgeInsets.symmetric(vertical: 20),
-                      decoration: BoxDecoration(
-                          // ignore: prefer_const_constructors
-                          //gradient: LinearGradient(
-                          //blue color background
-                          //  colors: [Color(0xff007EF4), Color(0xff2A75BC)]),
-                          border: Border.all(color: Colors.black54),
-                          borderRadius: BorderRadius.circular(30)),
-                      child: Text(
-                        //  Header format below
-                        DateFormat('EEEE')
-                                .format(data["time"].toDate())
-                                .toString() +
-                            ', ' +
-                            DateFormat('MMMMd')
-                                .format(data["time"].toDate())
-                                .toString(),
-
-                        //  textAlign: TextAlign.justify,
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 15,
+              !isInDates(data)
+                  ? Row(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            border: Border(
+                              bottom:
+                                  BorderSide(width: 1.0, color: Colors.black54),
+                            ),
+                          ),
+                          child: SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.27,
+                          ),
                         ),
-                      )),
-                  Container(
-                    decoration: BoxDecoration(
-                      border: Border(
-                        bottom: BorderSide(width: 1.0, color: Colors.black54),
-                      ),
-                    ),
-                    child: SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.27,
-                    ),
-                  ),
-                ],
-              ),
+                        Container(
+                            alignment: Alignment.center,
+                            width: MediaQuery.of(context).size.width * 0.16,
+                            height: MediaQuery.of(context).size.height * 0.03,
+                            //   padding: EdgeInsets.symmetric(vertical: 20),
+                            decoration: BoxDecoration(
+                                // ignore: prefer_const_constructors
+                                //gradient: LinearGradient(
+                                //blue color background
+                                //  colors: [Color(0xff007EF4), Color(0xff2A75BC)]),
+                                border: Border.all(color: Colors.black54),
+                                borderRadius: BorderRadius.circular(30)),
+                            child: Text(
+                              //  Header format below
+                              DateFormat('EEEE')
+                                      .format(data["time"].toDate())
+                                      .toString() +
+                                  ', ' +
+                                  DateFormat('MMMMd')
+                                      .format(data["time"].toDate())
+                                      .toString(),
+
+                              //  textAlign: TextAlign.justify,
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 15,
+                              ),
+                            )),
+                        Container(
+                          decoration: BoxDecoration(
+                            border: Border(
+                              bottom:
+                                  BorderSide(width: 1.0, color: Colors.black54),
+                            ),
+                          ),
+                          child: SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.27,
+                          ),
+                        ),
+                      ],
+                    )
+                  : Container(),
               Row(
                 children: [
                   Text(
@@ -280,7 +288,7 @@ Container feed(
                       });
                     }
                   }
-
+                  dates = [];
                   messageTextEditingController.clear();
                 },
               ),
@@ -307,6 +315,21 @@ Stream<QuerySnapshot> getStream() {
       .snapshots();
 }
 
+bool isInDates(Map<String, dynamic> data) {
+  String date = DateFormat('EEEE').format(data["time"].toDate()).toString() +
+      ', ' +
+      DateFormat('MMMMd').format(data["time"].toDate()).toString();
+
+  for (int i = 0; i < dates.length; i++) {
+    if (date == dates[i]) {
+      return true;
+    }
+  }
+  print("the length of dates is " + dates.length.toString());
+  dates.add(date);
+  return false;
+}
+
 Future<void> _signOut() async {
   await FirebaseAuth.instance.signOut();
 }
@@ -317,7 +340,7 @@ IconButton checkIfLiked(
   String postID,
   Map<String, dynamic> data,
 ) {
-  print("HERE");
+  //print("HERE");
 
   /* DocumentSnapshot doc = FirebaseFirestore.instance
       .collection('Users')
