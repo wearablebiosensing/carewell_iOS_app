@@ -273,7 +273,7 @@ Container feed(
                       // });
                       FirebaseFirestore.instance
                           .collection(selection)
-                          .doc(date)
+                          .doc("dates")
                           .collection(date)
                           .add({
                         'message': message,
@@ -312,6 +312,8 @@ Stream<QuerySnapshot> getStream() {
   if (isComment) {
     return FirebaseFirestore.instance
         .collection(selection)
+        .doc("dates")
+        .collection(date)
         .doc(post)
         .collection("comments")
         .orderBy('time')
@@ -319,7 +321,9 @@ Stream<QuerySnapshot> getStream() {
   }
   return FirebaseFirestore.instance
       .collection(selection)
-      .orderBy('time')
+      .doc("dates")
+      .collection(date)
+      //.orderBy('time')
       .snapshots();
 }
 
