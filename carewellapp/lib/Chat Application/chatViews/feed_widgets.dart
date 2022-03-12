@@ -15,6 +15,10 @@ String post = '';
 String about = 'Post about general topics.';
 bool isComment = false;
 
+String date = DateFormat('EEEE').format(Timestamp.now().toDate()).toString() +
+    ', ' +
+    DateFormat('MMMMd').format(Timestamp.now().toDate()).toString();
+
 StreamBuilder<QuerySnapshot> messageStream(
     Stream<QuerySnapshot<Object?>> _usersStream) {
   return StreamBuilder<QuerySnapshot>(
@@ -261,7 +265,17 @@ Container feed(
                     print("Message is empty");
                   } else {
                     if (!isComment) {
-                      FirebaseFirestore.instance.collection(selection).add({
+                      // FirebaseFirestore.instance.collection(selection).add({
+                      //   'message': message,
+                      //   'time': new Timestamp.now(),
+                      //   'user': email,
+                      //   'likes': 0,
+                      // });
+                      FirebaseFirestore.instance
+                          .collection(selection)
+                          .doc(date)
+                          .collection(date)
+                          .add({
                         'message': message,
                         'time': new Timestamp.now(),
                         'user': email,
@@ -270,6 +284,8 @@ Container feed(
                     } else {
                       FirebaseFirestore.instance
                           .collection(selection)
+                          .doc(date)
+                          .collection(date)
                           .doc(post)
                           .collection("comments")
                           .add({
