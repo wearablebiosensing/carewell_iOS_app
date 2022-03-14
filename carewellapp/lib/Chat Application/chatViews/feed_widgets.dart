@@ -21,6 +21,7 @@ List<String> dates = [];
 
 StreamBuilder<QuerySnapshot> messageStream(
     Stream<QuerySnapshot<Object?>> _usersStream) {
+  ScrollController listScrollController = ScrollController();
   return StreamBuilder<QuerySnapshot>(
     stream: _usersStream,
     builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -32,8 +33,17 @@ StreamBuilder<QuerySnapshot> messageStream(
         return Text("Loading");
       }
 
+      if (listScrollController.hasClients)
+        listScrollController
+            .jumpTo(listScrollController.position.maxScrollExtent);
+
+      // listScrollController.fullScroll(View.FOCUS_DOWN)
+
       return ListView(
+        //listScrollController.jumpTo(),
+
         // padding: EdgeInsets.all(8.0),
+        reverse: true,
         physics: NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         children: snapshot.data!.docs.map((DocumentSnapshot document) {
@@ -151,25 +161,6 @@ StreamBuilder<QuerySnapshot> messageStream(
                       padding: EdgeInsets.all(5.0),
                     ),
                     checkIfLiked(document.id, data),
-                    /*   IconButton(
-                      icon: new Icon(Icons.thumb_up, color: Colors.white),
-                      onPressed: () {
-                        // color:
-                        print("The value of email is: " + email);
-                        FirebaseFirestore.instance
-                            .collection('Users')
-                            .doc(email)
-                            .collection("liked_posts")
-                            .add({
-                          'postid': document.id,
-                        });
-
-                        FirebaseFirestore.instance
-                            .collection(selection)
-                            .doc(document.id)
-                            .update({'likes': data['likes'] += 1});
-                      },
-                    ), */
                     Padding(
                       padding: EdgeInsets.all(3.0),
                     ),
@@ -177,11 +168,134 @@ StreamBuilder<QuerySnapshot> messageStream(
                   ],
                 ),
               ),
+              Row(
+                children: [
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.16,
+                  ),
+                  //  commentStream(getCommentStream(document.id)),
+                ],
+              ),
             ],
           );
         }).toList(),
       );
     },
+  );
+}
+
+Column commentStream(Stream<QuerySnapshot<Object?>> _commentStream) {
+  return Column(
+    children: [
+      StreamBuilder<QuerySnapshot>(
+        stream: _commentStream,
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (snapshot.hasError) {
+            return Text('Something went wrong');
+          }
+
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Text("Loading");
+          }
+
+          return ListView(
+            // padding: EdgeInsets.all(8.0),
+            physics: NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            children: snapshot.data!.docs.map((DocumentSnapshot document) {
+              Map<String, dynamic> data =
+                  document.data()! as Map<String, dynamic>;
+
+              return Column(
+                children: [
+                  /*   !isInDates(data)
+                      ? Row(
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                border: Border(
+                                  bottom:
+                                      BorderSide(width: 1.0, color: Colors.black54),
+                                ),
+                              ),
+                              child: SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.27,
+                              ),
+                            ),
+                            Container(
+                                alignment: Alignment.center,
+                                width: MediaQuery.of(context).size.width * 0.16,
+                                height: MediaQuery.of(context).size.height * 0.03,
+                                //   padding: EdgeInsets.symmetric(vertical: 20),
+                                decoration: BoxDecoration(
+                                    // ignore: prefer_const_constructors
+                                    //gradient: LinearGradient(
+                                    //blue color background
+                                    //  colors: [Color(0xff007EF4), Color(0xff2A75BC)]),
+                                    border: Border.all(color: Colors.black54),
+                                    borderRadius: BorderRadius.circular(30)),
+                                child: Text(
+                                  //  Header format below
+                                  DateFormat('EEEE')
+                                          .format(data["time"].toDate())
+                                          .toString() +
+                                      ', ' +
+                                      DateFormat('MMMMd')
+                                          .format(data["time"].toDate())
+                                          .toString(),
+
+                                  //  textAlign: TextAlign.justify,
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 15,
+                                  ),
+                                )),
+                            Container(
+                              decoration: BoxDecoration(
+                                border: Border(
+                                  bottom:
+                                      BorderSide(width: 1.0, color: Colors.black54),
+                                ),
+                              ),
+                              child: SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.27,
+                              ),
+                            ),
+                          ],
+                        )
+                      : Container(), */
+                  Row(
+                    children: [
+                      Text(
+                        ' ' + data["user"],
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 17,
+                        ),
+                      ),
+                      Text(
+                        //  Header format below
+                        '\n ' +
+                            DateFormat('jm')
+                                .format(data["time"].toDate())
+                                .toString(),
+                        style: TextStyle(
+                          color: Colors.black54,
+                          fontSize: 10,
+                        ),
+                      )
+                    ],
+                  ),
+                  ListTile(
+                    title: Text(data['message']),
+                  ),
+                ],
+              );
+            }).toList(),
+          );
+        },
+      ),
+    ],
   );
 }
 
@@ -195,6 +309,9 @@ Container feed(
 
     //padding: EdgeInsets.all(5.0),
     child: SingleChildScrollView(
+      // scrollDirection: Axis.vertical,
+      // reverse: false,
+      //  physics: NeverScrollableScrollPhysics(),
       child: Column(
         children: [
           Container(
@@ -239,6 +356,7 @@ Container feed(
                   height: MediaQuery.of(context).size.height * 0.02,
                 ),
                 messageStream(_usersStream),
+                //  commentStream(_usersStream),
               ]),
             ),
           ),
@@ -315,6 +433,15 @@ Stream<QuerySnapshot> getStream() {
       .snapshots();
 }
 
+Stream<QuerySnapshot> getCommentStream(String id) {
+  return FirebaseFirestore.instance
+      .collection(selection)
+      .doc(id)
+      .collection("comments")
+      .orderBy('time')
+      .snapshots();
+}
+
 bool isInDates(Map<String, dynamic> data) {
   String date = DateFormat('EEEE').format(data["time"].toDate()).toString() +
       ', ' +
@@ -340,19 +467,64 @@ IconButton checkIfLiked(
   String postID,
   Map<String, dynamic> data,
 ) {
-  //print("HERE");
-
-  /* DocumentSnapshot doc = FirebaseFirestore.instance
-      .collection('Users')
-      .doc(email)
-      .collection('liked_posts')
-      .where('postid', isEqualTo: postID)
-      .get() as DocumentSnapshot; //Future<QuerySnapshot<Map<String, dynamic>>>; */
-  //print(doc);
   if (liked) {
     print("TRUE");
     return IconButton(
       icon: new Icon(Icons.thumb_up, color: Colors.green),
+      onPressed: () {
+        // color:
+        dates = [];
+        FirebaseFirestore.instance
+            .collection('Users')
+            .doc(email)
+            .collection("liked_posts")
+            .add({
+          'postid': postID,
+        });
+
+        FirebaseFirestore.instance
+            .collection(selection)
+            .doc(postID)
+            .update({'likes': data['likes'] -= 1});
+
+        liked = false;
+      },
+    );
+  } else {
+    print("False");
+    return IconButton(
+      icon: new Icon(Icons.thumb_up),
+      onPressed: () {
+        dates = [];
+        // color:
+
+        FirebaseFirestore.instance
+            .collection('Users')
+            .doc(email)
+            .collection("liked_posts")
+            .add({
+          'postid': postID,
+        });
+
+        FirebaseFirestore.instance
+            .collection(selection)
+            .doc(postID)
+            .update({'likes': data['likes'] += 1});
+        liked = true;
+      },
+    );
+  }
+}
+
+/*
+IconButton checkIfComment(
+  String postID,
+  Map<String, dynamic> data,
+) {
+  if (isComment) {
+    print("TRUE");
+    return IconButton(
+      icon: new Icon(Icons.comment, color: Colors.green),
       onPressed: () {
         // color:
 
@@ -374,7 +546,7 @@ IconButton checkIfLiked(
   } else {
     print("False");
     return IconButton(
-      icon: new Icon(Icons.thumb_up),
+      icon: new Icon(Icons.comment),
       onPressed: () {
         // color:
 
@@ -394,4 +566,4 @@ IconButton checkIfLiked(
       },
     );
   }
-}
+} */
