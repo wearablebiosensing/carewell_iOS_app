@@ -41,6 +41,7 @@ StreamBuilder<QuerySnapshot> messageStream(
 
       return ListView(
         //listScrollController.jumpTo(),
+        controller: listScrollController,
 
         // padding: EdgeInsets.all(8.0),
         reverse: true,
