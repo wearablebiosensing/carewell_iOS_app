@@ -26,6 +26,7 @@ class _FeedState extends State<Feed> {
                   height: MediaQuery.of(context).size.height, // * 0.923,
                   width: MediaQuery.of(context).size.width * 0.30,
                   child: ListView(
+                    physics: NeverScrollableScrollPhysics(),
                     children: [
                       Container(
                         height: 25,
