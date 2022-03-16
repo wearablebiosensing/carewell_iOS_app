@@ -14,7 +14,9 @@ class Feed extends StatefulWidget {
 
 class _FeedState extends State<Feed> {
   @override
+  // ScrollController listScrollController = ScrollController();
   Widget build(BuildContext context) {
+    dates = [];
     return Scaffold(
         body: Row(
       children: [

@@ -122,30 +122,8 @@ class _SignInState extends State<SignIn> {
                             );
                           }
                         });
-
-                        /* context
-                            .read<AuthService>()
-                            .login(email, password)
-                            .then((value) async {
-                          chatuser = FirebaseAuth.instance;
-
-                          await FirebaseFirestore.instance
-                              .collection('Users')
-                              .doc(chatuser.currentUser?.uid)
-                              .set({
-                            'uid': chatuser.currentUser?.uid,
-                            'email': email,
-                            'password': password,
-                          });
-                        }); */
-
-                        /*  FirebaseFirestore.instance
-                            .collection('Users')
-                            .add({'username': email});
-                        username = email; */
                       }
                     }
-                    // ChatRoom();
                   },
                   child: Container(
                     alignment: Alignment.center,

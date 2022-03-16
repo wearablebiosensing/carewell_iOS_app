@@ -21,7 +21,7 @@ List<String> dates = [];
 
 StreamBuilder<QuerySnapshot> messageStream(
     Stream<QuerySnapshot<Object?>> _usersStream) {
-  ScrollController listScrollController = ScrollController();
+  // ScrollController listScrollController = ScrollController();
   return StreamBuilder<QuerySnapshot>(
     stream: _usersStream,
     builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -32,18 +32,13 @@ StreamBuilder<QuerySnapshot> messageStream(
       if (snapshot.connectionState == ConnectionState.waiting) {
         return Text("Loading");
       }
-
-      if (listScrollController.hasClients)
-        listScrollController
-            .jumpTo(listScrollController.position.maxScrollExtent);
-
+      /* listScrollController.animateTo(
+          listScrollController.position.maxScrollExtent,
+          duration: Duration(milliseconds: 500),
+          curve: Curves.ease);*/
       // listScrollController.fullScroll(View.FOCUS_DOWN)
 
       return ListView(
-        //listScrollController.jumpTo(),
-        controller: listScrollController,
-
-        // padding: EdgeInsets.all(8.0),
         reverse: true,
         physics: NeverScrollableScrollPhysics(),
         shrinkWrap: true,
@@ -63,19 +58,14 @@ StreamBuilder<QuerySnapshot> messageStream(
                             ),
                           ),
                           child: SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.27,
+                            width: MediaQuery.of(context).size.width * 0.265,
                           ),
                         ),
                         Container(
                             alignment: Alignment.center,
                             width: MediaQuery.of(context).size.width * 0.16,
                             height: MediaQuery.of(context).size.height * 0.03,
-                            //   padding: EdgeInsets.symmetric(vertical: 20),
                             decoration: BoxDecoration(
-                                // ignore: prefer_const_constructors
-                                //gradient: LinearGradient(
-                                //blue color background
-                                //  colors: [Color(0xff007EF4), Color(0xff2A75BC)]),
                                 border: Border.all(color: Colors.black54),
                                 borderRadius: BorderRadius.circular(30)),
                             child: Text(
@@ -102,7 +92,7 @@ StreamBuilder<QuerySnapshot> messageStream(
                             ),
                           ),
                           child: SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.27,
+                            width: MediaQuery.of(context).size.width * 0.265,
                           ),
                         ),
                       ],
@@ -209,62 +199,6 @@ Column commentStream(Stream<QuerySnapshot<Object?>> _commentStream) {
 
               return Column(
                 children: [
-                  /*   !isInDates(data)
-                      ? Row(
-                          children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                border: Border(
-                                  bottom:
-                                      BorderSide(width: 1.0, color: Colors.black54),
-                                ),
-                              ),
-                              child: SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.27,
-                              ),
-                            ),
-                            Container(
-                                alignment: Alignment.center,
-                                width: MediaQuery.of(context).size.width * 0.16,
-                                height: MediaQuery.of(context).size.height * 0.03,
-                                //   padding: EdgeInsets.symmetric(vertical: 20),
-                                decoration: BoxDecoration(
-                                    // ignore: prefer_const_constructors
-                                    //gradient: LinearGradient(
-                                    //blue color background
-                                    //  colors: [Color(0xff007EF4), Color(0xff2A75BC)]),
-                                    border: Border.all(color: Colors.black54),
-                                    borderRadius: BorderRadius.circular(30)),
-                                child: Text(
-                                  //  Header format below
-                                  DateFormat('EEEE')
-                                          .format(data["time"].toDate())
-                                          .toString() +
-                                      ', ' +
-                                      DateFormat('MMMMd')
-                                          .format(data["time"].toDate())
-                                          .toString(),
-
-                                  //  textAlign: TextAlign.justify,
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 15,
-                                  ),
-                                )),
-                            Container(
-                              decoration: BoxDecoration(
-                                border: Border(
-                                  bottom:
-                                      BorderSide(width: 1.0, color: Colors.black54),
-                                ),
-                              ),
-                              child: SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.27,
-                              ),
-                            ),
-                          ],
-                        )
-                      : Container(), */
                   Row(
                     children: [
                       Text(
@@ -307,8 +241,7 @@ Container feed(
   return Container(
     height: MediaQuery.of(context).size.height,
     width: MediaQuery.of(context).size.width * 0.70,
-
-    //padding: EdgeInsets.all(5.0),
+    padding: EdgeInsets.all(5.0),
     child: SingleChildScrollView(
       // scrollDirection: Axis.vertical,
       // reverse: false,
@@ -316,7 +249,7 @@ Container feed(
       child: Column(
         children: [
           Container(
-            height: MediaQuery.of(context).size.height * 0.1,
+            height: MediaQuery.of(context).size.height * 0.12,
             width: MediaQuery.of(context).size.width,
             padding: EdgeInsets.fromLTRB(8, 8, 0, 0),
             child: Column(
@@ -346,8 +279,10 @@ Container feed(
             ),
           ),
           Container(
-            height: MediaQuery.of(context).size.height * 0.73,
+            height: MediaQuery.of(context).size.height * 0.64,
+            //height: MediaQuery.of(context).size.height * 0.5,
             width: MediaQuery.of(context).size.width,
+
             child: SingleChildScrollView(
               child: Column(children: [
                 Divider(
@@ -361,60 +296,133 @@ Container feed(
               ]),
             ),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Expanded(
-                child: TextField(
-                  controller: messageTextEditingController,
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: isComment ? "Add comment" : 'Enter a message',
+          Container(
+            height: MediaQuery.of(context).size.height * 0.22,
+            width: MediaQuery.of(context).size.width * 0.9,
+            padding: EdgeInsets.all(10.0),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(color: Colors.black54),
+            ),
+            child: Column(
+              //mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: TextField(
+                    minLines: 1,
+                    maxLines: 5, // allow user to enter 5 line in textfield
+                    keyboardType: TextInputType
+                        .multiline, // user keyboard will have a button to move cursor to next line
+
+                    controller: messageTextEditingController,
+                    decoration: InputDecoration(
+                      border: InputBorder.none,
+                      hintText:
+                          isComment ? " Add comment" : ' Type a message ...',
+                    ),
                   ),
                 ),
-              ),
-              SizedBox(
-                width: 25,
-              ),
-              FloatingActionButton(
-                child: const Icon(
-                  Icons.arrow_right_rounded,
-                  size: 50,
-                ),
-                onPressed: () {
-                  String message = messageTextEditingController.text.trim();
+                Row(
+                  children: [
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.62,
+                    ),
+                    GestureDetector(
+                      onTap: () async {
+                        String message =
+                            messageTextEditingController.text.trim();
 
-                  if (message.isEmpty) {
-                    print("Message is empty");
-                  } else {
-                    if (!isComment) {
-                      //Map<String, int> likedBy = {};
-                      List<String> likedBy = [];
-                      FirebaseFirestore.instance.collection(selection).add({
-                        'message': message,
-                        'time': new Timestamp.now(),
-                        'user': email,
-                        'likes': 0,
-                        'likedBy': likedBy,
-                      });
-                    } else {
-                      FirebaseFirestore.instance
-                          .collection(selection)
-                          .doc(post)
-                          .collection("comments")
-                          .add({
-                        'message': message,
-                        'time': new Timestamp.now(),
-                        'user': username,
-                        'likes': 0,
-                      });
-                    }
-                  }
-                  dates = [];
-                  messageTextEditingController.clear();
-                },
-              ),
-            ],
+                        if (message.isEmpty) {
+                          print("Message is empty");
+                        } else {
+                          if (!isComment) {
+                            //Map<String, int> likedBy = {};
+                            List<String> likedBy = [];
+                            FirebaseFirestore.instance
+                                .collection(selection)
+                                .add({
+                              'message': message,
+                              'time': new Timestamp.now(),
+                              'user': email,
+                              'likes': 0,
+                              'likedBy': likedBy,
+                            });
+                          } else {
+                            FirebaseFirestore.instance
+                                .collection(selection)
+                                .doc(post)
+                                .collection("comments")
+                                .add({
+                              'message': message,
+                              'time': new Timestamp.now(),
+                              'user': username,
+                              'likes': 0,
+                            });
+                          }
+                        }
+                        dates = [];
+                        messageTextEditingController.clear();
+                      },
+                      child: Container(
+                        alignment: Alignment.center,
+                        width: MediaQuery.of(context).size.width * 0.05,
+                        padding: EdgeInsets.all(8.0),
+                        decoration: BoxDecoration(
+                            // ignore: prefer_const_constructors
+                            color: Colors.black,
+                            borderRadius: BorderRadius.circular(5)),
+                        child: Text("Post",
+                            style: new TextStyle(
+                                color: Colors.white, fontSize: 14)),
+                      ),
+                    ),
+
+/*
+                    FloatingActionButton(
+                      child: const Icon(
+                        Icons.arrow_right_rounded,
+                        size: 50,
+                      ),
+                      onPressed: () {
+                        String message =
+                            messageTextEditingController.text.trim();
+
+                        if (message.isEmpty) {
+                          print("Message is empty");
+                        } else {
+                          if (!isComment) {
+                            //Map<String, int> likedBy = {};
+                            List<String> likedBy = [];
+                            FirebaseFirestore.instance
+                                .collection(selection)
+                                .add({
+                              'message': message,
+                              'time': new Timestamp.now(),
+                              'user': email,
+                              'likes': 0,
+                              'likedBy': likedBy,
+                            });
+                          } else {
+                            FirebaseFirestore.instance
+                                .collection(selection)
+                                .doc(post)
+                                .collection("comments")
+                                .add({
+                              'message': message,
+                              'time': new Timestamp.now(),
+                              'user': username,
+                              'likes': 0,
+                            });
+                          }
+                        }
+                        dates = [];
+                        messageTextEditingController.clear();
+                      },
+                    ), */
+                  ],
+                ),
+              ],
+            ),
           )
         ],
       ),
