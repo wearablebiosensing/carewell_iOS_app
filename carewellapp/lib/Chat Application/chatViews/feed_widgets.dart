@@ -388,11 +388,14 @@ Container feed(
                     print("Message is empty");
                   } else {
                     if (!isComment) {
+                      //Map<String, int> likedBy = {};
+                      List<String> likedBy = [];
                       FirebaseFirestore.instance.collection(selection).add({
                         'message': message,
                         'time': new Timestamp.now(),
                         'user': email,
                         'likes': 0,
+                        'likedBy': likedBy,
                       });
                     } else {
                       FirebaseFirestore.instance
@@ -464,57 +467,120 @@ Future<void> _signOut() async {
 
 bool liked = false;
 
-IconButton checkIfLiked(
+Widget checkIfLiked(
   String postID,
   Map<String, dynamic> data,
 ) {
-  if (liked) {
-    print("TRUE");
+  //List<String> temp = [data["likedBy"][0]];
+  if (data["likedBy"].contains(email)) {
     return IconButton(
       icon: new Icon(Icons.thumb_up, color: Colors.green),
       onPressed: () {
         // color:
         dates = [];
-        FirebaseFirestore.instance
-            .collection('Users')
-            .doc(email)
-            .collection("liked_posts")
-            .add({
-          'postid': postID,
-        });
 
         FirebaseFirestore.instance
             .collection(selection)
             .doc(postID)
             .update({'likes': data['likes'] -= 1});
 
-        liked = false;
-      },
-    );
-  } else {
-    print("False");
-    return IconButton(
-      icon: new Icon(Icons.thumb_up),
-      onPressed: () {
-        dates = [];
-        // color:
+        List<String> temp = [];
+        int len = data["likedBy"].length;
 
-        FirebaseFirestore.instance
-            .collection('Users')
-            .doc(email)
-            .collection("liked_posts")
-            .add({
-          'postid': postID,
-        });
+        for (int i = 0; i < len; i++) {
+          temp.add(data["likedBy"][i]);
+        }
+
+        temp.remove(email);
 
         FirebaseFirestore.instance
             .collection(selection)
             .doc(postID)
-            .update({'likes': data['likes'] += 1});
-        liked = true;
+            .update({'likedBy': temp});
       },
     );
   }
+
+  return IconButton(
+    icon: new Icon(Icons.thumb_up),
+    onPressed: () {
+      dates = [];
+
+      FirebaseFirestore.instance
+          .collection(selection)
+          .doc(postID)
+          .update({'likes': data['likes'] += 1});
+
+      List<String> temp = [];
+      int len = data["likedBy"].length;
+
+      for (int i = 0; i < len; i++) {
+        temp.add(data["likedBy"][i]);
+      }
+
+      temp.add(email);
+
+      FirebaseFirestore.instance
+          .collection(selection)
+          .doc(postID)
+          .update({'likedBy': temp});
+
+      //data["likedBy"].add("Tyler");
+    },
+  );
+
+  /*FirebaseFirestore.instance
+      .collection(selection)
+      .doc(postID)
+      .get()
+      .then((DocumentSnapshot doc) {
+    if (doc["likedBy"].contains("lebron")) {
+      print(email + " liked this post");
+      return IconButton(
+        icon: new Icon(Icons.thumb_up, color: Colors.green),
+        onPressed: () {
+          // color:
+          dates = [];
+
+          FirebaseFirestore.instance
+              .collection(selection)
+              .doc(postID)
+              .update({'likes': data['likes'] -= 1});
+
+          List<String> newLikedBy = data["likedBy"];
+          newLikedBy.add("lebron");
+
+          FirebaseFirestore.instance
+              .collection(selection)
+              .doc(postID)
+              .update({'likedBy': newLikedBy});
+
+          liked = false;
+        },
+      );
+    }
+    print(email + "did not like this post");
+  });
+
+  // return IconButton(
+  //   icon: new Icon(Icons.thumb_up),
+  //   onPressed: () {
+  //     dates = [];
+
+  //     FirebaseFirestore.instance
+  //         .collection(selection)
+  //         .doc(postID)
+  //         .update({'likes': data['likes'] += 1});
+
+  //     FirebaseFirestore.instance
+  //         .collection(selection)
+  //         .doc(postID)
+  //         .update({'likedBy': data['likedBy'][email] = 1});
+
+  //     liked = true;
+  //   },
+  // );
+*/
 }
 
 /*
