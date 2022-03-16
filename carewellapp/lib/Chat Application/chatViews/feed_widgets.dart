@@ -279,7 +279,7 @@ Container feed(
             ),
           ),
           Container(
-            height: MediaQuery.of(context).size.height * 0.64,
+            height: MediaQuery.of(context).size.height * 0.57,
             //height: MediaQuery.of(context).size.height * 0.5,
             width: MediaQuery.of(context).size.width,
 
@@ -297,7 +297,7 @@ Container feed(
             ),
           ),
           Container(
-            height: MediaQuery.of(context).size.height * 0.22,
+            height: MediaQuery.of(context).size.height * 0.19,
             width: MediaQuery.of(context).size.width * 0.9,
             padding: EdgeInsets.all(10.0),
             decoration: BoxDecoration(

@@ -114,12 +114,12 @@ class _SignInState extends State<SignIn> {
                             print('User is signed in!');
 
                             Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      //init_question_controller())
-                                      Feed()),
-                            );
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        init_question_controller())
+                                //Keeo this for testing purposes to skio the questionaire Feed()),
+                                );
                           }
                         });
                       }
