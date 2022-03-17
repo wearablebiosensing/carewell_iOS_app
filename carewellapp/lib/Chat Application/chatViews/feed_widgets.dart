@@ -127,6 +127,7 @@ StreamBuilder<QuerySnapshot> messageStream(
                     return;
                   }
                   isComment = true;
+                  about = "Leave a comment";
                   post = document.id;
 
                   Navigator.pushReplacement(
