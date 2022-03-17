@@ -251,7 +251,7 @@ Container feed(
           Container(
             height: MediaQuery.of(context).size.height * 0.12,
             width: MediaQuery.of(context).size.width,
-            padding: EdgeInsets.fromLTRB(8, 8, 0, 0),
+            padding: EdgeInsets.fromLTRB(6, 8, 0, 0),
             child: Column(
               children: [
                 Align(
@@ -297,9 +297,9 @@ Container feed(
             ),
           ),
           Container(
-            height: MediaQuery.of(context).size.height * 0.19,
+            height: MediaQuery.of(context).size.height * 0.21,
             width: MediaQuery.of(context).size.width * 0.9,
-            padding: EdgeInsets.all(10.0),
+            padding: EdgeInsets.all(5.0),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               border: Border.all(color: Colors.black54),
@@ -348,6 +348,7 @@ Container feed(
                               'likedBy': likedBy,
                             });
                           } else {
+                            List<String> likedBy = [];
                             FirebaseFirestore.instance
                                 .collection(selection)
                                 .doc(post)
@@ -355,8 +356,9 @@ Container feed(
                                 .add({
                               'message': message,
                               'time': new Timestamp.now(),
-                              'user': username,
+                              'user': email,
                               'likes': 0,
+                              'likedBy': likedBy,
                             });
                           }
                         }
@@ -479,6 +481,9 @@ Widget checkIfLiked(
   String postID,
   Map<String, dynamic> data,
 ) {
+  if (isComment) {
+    return Container();
+  }
   //List<String> temp = [data["likedBy"][0]];
   if (data["likedBy"].contains(email)) {
     return IconButton(
