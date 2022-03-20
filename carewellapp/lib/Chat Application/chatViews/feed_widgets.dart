@@ -18,6 +18,10 @@ String about = 'Post about general topics.';
 bool isComment = false;
 
 List<String> dates = [];
+String currentDate =
+    DateFormat('EEEE').format(new Timestamp.now().toDate()).toString() +
+        ', ' +
+        DateFormat('MMMMd').format(new Timestamp.now().toDate()).toString();
 
 StreamBuilder<QuerySnapshot> messageStream(
     Stream<QuerySnapshot<Object?>> _usersStream) {
@@ -68,22 +72,31 @@ StreamBuilder<QuerySnapshot> messageStream(
                             decoration: BoxDecoration(
                                 border: Border.all(color: Colors.black54),
                                 borderRadius: BorderRadius.circular(30)),
-                            child: Text(
-                              //  Header format below
-                              DateFormat('EEEE')
-                                      .format(data["time"].toDate())
-                                      .toString() +
-                                  ', ' +
-                                  DateFormat('MMMMd')
-                                      .format(data["time"].toDate())
-                                      .toString(),
+                            child: DateFormat('EEEE')
+                                            .format(data["time"].toDate())
+                                            .toString() +
+                                        ', ' +
+                                        DateFormat('MMMMd')
+                                            .format(data["time"].toDate())
+                                            .toString() ==
+                                    currentDate
+                                ? Text("Today")
+                                : Text(
+                                    //  Header format below
+                                    DateFormat('EEEE')
+                                            .format(data["time"].toDate())
+                                            .toString() +
+                                        ', ' +
+                                        DateFormat('MMMMd')
+                                            .format(data["time"].toDate())
+                                            .toString(),
 
-                              //  textAlign: TextAlign.justify,
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 15,
-                              ),
-                            )),
+                                    //  textAlign: TextAlign.justify,
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 15,
+                                    ),
+                                  )),
                         Container(
                           decoration: BoxDecoration(
                             border: Border(
