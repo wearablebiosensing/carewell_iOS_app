@@ -14,7 +14,7 @@ class Feed extends StatefulWidget {
 
 class _FeedState extends State<Feed> {
   @override
-  // ScrollController listScrollController = ScrollController();
+  ScrollController listScrollController = ScrollController();
   Widget build(BuildContext context) {
     dates = [];
     return Scaffold(
@@ -109,7 +109,7 @@ class _FeedState extends State<Feed> {
             ]),
           ),
         ),
-        feed(context, getStream()),
+        feed(context, getStream(), listScrollController),
       ],
     ));
   }

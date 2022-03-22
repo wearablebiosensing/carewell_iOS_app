@@ -43,144 +43,147 @@ StreamBuilder<QuerySnapshot> messageStream(
       // listScrollController.fullScroll(View.FOCUS_DOWN)
 
       return ListView(
-        reverse: true,
+        reverse: false,
         physics: NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         children: snapshot.data!.docs.map((DocumentSnapshot document) {
           Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
 
-          return Column(
-            children: [
-              !isInDates(data)
-                  ? Row(
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            border: Border(
-                              bottom:
-                                  BorderSide(width: 1.0, color: Colors.black54),
-                            ),
-                          ),
-                          child: SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.265,
-                          ),
-                        ),
-                        Container(
-                            alignment: Alignment.center,
-                            width: MediaQuery.of(context).size.width * 0.16,
-                            height: MediaQuery.of(context).size.height * 0.03,
+          return SingleChildScrollView(
+            // reverse: true,
+            child: Column(
+              children: [
+                !isInDates(data)
+                    ? Row(
+                        children: [
+                          Container(
                             decoration: BoxDecoration(
-                                border: Border.all(color: Colors.black54),
-                                borderRadius: BorderRadius.circular(30)),
-                            child: DateFormat('EEEE')
-                                            .format(data["time"].toDate())
-                                            .toString() +
-                                        ', ' +
-                                        DateFormat('MMMMd')
-                                            .format(data["time"].toDate())
-                                            .toString() ==
-                                    currentDate
-                                ? Text("Today")
-                                : Text(
-                                    //  Header format below
-                                    DateFormat('EEEE')
-                                            .format(data["time"].toDate())
-                                            .toString() +
-                                        ', ' +
-                                        DateFormat('MMMMd')
-                                            .format(data["time"].toDate())
-                                            .toString(),
-
-                                    //  textAlign: TextAlign.justify,
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 15,
-                                    ),
-                                  )),
-                        Container(
-                          decoration: BoxDecoration(
-                            border: Border(
-                              bottom:
-                                  BorderSide(width: 1.0, color: Colors.black54),
+                              border: Border(
+                                bottom: BorderSide(
+                                    width: 1.0, color: Colors.black54),
+                              ),
+                            ),
+                            child: SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.265,
                             ),
                           ),
-                          child: SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.265,
-                          ),
-                        ),
-                      ],
-                    )
-                  : Container(),
-              Row(
-                children: [
-                  Text(
-                    ' ' + data["user"],
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 17,
-                    ),
-                  ),
-                  Text(
-                    //  Header format below
-                    '\n ' +
-                        DateFormat('jm')
-                            .format(data["time"].toDate())
-                            .toString(),
-                    style: TextStyle(
-                      color: Colors.black54,
-                      fontSize: 10,
-                    ),
-                  )
-                ],
-              ),
-              ListTile(
-                title: Text(data['message']),
-                onTap: () async {
-                  if (isComment) {
-                    return;
-                  }
-                  isComment = true;
-                  post = document.id;
+                          Container(
+                              alignment: Alignment.center,
+                              width: MediaQuery.of(context).size.width * 0.16,
+                              height: MediaQuery.of(context).size.height * 0.03,
+                              decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.black54),
+                                  borderRadius: BorderRadius.circular(30)),
+                              child: DateFormat('EEEE')
+                                              .format(data["time"].toDate())
+                                              .toString() +
+                                          ', ' +
+                                          DateFormat('MMMMd')
+                                              .format(data["time"].toDate())
+                                              .toString() ==
+                                      currentDate
+                                  ? Text("Today")
+                                  : Text(
+                                      //  Header format below
+                                      DateFormat('EEEE')
+                                              .format(data["time"].toDate())
+                                              .toString() +
+                                          ', ' +
+                                          DateFormat('MMMMd')
+                                              .format(data["time"].toDate())
+                                              .toString(),
 
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (context) => Feed()),
-                  );
-                  ;
-                },
-              ),
-              Container(
-                //width: MediaQuery.of(context).size.width,
-                //padding: EdgeInsets.all(5.0),
-                alignment: Alignment.centerRight,
-                child: Row(
+                                      //  textAlign: TextAlign.justify,
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 15,
+                                      ),
+                                    )),
+                          Container(
+                            decoration: BoxDecoration(
+                              border: Border(
+                                bottom: BorderSide(
+                                    width: 1.0, color: Colors.black54),
+                              ),
+                            ),
+                            child: SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.265,
+                            ),
+                          ),
+                        ],
+                      )
+                    : Container(),
+                Row(
                   children: [
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.6,
+                    Text(
+                      ' ' + data["user"],
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 17,
+                      ),
                     ),
-                    Icon(
-                      Icons.comment,
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(5.0),
-                    ),
-                    checkIfLiked(document.id, data),
-                    Padding(
-                      padding: EdgeInsets.all(3.0),
-                    ),
-                    Text(data['likes'].toString())
+                    Text(
+                      //  Header format below
+                      '\n ' +
+                          DateFormat('jm')
+                              .format(data["time"].toDate())
+                              .toString(),
+                      style: TextStyle(
+                        color: Colors.black54,
+                        fontSize: 10,
+                      ),
+                    )
                   ],
                 ),
-              ),
-              Row(
-                children: [
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.16,
+                ListTile(
+                  title: Text(data['message']),
+                  onTap: () async {
+                    if (isComment) {
+                      return;
+                    }
+                    isComment = true;
+                    post = document.id;
+
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => Feed()),
+                    );
+                    ;
+                  },
+                ),
+                Container(
+                  //width: MediaQuery.of(context).size.width,
+                  //padding: EdgeInsets.all(5.0),
+                  alignment: Alignment.centerRight,
+                  child: Row(
+                    children: [
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.6,
+                      ),
+                      Icon(
+                        Icons.comment,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(5.0),
+                      ),
+                      checkIfLiked(document.id, data),
+                      Padding(
+                        padding: EdgeInsets.all(3.0),
+                      ),
+                      Text(data['likes'].toString())
+                    ],
                   ),
-                  //  commentStream(getCommentStream(document.id)),
-                ],
-              ),
-            ],
+                ),
+                Row(
+                  children: [
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.16,
+                    ),
+                    //  commentStream(getCommentStream(document.id)),
+                  ],
+                ),
+              ],
+            ),
           );
         }).toList(),
       );
@@ -248,7 +251,9 @@ Column commentStream(Stream<QuerySnapshot<Object?>> _commentStream) {
 }
 
 Container feed(
-    BuildContext context, Stream<QuerySnapshot<Object?>> _usersStream) {
+    BuildContext context,
+    Stream<QuerySnapshot<Object?>> _usersStream,
+    ScrollController listScrollController) {
   TextEditingController messageTextEditingController =
       new TextEditingController();
   return Container(
@@ -257,7 +262,7 @@ Container feed(
     padding: EdgeInsets.all(5.0),
     child: SingleChildScrollView(
       // scrollDirection: Axis.vertical,
-      // reverse: false,
+
       //  physics: NeverScrollableScrollPhysics(),
       child: Column(
         children: [
