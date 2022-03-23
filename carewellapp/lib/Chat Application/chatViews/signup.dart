@@ -1,7 +1,8 @@
 import 'package:carewellapp/Chat%20Application/chatViews/chat_info.dart';
-import 'package:carewellapp/Chat%20Application/chatViews/feed.dart';
+import 'package:carewellapp/Chat%20Application/chatViews/feed_widgets.dart';
 import 'package:carewellapp/Chat%20Application/chatViews/signin.dart';
 import 'package:carewellapp/Chat%20Application/widgets/widget.dart';
+import 'package:carewellapp/questionnaire/initial_questionnaire_controller.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
@@ -128,7 +129,9 @@ class _SignUpState extends State<SignUp> {
 
                             Navigator.pushReplacement(
                               context,
-                              MaterialPageRoute(builder: (context) => Feed()),
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      init_question_controller()),
                             );
                           }
                         });
