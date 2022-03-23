@@ -5,6 +5,8 @@ import 'package:flutter/widgets.dart';
 
 import '../../main.dart';
 
+List<String> messageList = [];
+
 class Feed extends StatefulWidget {
   const Feed({Key? key}) : super(key: key);
 
@@ -17,6 +19,7 @@ class _FeedState extends State<Feed> {
   ScrollController listScrollController = ScrollController();
   Widget build(BuildContext context) {
     dates = [];
+
     return Scaffold(
         body: Row(
       children: [

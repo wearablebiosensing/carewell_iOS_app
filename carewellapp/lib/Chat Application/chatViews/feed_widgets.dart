@@ -2,6 +2,7 @@
 
 import 'package:carewellapp/Chat%20Application/chatViews/feed.dart';
 import 'package:carewellapp/Chat%20Application/chatViews/signin.dart';
+//import 'package:carewellapp/Chat%20Application/chatViews/signup.dart';
 import 'package:carewellapp/main.dart';
 import 'package:carewellapp/navigation_elements/community.dart';
 import 'package:carewellapp/navigation_elements/dashboard.dart';
@@ -16,8 +17,8 @@ String selection = 'General';
 String post = '';
 String about = 'Post about general topics.';
 bool isComment = false;
-
 List<String> dates = [];
+
 String currentDate =
     DateFormat('EEEE').format(new Timestamp.now().toDate()).toString() +
         ', ' +
@@ -25,6 +26,8 @@ String currentDate =
 
 StreamBuilder<QuerySnapshot> messageStream(
     Stream<QuerySnapshot<Object?>> _usersStream) {
+  //List<String> messages = messageStream2(_usersStream);
+
   // ScrollController listScrollController = ScrollController();
   return StreamBuilder<QuerySnapshot>(
     stream: _usersStream,
@@ -48,6 +51,10 @@ StreamBuilder<QuerySnapshot> messageStream(
         shrinkWrap: true,
         children: snapshot.data!.docs.map((DocumentSnapshot document) {
           Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
+
+          messageList.add(data["message"].toString());
+
+          //  print(messageList[messageList.length - 1]);
 
           return SingleChildScrollView(
             // reverse: true,
@@ -659,4 +666,184 @@ IconButton checkIfComment(
       },
     );
   }
+} */
+
+List<String> messageStream2(Stream<QuerySnapshot<Object?>> _usersStream) {
+  //print("HELLO");
+  List<String> messageList = [];
+  // ScrollController listScrollController = ScrollController();
+  StreamBuilder<QuerySnapshot>(
+      stream: _usersStream,
+      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+        if (snapshot.hasError) {
+          print("Here1");
+          return Text("error");
+        }
+
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          print("Here2");
+          return Text("Loading");
+        }
+
+        snapshot.data!.docs.map((DocumentSnapshot document) {
+          print("HERE4");
+          Map<String, dynamic> data = document.data()! as Map<String, dynamic>;
+
+          print("Here3");
+          for (var message in data.values) {
+            messageList.add(message.toString());
+            print(message);
+          }
+        });
+
+        return Text("Hello");
+      });
+  print("HELLO5");
+  return messageList;
+}
+
+
+
+        
+      
+
+
+         
+          // reverse: true,
+   /*       child:
+          Column(
+            children: [
+              !isInDates(data)
+                  ? Row(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            border: Border(
+                              bottom:
+                                  BorderSide(width: 1.0, color: Colors.black54),
+                            ),
+                          ),
+                          child: SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.265,
+                          ),
+                        ),
+                        Container(
+                            alignment: Alignment.center,
+                            width: MediaQuery.of(context).size.width * 0.16,
+                            height: MediaQuery.of(context).size.height * 0.03,
+                            decoration: BoxDecoration(
+                                border: Border.all(color: Colors.black54),
+                                borderRadius: BorderRadius.circular(30)),
+                            child: DateFormat('EEEE')
+                                            .format(data["time"].toDate())
+                                            .toString() +
+                                        ', ' +
+                                        DateFormat('MMMMd')
+                                            .format(data["time"].toDate())
+                                            .toString() ==
+                                    currentDate
+                                ? Text("Today")
+                                : Text(
+                                    //  Header format below
+                                    DateFormat('EEEE')
+                                            .format(data["time"].toDate())
+                                            .toString() +
+                                        ', ' +
+                                        DateFormat('MMMMd')
+                                            .format(data["time"].toDate())
+                                            .toString(),
+
+                                    //  textAlign: TextAlign.justify,
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 15,
+                                    ),
+                                  )),
+                        Container(
+                          decoration: BoxDecoration(
+                            border: Border(
+                              bottom:
+                                  BorderSide(width: 1.0, color: Colors.black54),
+                            ),
+                          ),
+                          child: SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.265,
+                          ),
+                        ),
+                      ],
+                    )
+                  : Container(),
+              Row(
+                children: [
+                  Text(
+                    ' ' + data["user"],
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 17,
+                    ),
+                  ),
+                  Text(
+                    //  Header format below
+                    '\n ' +
+                        DateFormat('jm')
+                            .format(data["time"].toDate())
+                            .toString(),
+                    style: TextStyle(
+                      color: Colors.black54,
+                      fontSize: 10,
+                    ),
+                  )
+                ],
+              ),
+              ListTile(
+                title: Text(data['message']),
+                onTap: () async {
+                  if (isComment) {
+                    return;
+                  }
+                  isComment = true;
+                  post = document.id;
+
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => Feed()),
+                  );
+                  ;
+                },
+              ),
+              Container(
+                //width: MediaQuery.of(context).size.width,
+                //padding: EdgeInsets.all(5.0),
+                alignment: Alignment.centerRight,
+                child: Row(
+                  children: [
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.6,
+                    ),
+                    Icon(
+                      Icons.comment,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(5.0),
+                    ),
+                    checkIfLiked(document.id, data),
+                    Padding(
+                      padding: EdgeInsets.all(3.0),
+                    ),
+                    Text(data['likes'].toString())
+                  ],
+                ),
+              ),
+              Row(
+                children: [
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width * 0.16,
+                  ),
+                  //  commentStream(getCommentStream(document.id)),
+                ],
+              ),
+            ],
+          );
+        }).toList();
+      });
 } */
