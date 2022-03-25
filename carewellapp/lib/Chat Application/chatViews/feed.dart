@@ -108,7 +108,7 @@ class _FeedState extends State<Feed> {
                             style: TextStyle(
                                 color: Colors.white70,
                                 fontSize: 25 /*/ deviceTextScaleFactor + 2 */)),
-                        tileColor: selection == "Care Options / Transitions"
+                        tileColor: selection == "Care Options - Transitions"
                             ? Colors.blue[900]
                             : Colors.black,
                         onTap: () async {
