@@ -100,26 +100,25 @@ class _SignInState extends State<SignIn> {
                                 .instance
                                 .signInWithEmailAndPassword(
                                     email: email, password: password);
+
+                            if (user == null) {
+                              print('User is currently signed out!');
+                            } else {
+                              print('User is signed in!');
+
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        init_question_controller() /*Feed()*/),
+                              );
+                            }
                           } on FirebaseAuthException catch (e) {
                             if (e.code == 'user-not-found') {
                               print('No user found for that email.');
                             } else if (e.code == 'wrong-password') {
                               print('Wrong password provided for that user.');
                             }
-                          }
-
-                          if (user == null) {
-                            print('User is currently signed out!');
-                          } else {
-                            print('User is signed in!');
-
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      //init_question_controller())
-                                      Feed()),
-                            );
                           }
                         });
                       }

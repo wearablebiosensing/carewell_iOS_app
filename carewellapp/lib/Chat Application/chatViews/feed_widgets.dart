@@ -401,49 +401,6 @@ Container feed(
                                 color: Colors.white, fontSize: 14)),
                       ),
                     ),
-
-/*
-                    FloatingActionButton(
-                      child: const Icon(
-                        Icons.arrow_right_rounded,
-                        size: 50,
-                      ),
-                      onPressed: () {
-                        String message =
-                            messageTextEditingController.text.trim();
-
-                        if (message.isEmpty) {
-                          print("Message is empty");
-                        } else {
-                          if (!isComment) {
-                            //Map<String, int> likedBy = {};
-                            List<String> likedBy = [];
-                            FirebaseFirestore.instance
-                                .collection(selection)
-                                .add({
-                              'message': message,
-                              'time': new Timestamp.now(),
-                              'user': email,
-                              'likes': 0,
-                              'likedBy': likedBy,
-                            });
-                          } else {
-                            FirebaseFirestore.instance
-                                .collection(selection)
-                                .doc(post)
-                                .collection("comments")
-                                .add({
-                              'message': message,
-                              'time': new Timestamp.now(),
-                              'user': username,
-                              'likes': 0,
-                            });
-                          }
-                        }
-                        dates = [];
-                        messageTextEditingController.clear();
-                      },
-                    ), */
                   ],
                 ),
               ],
