@@ -103,6 +103,156 @@ class _FeedState extends State<Feed> {
                           });
                         },
                       ),
+                      ListTile(
+                        title: Text("Care Options - Transitions",
+                            style: TextStyle(
+                                color: Colors.white70,
+                                fontSize: 25 /*/ deviceTextScaleFactor + 2 */)),
+                        tileColor: selection == "Care Options / Transitions"
+                            ? Colors.blue[900]
+                            : Colors.black,
+                        onTap: () async {
+                          setState(() {
+                            isComment = false;
+                            selection = "Care Options - Transitions";
+                            about = 'Post about Care Options - Transitions.';
+                          });
+                        },
+                      ),
+                      ListTile(
+                        title: Text("Daily Care",
+                            style: TextStyle(
+                                color: Colors.white70,
+                                fontSize: 25 /*/ deviceTextScaleFactor + 2 */)),
+                        tileColor: selection == "Daily Care"
+                            ? Colors.blue[900]
+                            : Colors.black,
+                        onTap: () async {
+                          setState(() {
+                            isComment = false;
+                            selection = "Daily Care";
+                            about = 'Post about Daily Care.';
+                          });
+                        },
+                      ),
+                      ListTile(
+                        title: Text("Family Relationships",
+                            style: TextStyle(
+                                color: Colors.white70,
+                                fontSize: 25 /*/ deviceTextScaleFactor + 2 */)),
+                        tileColor: selection == "Family Relationships"
+                            ? Colors.blue[900]
+                            : Colors.black,
+                        onTap: () async {
+                          setState(() {
+                            isComment = false;
+                            selection = "Family Relationships";
+                            about = 'Post about Family Relationships.';
+                          });
+                        },
+                      ),
+                      ListTile(
+                        title: Text("Legal and Financial Planning",
+                            style: TextStyle(
+                                color: Colors.white70,
+                                fontSize: 25 /*/ deviceTextScaleFactor + 2 */)),
+                        tileColor: selection == "Legal and Financial Planning"
+                            ? Colors.blue[900]
+                            : Colors.black,
+                        onTap: () async {
+                          setState(() {
+                            isComment = false;
+                            selection = "Legal and Financial Planning";
+                            about = 'Post about Legal and Financial Planning.';
+                          });
+                        },
+                      ),
+                      ListTile(
+                        title: Text("Safety Issues",
+                            style: TextStyle(
+                                color: Colors.white70,
+                                fontSize: 25 /*/ deviceTextScaleFactor + 2 */)),
+                        tileColor: selection == "Safety Issues"
+                            ? Colors.blue[900]
+                            : Colors.black,
+                        onTap: () async {
+                          setState(() {
+                            isComment = false;
+                            selection = "Safety Issues";
+                            about = 'Post about Safety Issues.';
+                          });
+                        },
+                      ),
+                      ListTile(
+                        title: Text("Symptoms and Behavior",
+                            style: TextStyle(
+                                color: Colors.white70,
+                                fontSize: 25 /*/ deviceTextScaleFactor + 2 */)),
+                        tileColor: selection == "Symptoms and Behavior"
+                            ? Colors.blue[900]
+                            : Colors.black,
+                        onTap: () async {
+                          setState(() {
+                            isComment = false;
+                            selection = "Symptoms and Behavior";
+                            about = 'Post about Symptoms and Behavior.';
+                          });
+                        },
+                      ),
+                      ListTile(
+                        title: Text("Working with a Health Care Team",
+                            style: TextStyle(
+                                color: Colors.white70,
+                                fontSize: 25 /*/ deviceTextScaleFactor + 2 */)),
+                        tileColor:
+                            selection == "Working with a Health Care Team"
+                                ? Colors.blue[900]
+                                : Colors.black,
+                        onTap: () async {
+                          setState(() {
+                            isComment = false;
+                            selection = "Working with a Health Care Team";
+                            about =
+                                'Post about Working with a Health Care Team.';
+                          });
+                        },
+                      ),
+                      ListTile(
+                        title: Text(
+                            "General Information about Alzheimer's and dementia",
+                            style: TextStyle(
+                                color: Colors.white70,
+                                fontSize: 25 /*/ deviceTextScaleFactor + 2 */)),
+                        tileColor: selection ==
+                                "General Information about Alzheimer's and dementia"
+                            ? Colors.blue[900]
+                            : Colors.black,
+                        onTap: () async {
+                          setState(() {
+                            isComment = false;
+                            selection =
+                                "General Information about Alzheimer's and dementia";
+                            about =
+                                "Post about General Information about Alzheimer's and dementia";
+                          });
+                        },
+                      ),
+                      ListTile(
+                        title: Text("Community Resources",
+                            style: TextStyle(
+                                color: Colors.white70,
+                                fontSize: 25 /*/ deviceTextScaleFactor + 2 */)),
+                        tileColor: selection == "Community Resources"
+                            ? Colors.blue[900]
+                            : Colors.black,
+                        onTap: () async {
+                          setState(() {
+                            isComment = false;
+                            selection = "Community Resources";
+                            about = 'Post about Community Resources.';
+                          });
+                        },
+                      ),
                       Container(
                         height: MediaQuery.of(context).size.height,
                         color: Colors.black,
