@@ -19,6 +19,8 @@ String about = 'Post about general topics.';
 bool isComment = false;
 List<String> dates = [];
 
+String currentMessage = "";
+
 String currentDate =
     DateFormat('EEEE').format(new Timestamp.now().toDate()).toString() +
         ', ' +
@@ -60,66 +62,77 @@ StreamBuilder<QuerySnapshot> messageStream(
             // reverse: true,
             child: Column(
               children: [
-                !isInDates(data)
-                    ? Row(
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              border: Border(
-                                bottom: BorderSide(
-                                    width: 1.0, color: Colors.black54),
-                              ),
-                            ),
-                            child: SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.265,
-                            ),
-                          ),
-                          Container(
-                              alignment: Alignment.center,
-                              width: MediaQuery.of(context).size.width * 0.16,
-                              height: MediaQuery.of(context).size.height * 0.03,
-                              decoration: BoxDecoration(
-                                  border: Border.all(color: Colors.black54),
-                                  borderRadius: BorderRadius.circular(30)),
-                              child: DateFormat('EEEE')
-                                              .format(data["time"].toDate())
-                                              .toString() +
-                                          ', ' +
-                                          DateFormat('MMMMd')
-                                              .format(data["time"].toDate())
-                                              .toString() ==
-                                      currentDate
-                                  ? Text("Today")
-                                  : Text(
-                                      //  Header format below
-                                      DateFormat('EEEE')
-                                              .format(data["time"].toDate())
-                                              .toString() +
-                                          ', ' +
-                                          DateFormat('MMMMd')
-                                              .format(data["time"].toDate())
-                                              .toString(),
-
-                                      //  textAlign: TextAlign.justify,
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 15,
-                                      ),
-                                    )),
-                          Container(
-                            decoration: BoxDecoration(
-                              border: Border(
-                                bottom: BorderSide(
-                                    width: 1.0, color: Colors.black54),
-                              ),
-                            ),
-                            child: SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.265,
-                            ),
-                          ),
-                        ],
+                isComment
+                    ? ListTile(
+                        title: Text(currentMessage),
                       )
                     : Container(),
+                isComment
+                    ? Container()
+                    : !isInDates(data)
+                        ? Row(
+                            children: [
+                              Container(
+                                decoration: BoxDecoration(
+                                  border: Border(
+                                    bottom: BorderSide(
+                                        width: 1.0, color: Colors.black54),
+                                  ),
+                                ),
+                                child: SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.265,
+                                ),
+                              ),
+                              Container(
+                                  alignment: Alignment.center,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.16,
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.03,
+                                  decoration: BoxDecoration(
+                                      border: Border.all(color: Colors.black54),
+                                      borderRadius: BorderRadius.circular(30)),
+                                  child: DateFormat('EEEE')
+                                                  .format(data["time"].toDate())
+                                                  .toString() +
+                                              ', ' +
+                                              DateFormat('MMMMd')
+                                                  .format(data["time"].toDate())
+                                                  .toString() ==
+                                          currentDate
+                                      ? Text("Today")
+                                      : Text(
+                                          //  Header format below
+                                          DateFormat('EEEE')
+                                                  .format(data["time"].toDate())
+                                                  .toString() +
+                                              ', ' +
+                                              DateFormat('MMMMd')
+                                                  .format(data["time"].toDate())
+                                                  .toString(),
+
+                                          //  textAlign: TextAlign.justify,
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 15,
+                                          ),
+                                        )),
+                              Container(
+                                decoration: BoxDecoration(
+                                  border: Border(
+                                    bottom: BorderSide(
+                                        width: 1.0, color: Colors.black54),
+                                  ),
+                                ),
+                                child: SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.265,
+                                ),
+                              ),
+                            ],
+                          )
+                        : Container(),
                 Row(
                   children: [
                     Text(
@@ -150,6 +163,7 @@ StreamBuilder<QuerySnapshot> messageStream(
                     }
                     isComment = true;
                     post = document.id;
+                    currentMessage = data['message'];
 
                     Navigator.pushReplacement(
                       context,
@@ -360,9 +374,10 @@ Container feed(
                         if (message.isEmpty) {
                           print("Message is empty");
                         } else {
+                          List<String> likedBy = [];
                           if (!isComment) {
                             //Map<String, int> likedBy = {};
-                            List<String> likedBy = [];
+
                             FirebaseFirestore.instance
                                 .collection(selection)
                                 .add({
@@ -382,6 +397,7 @@ Container feed(
                               'time': new Timestamp.now(),
                               'user': username,
                               'likes': 0,
+                              'likedBy': likedBy,
                             });
                           }
                         }
@@ -518,112 +534,7 @@ Widget checkIfLiked(
       //data["likedBy"].add("Tyler");
     },
   );
-
-  /*FirebaseFirestore.instance
-      .collection(selection)
-      .doc(postID)
-      .get()
-      .then((DocumentSnapshot doc) {
-    if (doc["likedBy"].contains("lebron")) {
-      print(email + " liked this post");
-      return IconButton(
-        icon: new Icon(Icons.thumb_up, color: Colors.green),
-        onPressed: () {
-          // color:
-          dates = [];
-
-          FirebaseFirestore.instance
-              .collection(selection)
-              .doc(postID)
-              .update({'likes': data['likes'] -= 1});
-
-          List<String> newLikedBy = data["likedBy"];
-          newLikedBy.add("lebron");
-
-          FirebaseFirestore.instance
-              .collection(selection)
-              .doc(postID)
-              .update({'likedBy': newLikedBy});
-
-          liked = false;
-        },
-      );
-    }
-    print(email + "did not like this post");
-  });
-
-  // return IconButton(
-  //   icon: new Icon(Icons.thumb_up),
-  //   onPressed: () {
-  //     dates = [];
-
-  //     FirebaseFirestore.instance
-  //         .collection(selection)
-  //         .doc(postID)
-  //         .update({'likes': data['likes'] += 1});
-
-  //     FirebaseFirestore.instance
-  //         .collection(selection)
-  //         .doc(postID)
-  //         .update({'likedBy': data['likedBy'][email] = 1});
-
-  //     liked = true;
-  //   },
-  // );
-*/
 }
-
-/*
-IconButton checkIfComment(
-  String postID,
-  Map<String, dynamic> data,
-) {
-  if (isComment) {
-    print("TRUE");
-    return IconButton(
-      icon: new Icon(Icons.comment, color: Colors.green),
-      onPressed: () {
-        // color:
-
-        FirebaseFirestore.instance
-            .collection('Users')
-            .doc(email)
-            .collection("liked_posts")
-            .add({
-          'postid': postID,
-        });
-
-        FirebaseFirestore.instance
-            .collection(selection)
-            .doc(postID)
-            .update({'likes': data['likes'] -= 1});
-        liked = false;
-      },
-    );
-  } else {
-    print("False");
-    return IconButton(
-      icon: new Icon(Icons.comment),
-      onPressed: () {
-        // color:
-
-        FirebaseFirestore.instance
-            .collection('Users')
-            .doc(email)
-            .collection("liked_posts")
-            .add({
-          'postid': postID,
-        });
-
-        FirebaseFirestore.instance
-            .collection(selection)
-            .doc(postID)
-            .update({'likes': data['likes'] += 1});
-        liked = true;
-      },
-    );
-  }
-} */
 
 List<String> messageStream2(Stream<QuerySnapshot<Object?>> _usersStream) {
   //print("HELLO");
