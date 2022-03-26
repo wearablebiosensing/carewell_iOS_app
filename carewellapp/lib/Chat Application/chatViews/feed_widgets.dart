@@ -19,6 +19,8 @@ String about = 'Post about general topics.';
 bool isComment = false;
 List<String> dates = [];
 
+//user of the selected post for comments
+String currentUser = "";
 String currentMessage = "";
 
 String currentDate =
@@ -56,218 +58,199 @@ StreamBuilder<QuerySnapshot> messageStream(
 
           messageList.add(data["message"].toString());
 
-          //  print(messageList[messageList.length - 1]);
-
-          return SingleChildScrollView(
-            // reverse: true,
-            child: Column(
-              children: [
-                isComment
+          List<Widget> showPosts() {
+            return [
+              /* isComment
                     ? ListTile(
                         title: Text(currentMessage),
                       )
                     : Container(),
                 isComment
                     ? Container()
-                    : !isInDates(data)
-                        ? Row(
-                            children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                  border: Border(
-                                    bottom: BorderSide(
-                                        width: 1.0, color: Colors.black54),
-                                  ),
-                                ),
-                                child: SizedBox(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.265,
-                                ),
-                              ),
-                              Container(
-                                  alignment: Alignment.center,
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.16,
-                                  height:
-                                      MediaQuery.of(context).size.height * 0.03,
-                                  decoration: BoxDecoration(
-                                      border: Border.all(color: Colors.black54),
-                                      borderRadius: BorderRadius.circular(30)),
-                                  child: DateFormat('EEEE')
-                                                  .format(data["time"].toDate())
-                                                  .toString() +
-                                              ', ' +
-                                              DateFormat('MMMMd')
-                                                  .format(data["time"].toDate())
-                                                  .toString() ==
-                                          currentDate
-                                      ? Text("Today")
-                                      : Text(
-                                          //  Header format below
-                                          DateFormat('EEEE')
-                                                  .format(data["time"].toDate())
-                                                  .toString() +
-                                              ', ' +
-                                              DateFormat('MMMMd')
-                                                  .format(data["time"].toDate())
-                                                  .toString(),
+                    : */
+              !isInDates(data)
+                  ? Row(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            border: Border(
+                              bottom:
+                                  BorderSide(width: 1.0, color: Colors.black54),
+                            ),
+                          ),
+                          child: SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.265,
+                          ),
+                        ),
+                        Container(
+                            alignment: Alignment.center,
+                            width: MediaQuery.of(context).size.width * 0.16,
+                            height: MediaQuery.of(context).size.height * 0.03,
+                            decoration: BoxDecoration(
+                                border: Border.all(color: Colors.black54),
+                                borderRadius: BorderRadius.circular(30)),
+                            child: DateFormat('EEEE')
+                                            .format(data["time"].toDate())
+                                            .toString() +
+                                        ', ' +
+                                        DateFormat('MMMMd')
+                                            .format(data["time"].toDate())
+                                            .toString() ==
+                                    currentDate
+                                ? Text("Today")
+                                : Text(
+                                    //  Header format below
+                                    DateFormat('EEEE')
+                                            .format(data["time"].toDate())
+                                            .toString() +
+                                        ', ' +
+                                        DateFormat('MMMMd')
+                                            .format(data["time"].toDate())
+                                            .toString(),
 
-                                          //  textAlign: TextAlign.justify,
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 15,
-                                          ),
-                                        )),
-                              Container(
-                                decoration: BoxDecoration(
-                                  border: Border(
-                                    bottom: BorderSide(
-                                        width: 1.0, color: Colors.black54),
-                                  ),
-                                ),
-                                child: SizedBox(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.265,
-                                ),
-                              ),
-                            ],
-                          )
-                        : Container(),
-                Row(
-                  children: [
-                    Text(
-                      ' ' + data["user"],
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 17,
-                      ),
-                    ),
-                    Text(
-                      //  Header format below
-                      '\n ' +
-                          DateFormat('jm')
-                              .format(data["time"].toDate())
-                              .toString(),
-                      style: TextStyle(
-                        color: Colors.black54,
-                        fontSize: 10,
-                      ),
+                                    //  textAlign: TextAlign.justify,
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 15,
+                                    ),
+                                  )),
+                        Container(
+                          decoration: BoxDecoration(
+                            border: Border(
+                              bottom:
+                                  BorderSide(width: 1.0, color: Colors.black54),
+                            ),
+                          ),
+                          child: SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.265,
+                          ),
+                        ),
+                      ],
                     )
-                  ],
-                ),
-                ListTile(
-                  title: Text(data['message']),
-                  onTap: () async {
-                    if (isComment) {
-                      return;
-                    }
-                    isComment = true;
-                    post = document.id;
-                    currentMessage = data['message'];
+                  : Container(),
+              Row(
+                children: [
+                  Text(
+                    ' ' + data["user"],
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 17,
+                    ),
+                  ),
+                  Text(
+                    //  Header format below
+                    '\n ' +
+                        DateFormat('jm')
+                            .format(data["time"].toDate())
+                            .toString(),
+                    style: TextStyle(
+                      color: Colors.black54,
+                      fontSize: 10,
+                    ),
+                  )
+                ],
+              ),
+              ListTile(
+                title: Text(data['message']),
+                onTap: () async {
+                  if (isComment) {
+                    return;
+                  }
+                  isComment = true;
+                  post = document.id;
+                  currentMessage = data['message'];
+                  currentUser = data["user"];
 
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(builder: (context) => Feed()),
-                    );
-                    ;
-                  },
-                ),
-                Container(
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => Feed()),
+                  );
+                  ;
+                },
+              ),
+              Container(
                   //width: MediaQuery.of(context).size.width,
                   //padding: EdgeInsets.all(5.0),
                   alignment: Alignment.centerRight,
-                  child: Row(
-                    children: [
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.6,
-                      ),
-                      Icon(
-                        Icons.comment,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(5.0),
-                      ),
-                      checkIfLiked(document.id, data),
-                      Padding(
-                        padding: EdgeInsets.all(3.0),
-                      ),
-                      Text(data['likes'].toString())
-                    ],
-                  ),
-                ),
-                Row(
-                  children: [
+                  child: Row(children: [
                     SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.16,
+                      width: MediaQuery.of(context).size.width * 0.6,
                     ),
-                    //  commentStream(getCommentStream(document.id)),
-                  ],
-                ),
-              ],
+                    Icon(
+                      Icons.comment,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(5.0),
+                    ),
+                    checkIfLiked(document.id, data),
+                    Padding(
+                      padding: EdgeInsets.all(3.0),
+                    ),
+                    Text(data['likes'].toString())
+                  ]))
+            ];
+          }
+
+          List<Widget> showComments() {
+            return [
+              Row(
+                children: [
+                  Text(
+                    ' ' + data["user"],
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 17,
+                    ),
+                  ),
+                  Text(
+                    //  Header format below
+                    '\n ' +
+                        DateFormat('MMMMd')
+                            .format(data["time"].toDate())
+                            .toString() +
+                        " @" +
+                        DateFormat('jm')
+                            .format(data["time"].toDate())
+                            .toString(),
+                    style: TextStyle(
+                      color: Colors.black54,
+                      fontSize: 10,
+                    ),
+                  )
+                ],
+              ),
+              ListTile(
+                title: Text(data['message']),
+              ),
+              Container(
+                  //width: MediaQuery.of(context).size.width,
+                  //padding: EdgeInsets.all(5.0),
+                  alignment: Alignment.centerRight,
+                  child: Row(children: [
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.6,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(5.0),
+                    ),
+                    checkIfLiked(document.id, data),
+                    Padding(
+                      padding: EdgeInsets.all(3.0),
+                    ),
+                    Text(data['likes'].toString())
+                  ]))
+            ];
+          }
+
+          return SingleChildScrollView(
+            // reverse: true,
+            child: Column(
+              children: !isComment ? showPosts() : showComments(),
             ),
           );
         }).toList(),
       );
     },
-  );
-}
-
-Column commentStream(Stream<QuerySnapshot<Object?>> _commentStream) {
-  return Column(
-    children: [
-      StreamBuilder<QuerySnapshot>(
-        stream: _commentStream,
-        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          if (snapshot.hasError) {
-            return Text('Something went wrong');
-          }
-
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Text("Loading");
-          }
-
-          return ListView(
-            // padding: EdgeInsets.all(8.0),
-            physics: NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            children: snapshot.data!.docs.map((DocumentSnapshot document) {
-              Map<String, dynamic> data =
-                  document.data()! as Map<String, dynamic>;
-
-              return Column(
-                children: [
-                  Row(
-                    children: [
-                      Text(
-                        ' ' + data["user"],
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 17,
-                        ),
-                      ),
-                      Text(
-                        //  Header format below
-                        '\n ' +
-                            DateFormat('jm')
-                                .format(data["time"].toDate())
-                                .toString(),
-                        style: TextStyle(
-                          color: Colors.black54,
-                          fontSize: 10,
-                        ),
-                      )
-                    ],
-                  ),
-                  ListTile(
-                    title: Text(data['message']),
-                  ),
-                ],
-              );
-            }).toList(),
-          );
-        },
-      ),
-    ],
   );
 }
 
@@ -288,7 +271,7 @@ Container feed(
       child: Column(
         children: [
           Container(
-            height: MediaQuery.of(context).size.height * 0.12,
+            height: MediaQuery.of(context).size.height * 0.25,
             width: MediaQuery.of(context).size.width,
             padding: EdgeInsets.fromLTRB(8, 8, 0, 0),
             child: Column(
@@ -314,6 +297,20 @@ Container feed(
                     ),
                   ),
                 ),
+                isComment
+                    ? Text(currentUser,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 20))
+                    : Container(),
+                isComment
+                    ? Text(
+                        currentMessage + "\n\n",
+                        style: TextStyle(
+                          color: Colors.black54,
+                          fontSize: 16,
+                        ),
+                      )
+                    : Container()
               ],
             ),
           ),
@@ -395,7 +392,7 @@ Container feed(
                                 .add({
                               'message': message,
                               'time': new Timestamp.now(),
-                              'user': username,
+                              'user': email,
                               'likes': 0,
                               'likedBy': likedBy,
                             });
@@ -443,15 +440,6 @@ Stream<QuerySnapshot> getStream() {
       .snapshots();
 }
 
-Stream<QuerySnapshot> getCommentStream(String id) {
-  return FirebaseFirestore.instance
-      .collection(selection)
-      .doc(id)
-      .collection("comments")
-      .orderBy('time')
-      .snapshots();
-}
-
 bool isInDates(Map<String, dynamic> data) {
   String date = DateFormat('EEEE').format(data["time"].toDate()).toString() +
       ', ' +
@@ -466,12 +454,6 @@ bool isInDates(Map<String, dynamic> data) {
   dates.add(date);
   return false;
 }
-
-Future<void> _signOut() async {
-  await FirebaseAuth.instance.signOut();
-}
-
-bool liked = false;
 
 Widget checkIfLiked(
   String postID,
