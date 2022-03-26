@@ -152,21 +152,6 @@ StreamBuilder<QuerySnapshot> messageStream(
               ),
               ListTile(
                 title: Text(data['message']),
-                onTap: () async {
-                  if (isComment) {
-                    return;
-                  }
-                  isComment = true;
-                  post = document.id;
-                  currentMessage = data['message'];
-                  currentUser = data["user"];
-
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (context) => Feed()),
-                  );
-                  ;
-                },
               ),
               Container(
                   //width: MediaQuery.of(context).size.width,
@@ -176,11 +161,19 @@ StreamBuilder<QuerySnapshot> messageStream(
                     SizedBox(
                       width: MediaQuery.of(context).size.width * 0.6,
                     ),
-                    Icon(
-                      Icons.comment,
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(5.0),
+                    IconButton(
+                      icon: new Icon(Icons.comment),
+                      onPressed: () {
+                        isComment = true;
+                        post = document.id;
+                        currentMessage = data['message'];
+                        currentUser = data["user"];
+
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(builder: (context) => Feed()),
+                        );
+                      },
                     ),
                     checkIfLiked(document.id, data),
                     Padding(
@@ -271,7 +264,7 @@ Container feed(
       child: Column(
         children: [
           Container(
-            height: MediaQuery.of(context).size.height * 0.25,
+            height: MediaQuery.of(context).size.height * 0.12,
             width: MediaQuery.of(context).size.width,
             padding: EdgeInsets.fromLTRB(8, 8, 0, 0),
             child: Column(
