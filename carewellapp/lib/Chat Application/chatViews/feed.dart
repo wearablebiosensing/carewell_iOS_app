@@ -57,51 +57,64 @@ class _FeedState extends State<Feed> {
         body: Row(
       children: [
         Expanded(
-          child: SingleChildScrollView(
-            child: Column(children: [
+          child: Column(
+            children: [
               Container(
-                  //color: Colors.black,
-                  height: MediaQuery.of(context).size.height, // * 0.923,
-                  width: MediaQuery.of(context).size.width * 0.30,
-                  child: ListView(
-                    physics: NeverScrollableScrollPhysics(),
-                    children: [
-                      Container(
-                        height: 25,
-                        color: Colors.black,
-                      ),
-                      Container(
-                        height: 50,
-                        child: ListTile(
-                          title: Text("Chat Topics",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize:
-                                      40 /*/ deviceTextScaleFactor + 2*/)),
-                          tileColor: Colors.black,
+                height: 25,
+                color: Colors.black,
+              ),
+              Container(
+                color: Colors.black,
+                height: 50,
+                child: ListTile(
+                  title: Text("Chat Topics",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 40 /*/ deviceTextScaleFactor + 2*/)),
+                  //  tileColor: Colors.black,
+                ),
+              ),
+              Container(
+                height: 25,
+                color: Colors.black,
+              ),
+              //   SingleChildScrollView(
+              Column(children: [
+                Container(
+                    color: Colors.black,
+                    height: MediaQuery.of(context).size.height, // * 0.923,
+                    width: MediaQuery.of(context).size.width * 0.30,
+                    child: ListView(
+                      // physics: NeverScrollableScrollPhysics(),
+                      children: [
+                        SingleChildScrollView(
+                          // physics: ScrollPhysics(),
+                          // physics: NeverScrollableScrollPhysics(),
+
+                          child: Container(
+                              height: MediaQuery.of(context).size.height *
+                                  0.7, // * 0.923,
+                              //width: MediaQuery.of(context).size.width * 0.30,
+                              child: ListView.builder(
+                                  //  physics: NeverScrollableScrollPhysics(),
+                                  itemCount: channels.length,
+                                  shrinkWrap: true,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    return channels[index];
+                                  })),
                         ),
-                      ),
-                      Container(
-                        height: 25,
-                        color: Colors.black,
-                      ),
-                      Container(
-                        child: SingleChildScrollView(
-                          physics: NeverScrollableScrollPhysics(),
-                          child: Column(
-                            children: channels,
-                          ),
+                        Container(
+                          height: MediaQuery.of(context).size.height,
+                          color: Colors.black,
                         ),
-                      ),
-                      Container(
-                        height: MediaQuery.of(context).size.height,
-                        color: Colors.black,
-                      ),
-                    ],
-                  )),
-            ]),
+                      ],
+                    )),
+              ]),
+              // ),
+            ],
           ),
         ),
         feed(context, getStream(), listScrollController),
