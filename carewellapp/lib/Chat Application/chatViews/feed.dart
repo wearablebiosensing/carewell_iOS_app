@@ -101,42 +101,48 @@ class _FeedState extends State<Feed> {
       children: [
         SingleChildScrollView(
           physics: ScrollPhysics(),
-          child: Expanded(
-            child: Container(
-              height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width * 0.29,
-              child: Column(
-                children: [
-                  Container(
-                    color: Colors.black,
-                    padding: EdgeInsets.only(
-                      top: MediaQuery.of(context).size.height * 0.015,
-                    ),
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height * 0.15,
-                    child: ListTile(
-                      title: Text("Chat Topics",
-                          textAlign: TextAlign.center,
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 40)),
-                    ),
+          //  child: Expanded(
+          child: Container(
+            color: Colors.black,
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width * 0.29,
+            child: Column(
+              children: [
+                Container(
+                  color: Colors.black,
+                  padding: EdgeInsets.only(
+                    top: MediaQuery.of(context).size.height * 0.015,
                   ),
-                  Container(
-                    height: MediaQuery.of(context).size.height * 0.85,
-                    child: ListView.builder(
-                        physics: AlwaysScrollableScrollPhysics(),
-                        itemCount: channels.length,
-                        shrinkWrap: true,
-                        itemBuilder: (BuildContext context, int index) {
-                          return channels[index];
-                        }),
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height * 0.15,
+                  child: ListTile(
+                    title: Text("Chat Topics",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 40)),
                   ),
-                ],
-              ),
+                ),
+                Container(
+                  height: MediaQuery.of(context).size.height * 0.85,
+                  child: ListView.separated(
+                      physics: AlwaysScrollableScrollPhysics(),
+                      separatorBuilder: (BuildContext context, int index) =>
+                          Divider(
+                            color: Colors.white,
+                            height: MediaQuery.of(context).size.height * 0.001,
+                          ),
+                      itemCount: channels.length,
+                      shrinkWrap: true,
+                      itemBuilder: (BuildContext context, int index) {
+                        return channels[index];
+                      }),
+                ),
+              ],
             ),
           ),
+          // ),
         ),
         feed(context, getStream(), listScrollController),
       ],

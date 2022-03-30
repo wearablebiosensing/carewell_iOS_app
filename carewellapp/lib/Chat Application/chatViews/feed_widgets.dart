@@ -254,168 +254,330 @@ Container feed(
   TextEditingController messageTextEditingController =
       new TextEditingController();
   return Container(
-    height: MediaQuery.of(context).size.height,
-    width: MediaQuery.of(context).size.width * 0.70,
-    padding: EdgeInsets.all(5.0),
-    child: SingleChildScrollView(
-      // scrollDirection: Axis.vertical,
+      height: MediaQuery.of(context).size.height,
+      width: MediaQuery.of(context).size.width * 0.70,
+      padding: EdgeInsets.all(5.0),
+      child: !isComment
+          ? SingleChildScrollView(
+              // scrollDirection: Axis.vertical,
 
-      //  physics: NeverScrollableScrollPhysics(),
-      child: Column(
-        children: [
-          Container(
-            height: MediaQuery.of(context).size.height * 0.12,
-            width: MediaQuery.of(context).size.width,
-            padding: EdgeInsets.fromLTRB(8, 8, 0, 0),
-            child: Column(
-              children: [
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Container(
-                    child: Text(
-                      isComment ? "Comments" : selection,
-                      textAlign: TextAlign.left,
-                      style:
-                          TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                ),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Container(
-                    child: Text(
-                      "About : " + about,
-                      textAlign: TextAlign.left,
-                      style: TextStyle(fontSize: 25, color: Colors.black54),
-                    ),
-                  ),
-                ),
-                isComment
-                    ? Text(currentUser,
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 20))
-                    : Container(),
-                isComment
-                    ? Text(
-                        currentMessage + "\n\n",
-                        style: TextStyle(
-                          color: Colors.black54,
-                          fontSize: 16,
+              //  physics: NeverScrollableScrollPhysics(),
+              child: Column(
+                children: [
+                  Container(
+                    height: isComment
+                        ? MediaQuery.of(context).size.height * 0.4
+                        : MediaQuery.of(context).size.height * 0.12,
+                    width: MediaQuery.of(context).size.width,
+                    padding: EdgeInsets.fromLTRB(8, 8, 0, 0),
+                    child: Column(
+                      children: [
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Container(
+                            child: Text(
+                              isComment ? "Comments" : selection,
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
+                                  fontSize: 25, fontWeight: FontWeight.bold),
+                            ),
+                          ),
                         ),
-                      )
-                    : Container()
-              ],
-            ),
-          ),
-          Container(
-            height: MediaQuery.of(context).size.height * 0.64,
-            //height: MediaQuery.of(context).size.height * 0.5,
-            width: MediaQuery.of(context).size.width,
-
-            child: SingleChildScrollView(
-              child: Column(children: [
-                Divider(
-                  color: Colors.black54,
-                ),
-                SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.02,
-                ),
-                messageStream(_usersStream),
-                //  commentStream(_usersStream),
-              ]),
-            ),
-          ),
-          Container(
-            height: MediaQuery.of(context).size.height * 0.22,
-            width: MediaQuery.of(context).size.width * 0.9,
-            padding: EdgeInsets.all(10.0),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              border: Border.all(color: Colors.black54),
-            ),
-            child: Column(
-              //mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Expanded(
-                  child: TextField(
-                    minLines: 1,
-                    maxLines: 5, // allow user to enter 5 line in textfield
-                    keyboardType: TextInputType
-                        .multiline, // user keyboard will have a button to move cursor to next line
-
-                    controller: messageTextEditingController,
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText:
-                          isComment ? " Add comment" : ' Type a message ...',
+                        Align(
+                          alignment: Alignment.centerLeft,
+                          child: Container(
+                            // height: MediaQuery.of(context).size.height * 0.5,
+                            child: Text(
+                              "About : " + about,
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
+                                  fontSize: 25, color: Colors.black54),
+                            ),
+                          ),
+                        ),
+                        isComment
+                            ? Container(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.3,
+                                child: Text(currentUser,
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20)),
+                              )
+                            : Container(),
+                        isComment
+                            ? Text(
+                                currentMessage + "\n\n",
+                                style: TextStyle(
+                                  color: Colors.black54,
+                                  fontSize: 16,
+                                ),
+                              )
+                            : Container()
+                      ],
                     ),
                   ),
-                ),
-                Row(
-                  children: [
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.62,
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.64,
+                    //height: MediaQuery.of(context).size.height * 0.5,
+                    width: MediaQuery.of(context).size.width,
+
+                    child: SingleChildScrollView(
+                      child: Column(children: [
+                        Divider(
+                          color: Colors.black54,
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * 0.02,
+                        ),
+                        messageStream(_usersStream),
+                        //  commentStream(_usersStream),
+                      ]),
                     ),
-                    GestureDetector(
-                      onTap: () async {
-                        String message =
-                            messageTextEditingController.text.trim();
+                  ),
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.22,
+                    width: MediaQuery.of(context).size.width * 0.9,
+                    padding: EdgeInsets.all(10.0),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(color: Colors.black54),
+                    ),
+                    child: Column(
+                      //mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          child: TextField(
+                            minLines: 1,
+                            maxLines:
+                                5, // allow user to enter 5 line in textfield
+                            keyboardType: TextInputType
+                                .multiline, // user keyboard will have a button to move cursor to next line
 
-                        if (message.isEmpty) {
-                          print("Message is empty");
-                        } else {
-                          List<String> likedBy = [];
-                          if (!isComment) {
-                            //Map<String, int> likedBy = {};
+                            controller: messageTextEditingController,
+                            decoration: InputDecoration(
+                              border: InputBorder.none,
+                              hintText: isComment
+                                  ? " Add comment"
+                                  : ' Type a message ...',
+                            ),
+                          ),
+                        ),
+                        Row(
+                          children: [
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width * 0.62,
+                            ),
+                            GestureDetector(
+                              onTap: () async {
+                                String message =
+                                    messageTextEditingController.text.trim();
 
-                            FirebaseFirestore.instance
-                                .collection(selection)
-                                .add({
-                              'message': message,
-                              'time': new Timestamp.now(),
-                              'user': email,
-                              'likes': 0,
-                              'likedBy': likedBy,
-                            });
-                          } else {
-                            FirebaseFirestore.instance
-                                .collection(selection)
-                                .doc(post)
-                                .collection("comments")
-                                .add({
-                              'message': message,
-                              'time': new Timestamp.now(),
-                              'user': email,
-                              'likes': 0,
-                              'likedBy': likedBy,
-                            });
-                          }
-                        }
-                        dates = [];
-                        messageTextEditingController.clear();
-                      },
-                      child: Container(
-                        alignment: Alignment.center,
-                        width: MediaQuery.of(context).size.width * 0.05,
-                        padding: EdgeInsets.all(8.0),
-                        decoration: BoxDecoration(
-                            // ignore: prefer_const_constructors
-                            color: Colors.black,
-                            borderRadius: BorderRadius.circular(5)),
-                        child: Text("Post",
-                            style: new TextStyle(
-                                color: Colors.white, fontSize: 14)),
+                                if (message.isEmpty) {
+                                  print("Message is empty");
+                                } else {
+                                  List<String> likedBy = [];
+                                  if (!isComment) {
+                                    //Map<String, int> likedBy = {};
+
+                                    FirebaseFirestore.instance
+                                        .collection(selection)
+                                        .add({
+                                      'message': message,
+                                      'time': new Timestamp.now(),
+                                      'user': email,
+                                      'likes': 0,
+                                      'likedBy': likedBy,
+                                    });
+                                  } else {
+                                    FirebaseFirestore.instance
+                                        .collection(selection)
+                                        .doc(post)
+                                        .collection("comments")
+                                        .add({
+                                      'message': message,
+                                      'time': new Timestamp.now(),
+                                      'user': email,
+                                      'likes': 0,
+                                      'likedBy': likedBy,
+                                    });
+                                  }
+                                }
+                                dates = [];
+                                messageTextEditingController.clear();
+                              },
+                              child: Container(
+                                alignment: Alignment.center,
+                                width: MediaQuery.of(context).size.width * 0.05,
+                                padding: EdgeInsets.all(8.0),
+                                decoration: BoxDecoration(
+                                    // ignore: prefer_const_constructors
+                                    color: Colors.black,
+                                    borderRadius: BorderRadius.circular(5)),
+                                child: Text("Post",
+                                    style: new TextStyle(
+                                        color: Colors.white, fontSize: 14)),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            )
+          : Scaffold(
+              body: Column(
+              children: [
+                Container(
+                  // height: MediaQuery.of(context).size.height * 0.4,
+                  width: MediaQuery.of(context).size.width,
+                  // padding: EdgeInsets.fromLTRB(8, 8, 0, 0),
+                  child: Column(
+                    children: [
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Container(
+                          child: Text(
+                            "Comments",
+                            textAlign: TextAlign.left,
+                            style: TextStyle(
+                                fontSize: 25, fontWeight: FontWeight.bold),
+                          ),
+                        ),
                       ),
-                    ),
-                  ],
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Container(
+                          // height: MediaQuery.of(context).size.height * 0.5,
+                          child: Text(
+                            "About : " + about,
+                            textAlign: TextAlign.left,
+                            style:
+                                TextStyle(fontSize: 25, color: Colors.black54),
+                          ),
+                        ),
+                      ),
+                      //  Expanded(
+                      Container(
+                        //  constraints: const BoxConstraints(
+                        //  maxHeight: 250,
+                        //  ),
+                        // height: MediaQuery.of(context).size.height * 0.3,
+                        child: Column(
+                          children: [
+                            Text(currentUser,
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 20)),
+                            Container(
+                              padding: EdgeInsets.only(top: 5),
+                              height: MediaQuery.of(context).size.height * 0.15,
+                              child: Expanded(
+                                child: SingleChildScrollView(
+                                  child: Text(
+                                    currentMessage,
+                                    // maxLines: 3,
+                                    style: TextStyle(
+                                      color: Colors.black54,
+                                      fontSize: 16,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Divider(color: Colors.black),
+                          ],
+                        ),
+                      ),
+                      //  ),
+                    ],
+                  ),
                 ),
+                Container(
+                  height: MediaQuery.of(context).size.height * 0.45,
+                  child: Expanded(
+                      child: SingleChildScrollView(
+                          child: Expanded(child: messageStream(_usersStream)))),
+                ),
+                Container(
+                  height: MediaQuery.of(context).size.height * 0.22,
+                  width: MediaQuery.of(context).size.width * 0.9,
+                  padding: EdgeInsets.all(10.0),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(color: Colors.black54),
+                  ),
+                  child: Column(
+                    //mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: TextField(
+                          minLines: 1,
+                          maxLines:
+                              5, // allow user to enter 5 line in textfield
+                          keyboardType: TextInputType
+                              .multiline, // user keyboard will have a button to move cursor to next line
+
+                          controller: messageTextEditingController,
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: " Add comment",
+                          ),
+                        ),
+                      ),
+                      Row(
+                        children: [
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width * 0.62,
+                          ),
+                          GestureDetector(
+                            onTap: () async {
+                              String message =
+                                  messageTextEditingController.text.trim();
+
+                              if (message.isEmpty) {
+                                print("Message is empty");
+                              } else {
+                                List<String> likedBy = [];
+
+                                //Map<String, int> likedBy = {};
+
+                                FirebaseFirestore.instance
+                                    .collection(selection)
+                                    .doc(post)
+                                    .collection("comments")
+                                    .add({
+                                  'message': message,
+                                  'time': new Timestamp.now(),
+                                  'user': email,
+                                  'likes': 0,
+                                  'likedBy': likedBy,
+                                });
+                              }
+                              dates = [];
+                              messageTextEditingController.clear();
+                            },
+                            child: Container(
+                              alignment: Alignment.center,
+                              width: MediaQuery.of(context).size.width * 0.05,
+                              padding: EdgeInsets.all(8.0),
+                              decoration: BoxDecoration(
+                                  // ignore: prefer_const_constructors
+                                  color: Colors.black,
+                                  borderRadius: BorderRadius.circular(5)),
+                              child: Text("Post",
+                                  style: new TextStyle(
+                                      color: Colors.white, fontSize: 14)),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                )
               ],
-            ),
-          )
-        ],
-      ),
-    ),
-  );
+            )));
 }
 
 Stream<QuerySnapshot> getStream() {
@@ -460,24 +622,49 @@ Widget checkIfLiked(
         // color:
         dates = [];
 
-        FirebaseFirestore.instance
-            .collection(selection)
-            .doc(postID)
-            .update({'likes': data['likes'] -= 1});
+        if (!isComment) {
+          FirebaseFirestore.instance
+              .collection(selection)
+              .doc(postID)
+              .update({'likes': data['likes'] -= 1});
 
-        List<String> temp = [];
-        int len = data["likedBy"].length;
+          List<String> temp = [];
+          int len = data["likedBy"].length;
 
-        for (int i = 0; i < len; i++) {
-          temp.add(data["likedBy"][i]);
+          for (int i = 0; i < len; i++) {
+            temp.add(data["likedBy"][i]);
+          }
+
+          temp.remove(email);
+
+          FirebaseFirestore.instance
+              .collection(selection)
+              .doc(postID)
+              .update({'likedBy': temp});
+        } else {
+          FirebaseFirestore.instance
+              .collection(selection)
+              .doc(post)
+              .collection("comments")
+              .doc(postID)
+              .update({'likes': data['likes'] -= 1});
+
+          List<String> temp = [];
+          int len = data["likedBy"].length;
+
+          for (int i = 0; i < len; i++) {
+            temp.add(data["likedBy"][i]);
+          }
+
+          temp.remove(email);
+
+          FirebaseFirestore.instance
+              .collection(selection)
+              .doc(post)
+              .collection("comments")
+              .doc(postID)
+              .update({'likedBy': temp});
         }
-
-        temp.remove(email);
-
-        FirebaseFirestore.instance
-            .collection(selection)
-            .doc(postID)
-            .update({'likedBy': temp});
       },
     );
   }
@@ -487,26 +674,51 @@ Widget checkIfLiked(
     onPressed: () {
       dates = [];
 
-      FirebaseFirestore.instance
-          .collection(selection)
-          .doc(postID)
-          .update({'likes': data['likes'] += 1});
+      if (!isComment) {
+        FirebaseFirestore.instance
+            .collection(selection)
+            .doc(postID)
+            .update({'likes': data['likes'] += 1});
 
-      List<String> temp = [];
-      int len = data["likedBy"].length;
+        List<String> temp = [];
+        int len = data["likedBy"].length;
 
-      for (int i = 0; i < len; i++) {
-        temp.add(data["likedBy"][i]);
+        for (int i = 0; i < len; i++) {
+          temp.add(data["likedBy"][i]);
+        }
+
+        temp.add(email);
+
+        FirebaseFirestore.instance
+            .collection(selection)
+            .doc(postID)
+            .update({'likedBy': temp});
+
+        //data["likedBy"].add("Tyler");
+      } else {
+        FirebaseFirestore.instance
+            .collection(selection)
+            .doc(post)
+            .collection("comments")
+            .doc(postID)
+            .update({'likes': data['likes'] += 1});
+
+        List<String> temp = [];
+        int len = data["likedBy"].length;
+
+        for (int i = 0; i < len; i++) {
+          temp.add(data["likedBy"][i]);
+        }
+
+        temp.add(email);
+
+        FirebaseFirestore.instance
+            .collection(selection)
+            .doc(post)
+            .collection("comments")
+            .doc(postID)
+            .update({'likedBy': temp});
       }
-
-      temp.add(email);
-
-      FirebaseFirestore.instance
-          .collection(selection)
-          .doc(postID)
-          .update({'likedBy': temp});
-
-      //data["likedBy"].add("Tyler");
     },
   );
 }
