@@ -1,3 +1,5 @@
+// ignore_for_file: dead_code
+
 import 'package:carewellapp/Chat%20Application/chatViews/feed_widgets.dart';
 import 'package:carewellapp/navigation_elements/dashboard.dart';
 import 'package:flutter/material.dart';
@@ -52,7 +54,7 @@ class _FeedState extends State<Feed> {
         },
       ));
     }
-
+/*
     return Scaffold(
         body: Row(
       children: [
@@ -60,60 +62,31 @@ class _FeedState extends State<Feed> {
           child: Column(
             children: [
               Container(
-                height: 25,
                 color: Colors.black,
+                height: MediaQuery.of(context).size.height * 0.2,
+                child: Text("Chat Topics",
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 40)),
               ),
-              Container(
-                color: Colors.black,
-                height: 50,
-                child: ListTile(
-                  title: Text("Chat Topics",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 40 /*/ deviceTextScaleFactor + 2*/)),
-                  //  tileColor: Colors.black,
+
+              // ),
+              SingleChildScrollView(
+                physics: ScrollPhysics(),
+                child: Expanded(
+                  child: Container(
+                    child: ListView.builder(
+                        physics: NeverScrollableScrollPhysics(),
+                        itemCount: channels.length,
+                        shrinkWrap: true,
+                        itemBuilder: (BuildContext context, int index) {
+                          return channels[index];
+                        }),
+                  ),
                 ),
               ),
-              Container(
-                height: 25,
-                color: Colors.black,
-              ),
-              //   SingleChildScrollView(
-              Column(children: [
-                Container(
-                    color: Colors.black,
-                    height: MediaQuery.of(context).size.height, // * 0.923,
-                    width: MediaQuery.of(context).size.width * 0.30,
-                    child: ListView(
-                      // physics: NeverScrollableScrollPhysics(),
-                      children: [
-                        SingleChildScrollView(
-                          // physics: ScrollPhysics(),
-                          // physics: NeverScrollableScrollPhysics(),
-
-                          child: Container(
-                              height: MediaQuery.of(context).size.height *
-                                  0.7, // * 0.923,
-                              //width: MediaQuery.of(context).size.width * 0.30,
-                              child: ListView.builder(
-                                  //  physics: NeverScrollableScrollPhysics(),
-                                  itemCount: channels.length,
-                                  shrinkWrap: true,
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    return channels[index];
-                                  })),
-                        ),
-                        Container(
-                          height: MediaQuery.of(context).size.height,
-                          color: Colors.black,
-                        ),
-                      ],
-                    )),
-              ]),
-              // ),
             ],
           ),
         ),
@@ -121,4 +94,75 @@ class _FeedState extends State<Feed> {
       ],
     ));
   }
+} */
+
+    return Scaffold(
+        body: Row(
+      children: [
+        SingleChildScrollView(
+          physics: ScrollPhysics(),
+          child: Expanded(
+            child: Container(
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width * 0.29,
+              child: Column(
+                children: [
+                  Container(
+                    color: Colors.black,
+                    padding: EdgeInsets.only(
+                      top: MediaQuery.of(context).size.height * 0.015,
+                    ),
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height * 0.15,
+                    child: ListTile(
+                      title: Text("Chat Topics",
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 40)),
+                    ),
+                  ),
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.85,
+                    child: ListView.builder(
+                        physics: AlwaysScrollableScrollPhysics(),
+                        itemCount: channels.length,
+                        shrinkWrap: true,
+                        itemBuilder: (BuildContext context, int index) {
+                          return channels[index];
+                        }),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+        feed(context, getStream(), listScrollController),
+      ],
+    ));
+  }
 }
+/*
+
+
+body: SingleChildScrollView( // The relevant error-causing widget
+    child: Column(
+      children: [
+        for (int i = 0; i < 100; i++)
+          Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [...],
+              ),
+          ),
+          ListView.builder(
+              shrinkWrap: true,
+              itemCount: 100,
+              itemBuilder: (BuildContext context, int index) {...},
+          ),
+      ],
+    ),
+  ),
+); */
