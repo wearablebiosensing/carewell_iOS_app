@@ -29,12 +29,12 @@ class _FeedState extends State<Feed> {
       "Care Options - Transitions",
       "Daily Care",
       "Family Relationships",
-      "Legal and Finacial Planning",
-      "Safety Isuues",
-      "Symptoms and Behavior",
-      "Working with a Heal Care Team",
-      "General Information about Alzheimer's and Dementia",
-      "Community Resources"
+      //  "Legal and Finacial Planning",
+      //  "Safety Isuues",
+      //  "Symptoms and Behavior",
+      //  "Working with a Heal Care Team",
+      //  "General Information about Alzheimer's and Dementia",
+      //  "Community Resources"
     ];
     List<ListTile> channels = [];
 
