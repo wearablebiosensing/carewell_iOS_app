@@ -23,18 +23,14 @@ class _FeedState extends State<Feed> {
     dates = [];
 
     List<String> channelNames = [
-      "General",
-      "Social",
-      "Managing Care",
-      "Care Options - Transitions",
-      "Daily Care",
+      "Care Options-Transitions",
+      "Daly Care",
       "Family Relationships",
-      "Legal and Finacial Planning",
-      "Safety Isuues",
+      "Legal and Financial Planning",
       "Symptoms and Behavior",
-      "Working with a Heal Care Team",
-      "General Information about Alzheimer's and Dementia",
-      "Community Resources"
+      "Working with a Health Care Team",
+      "Community Resources",
+      "General"
     ];
     List<ListTile> channels = [];
 
@@ -54,54 +50,14 @@ class _FeedState extends State<Feed> {
         },
       ));
     }
-/*
+
     return Scaffold(
         body: Row(
       children: [
+        /*SingleChildScrollView(
+          physics: NeverScrollableScrollPhysics(), //ScrollPhysics(),
+          //  child: */
         Expanded(
-          child: Column(
-            children: [
-              Container(
-                color: Colors.black,
-                height: MediaQuery.of(context).size.height * 0.2,
-                child: Text("Chat Topics",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 40)),
-              ),
-
-              // ),
-              SingleChildScrollView(
-                physics: ScrollPhysics(),
-                child: Expanded(
-                  child: Container(
-                    child: ListView.builder(
-                        physics: NeverScrollableScrollPhysics(),
-                        itemCount: channels.length,
-                        shrinkWrap: true,
-                        itemBuilder: (BuildContext context, int index) {
-                          return channels[index];
-                        }),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-        feed(context, getStream(), listScrollController),
-      ],
-    ));
-  }
-} */
-
-    return Scaffold(
-        body: Row(
-      children: [
-        SingleChildScrollView(
-          physics: ScrollPhysics(),
-          //  child: Expanded(
           child: Container(
             color: Colors.black,
             height: MediaQuery.of(context).size.height,
@@ -111,10 +67,10 @@ class _FeedState extends State<Feed> {
                 Container(
                   color: Colors.black,
                   padding: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.height * 0.015,
+                    top: MediaQuery.of(context).size.height * 0.01,
                   ),
                   width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height * 0.15,
+                  height: MediaQuery.of(context).size.height * 0.09,
                   child: ListTile(
                     title: Text("Chat Topics",
                         textAlign: TextAlign.center,
@@ -124,20 +80,24 @@ class _FeedState extends State<Feed> {
                             fontSize: 40)),
                   ),
                 ),
-                Container(
-                  height: MediaQuery.of(context).size.height * 0.85,
-                  child: ListView.separated(
-                      physics: AlwaysScrollableScrollPhysics(),
-                      separatorBuilder: (BuildContext context, int index) =>
-                          Divider(
-                            color: Colors.white,
-                            height: MediaQuery.of(context).size.height * 0.001,
-                          ),
-                      itemCount: channels.length,
-                      shrinkWrap: true,
-                      itemBuilder: (BuildContext context, int index) {
-                        return channels[index];
-                      }),
+                SingleChildScrollView(
+                  physics: ScrollPhysics(),
+                  child: Container(
+                    //height: MediaQuery.of(context).size.height * 0.85,
+                    child: ListView.separated(
+                        physics: AlwaysScrollableScrollPhysics(),
+                        separatorBuilder: (BuildContext context, int index) =>
+                            Divider(
+                              color: Colors.white,
+                              height:
+                                  MediaQuery.of(context).size.height * 0.001,
+                            ),
+                        itemCount: channels.length,
+                        shrinkWrap: true,
+                        itemBuilder: (BuildContext context, int index) {
+                          return channels[index];
+                        }),
+                  ),
                 ),
               ],
             ),
@@ -149,26 +109,3 @@ class _FeedState extends State<Feed> {
     ));
   }
 }
-/*
-
-
-body: SingleChildScrollView( // The relevant error-causing widget
-    child: Column(
-      children: [
-        for (int i = 0; i < 100; i++)
-          Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [...],
-              ),
-          ),
-          ListView.builder(
-              shrinkWrap: true,
-              itemCount: 100,
-              itemBuilder: (BuildContext context, int index) {...},
-          ),
-      ],
-    ),
-  ),
-); */

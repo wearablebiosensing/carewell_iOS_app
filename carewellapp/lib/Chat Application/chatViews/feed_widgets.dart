@@ -297,8 +297,8 @@ Container feed(
                         ),
                         isComment
                             ? Container(
-                                height:
-                                    MediaQuery.of(context).size.height * 0.3,
+                                //height:
+                                //MediaQuery.of(context).size.height * 0.1,
                                 child: Text(currentUser,
                                     style: TextStyle(
                                         fontWeight: FontWeight.bold,
@@ -313,7 +313,10 @@ Container feed(
                                   fontSize: 16,
                                 ),
                               )
-                            : Container()
+                            : Container(),
+                        Divider(
+                          color: Colors.black54,
+                        ),
                       ],
                     ),
                   ),
@@ -324,19 +327,16 @@ Container feed(
 
                     child: SingleChildScrollView(
                       child: Column(children: [
-                        Divider(
-                          color: Colors.black54,
-                        ),
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.02,
-                        ),
+                        // SizedBox(
+                        //   height: MediaQuery.of(context).size.height * 0.02,
+                        // ),
                         messageStream(_usersStream),
                         //  commentStream(_usersStream),
                       ]),
                     ),
                   ),
                   Container(
-                    height: MediaQuery.of(context).size.height * 0.22,
+                    height: MediaQuery.of(context).size.height * 0.17,
                     width: MediaQuery.of(context).size.width * 0.9,
                     padding: EdgeInsets.all(10.0),
                     decoration: BoxDecoration(
