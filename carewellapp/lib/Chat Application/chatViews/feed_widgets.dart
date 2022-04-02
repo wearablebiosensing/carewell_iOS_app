@@ -321,7 +321,7 @@ Container feed(
                     ),
                   ),
                   Container(
-                    height: MediaQuery.of(context).size.height * 0.64,
+                    height: MediaQuery.of(context).size.height * 0.62,
                     //height: MediaQuery.of(context).size.height * 0.5,
                     width: MediaQuery.of(context).size.width,
 
@@ -439,26 +439,25 @@ Container feed(
                       Align(
                         alignment: Alignment.centerLeft,
                         child: Container(
-                          child: Text(
-                            "Comments",
-                            textAlign: TextAlign.left,
-                            style: TextStyle(
-                                fontSize: 25, fontWeight: FontWeight.bold),
+                          child: ListTile(
+                            title: Text(
+                              " <- Back to " + selection,
+                              textAlign: TextAlign.left,
+                              style: TextStyle(
+                                fontSize: 19,
+                              ),
+                            ),
+                            onTap: () async {
+                              isComment = false;
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(builder: (context) => Feed()),
+                              );
+                            },
                           ),
                         ),
                       ),
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Container(
-                          // height: MediaQuery.of(context).size.height * 0.5,
-                          child: Text(
-                            "About : " + about,
-                            textAlign: TextAlign.left,
-                            style:
-                                TextStyle(fontSize: 25, color: Colors.black54),
-                          ),
-                        ),
-                      ),
+
                       //  Expanded(
                       Container(
                         //  constraints: const BoxConstraints(
@@ -495,13 +494,13 @@ Container feed(
                   ),
                 ),
                 Container(
-                  height: MediaQuery.of(context).size.height * 0.45,
+                  height: MediaQuery.of(context).size.height * 0.49,
                   child: Expanded(
                       child: SingleChildScrollView(
                           child: Expanded(child: messageStream(_usersStream)))),
                 ),
                 Container(
-                  height: MediaQuery.of(context).size.height * 0.22,
+                  height: MediaQuery.of(context).size.height * 0.17,
                   width: MediaQuery.of(context).size.width * 0.9,
                   padding: EdgeInsets.all(10.0),
                   decoration: BoxDecoration(
