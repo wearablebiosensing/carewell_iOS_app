@@ -436,26 +436,48 @@ Container feed(
                   // padding: EdgeInsets.fromLTRB(8, 8, 0, 0),
                   child: Column(
                     children: [
-                      Align(
-                        alignment: Alignment.centerLeft,
-                        child: Container(
-                          child: ListTile(
-                            title: Text(
-                              " <- Back to " + selection,
-                              textAlign: TextAlign.left,
+                      Row(
+                        children: [
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: Container(
+                              height: MediaQuery.of(context).size.height * 0.08,
+                              child: IconButton(
+                                icon: new Icon(Icons.arrow_back,
+                                    color: Colors.blue),
+                                onPressed: () {
+                                  isComment = false;
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => Feed()),
+                                  ); //Use pageroutebuilder and transitions to make the page come in from the other side
+                                },
+                              ),
+                              /*    child: ListTile( 
+                                title: Text(
+                                  " <- Back to " + selection,
+                                  textAlign: TextAlign.left,
+                                  style: TextStyle(
+                                    fontSize: 19,
+                                  ),
+                                ),
+                                
+                                onTap: () async {
+                                  isComment = false;
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => Feed()),
+                                  );
+                                },
+                              ), */
+                            ),
+                          ),
+                          Text("Press the button to return to the main feed!",
                               style: TextStyle(
                                 fontSize: 19,
-                              ),
-                            ),
-                            onTap: () async {
-                              isComment = false;
-                              Navigator.pushReplacement(
-                                context,
-                                MaterialPageRoute(builder: (context) => Feed()),
-                              );
-                            },
-                          ),
-                        ),
+                              )),
+                        ],
                       ),
 
                       //  Expanded(
