@@ -514,7 +514,7 @@ Container feed(
                   ),
                 ),
                 Container(
-                  height: MediaQuery.of(context).size.height * 0.49,
+                  height: MediaQuery.of(context).size.height * 0.42,
                   child: Expanded(
                       child: SingleChildScrollView(
                           child: Expanded(child: messageStream(_usersStream)))),
