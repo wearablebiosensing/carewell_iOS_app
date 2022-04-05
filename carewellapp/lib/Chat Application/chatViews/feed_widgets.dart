@@ -261,13 +261,11 @@ Container feed(
           ? SingleChildScrollView(
               // scrollDirection: Axis.vertical,
 
-              //  physics: NeverScrollableScrollPhysics(),
+              physics: NeverScrollableScrollPhysics(),
               child: Column(
                 children: [
                   Container(
-                    height: isComment
-                        ? MediaQuery.of(context).size.height * 0.4
-                        : MediaQuery.of(context).size.height * 0.12,
+                    //   height: MediaQuery.of(context).size.height * 0.12,
                     width: MediaQuery.of(context).size.width,
                     padding: EdgeInsets.fromLTRB(8, 8, 0, 0),
                     child: Column(
@@ -321,7 +319,7 @@ Container feed(
                     ),
                   ),
                   Container(
-                    height: MediaQuery.of(context).size.height * 0.62,
+                    height: MediaQuery.of(context).size.height * 0.60,
                     //height: MediaQuery.of(context).size.height * 0.5,
                     width: MediaQuery.of(context).size.width,
 
@@ -431,7 +429,7 @@ Container feed(
               body: Column(
               children: [
                 Container(
-                  // height: MediaQuery.of(context).size.height * 0.4,
+                  //  height: MediaQuery.of(context).size.height * 0.4,
                   width: MediaQuery.of(context).size.width,
                   // padding: EdgeInsets.fromLTRB(8, 8, 0, 0),
                   child: Column(
