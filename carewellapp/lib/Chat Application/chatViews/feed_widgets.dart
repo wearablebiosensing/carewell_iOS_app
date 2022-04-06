@@ -445,13 +445,32 @@ Container feed(
                                     color: Colors.blue),
                                 onPressed: () {
                                   isComment = false;
-                                  Navigator.pushReplacement(
+                                  /*    Navigator.pushReplacement(
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) => Feed()),
+                                  ); */
+
+                                  Navigator.push(
+                                    context,
+                                    PageRouteBuilder(
+                                      pageBuilder: (c, a1, a2) => Feed(),
+                                      transitionsBuilder: (c, anim, a2,
+                                              child) =>
+                                          SlideTransition(
+                                              position: anim.drive(Tween(
+                                                      begin: Offset(-1.0, 0.0),
+                                                      end: Offset.zero)
+                                                  .chain(CurveTween(
+                                                      curve: Curves.ease))),
+                                              child: child),
+                                      transitionDuration:
+                                          Duration(milliseconds: 500),
+                                    ),
                                   ); //Use pageroutebuilder and transitions to make the page come in from the other side
                                 },
                               ),
+
                               /*    child: ListTile( 
                                 title: Text(
                                   " <- Back to " + selection,
@@ -471,10 +490,7 @@ Container feed(
                               ), */
                             ),
                           ),
-                          Text("Press the button to return to the main feed!",
-                              style: TextStyle(
-                                fontSize: 19,
-                              )),
+                          Text("Back", style: TextStyle(fontSize: 19)),
                         ],
                       ),
 
