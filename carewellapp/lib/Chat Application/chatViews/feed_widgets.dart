@@ -306,25 +306,6 @@ Container feed(
                             ),
                           ),
                         ),
-                        isComment
-                            ? Container(
-                                //height:
-                                //MediaQuery.of(context).size.height * 0.1,
-                                child: Text(currentUser,
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 20)),
-                              )
-                            : Container(),
-                        isComment
-                            ? Text(
-                                currentMessage + "\n\n",
-                                style: TextStyle(
-                                  color: Colors.black54,
-                                  fontSize: 16,
-                                ),
-                              )
-                            : Container(),
                         Divider(
                           color: Colors.black54,
                         ),
@@ -389,8 +370,6 @@ Container feed(
                                 } else {
                                   List<String> likedBy = [];
                                   if (!isComment) {
-                                    //Map<String, int> likedBy = {};
-
                                     FirebaseFirestore.instance
                                         .collection(selection)
                                         .add({
@@ -458,11 +437,6 @@ Container feed(
                                     color: Colors.blue),
                                 onPressed: () {
                                   isComment = false;
-                                  /*    Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => Feed()),
-                                  ); */
 
                                   Navigator.push(
                                     context,
@@ -483,24 +457,6 @@ Container feed(
                                   ); //Use pageroutebuilder and transitions to make the page come in from the other side
                                 },
                               ),
-
-                              /*    child: ListTile( 
-                                title: Text(
-                                  " <- Back to " + selection,
-                                  textAlign: TextAlign.left,
-                                  style: TextStyle(
-                                    fontSize: 19,
-                                  ),
-                                ),
-                                
-                                onTap: () async {
-                                  isComment = false;
-                                  Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(builder: (context) => Feed()),
-                                  );
-                                },
-                              ), */
                             ),
                           ),
                           Text("Back", style: TextStyle(fontSize: 19)),
@@ -803,149 +759,3 @@ List<String> messageStream2(Stream<QuerySnapshot<Object?>> _usersStream) {
   print("HELLO5");
   return messageList;
 }
-
-
-
-        
-      
-
-
-         
-          // reverse: true,
-   /*       child:
-          Column(
-            children: [
-              !isInDates(data)
-                  ? Row(
-                      children: [
-                        Container(
-                          decoration: BoxDecoration(
-                            border: Border(
-                              bottom:
-                                  BorderSide(width: 1.0, color: Colors.black54),
-                            ),
-                          ),
-                          child: SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.265,
-                          ),
-                        ),
-                        Container(
-                            alignment: Alignment.center,
-                            width: MediaQuery.of(context).size.width * 0.16,
-                            height: MediaQuery.of(context).size.height * 0.03,
-                            decoration: BoxDecoration(
-                                border: Border.all(color: Colors.black54),
-                                borderRadius: BorderRadius.circular(30)),
-                            child: DateFormat('EEEE')
-                                            .format(data["time"].toDate())
-                                            .toString() +
-                                        ', ' +
-                                        DateFormat('MMMMd')
-                                            .format(data["time"].toDate())
-                                            .toString() ==
-                                    currentDate
-                                ? Text("Today")
-                                : Text(
-                                    //  Header format below
-                                    DateFormat('EEEE')
-                                            .format(data["time"].toDate())
-                                            .toString() +
-                                        ', ' +
-                                        DateFormat('MMMMd')
-                                            .format(data["time"].toDate())
-                                            .toString(),
-
-                                    //  textAlign: TextAlign.justify,
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 15,
-                                    ),
-                                  )),
-                        Container(
-                          decoration: BoxDecoration(
-                            border: Border(
-                              bottom:
-                                  BorderSide(width: 1.0, color: Colors.black54),
-                            ),
-                          ),
-                          child: SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.265,
-                          ),
-                        ),
-                      ],
-                    )
-                  : Container(),
-              Row(
-                children: [
-                  Text(
-                    ' ' + data["user"],
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 17,
-                    ),
-                  ),
-                  Text(
-                    //  Header format below
-                    '\n ' +
-                        DateFormat('jm')
-                            .format(data["time"].toDate())
-                            .toString(),
-                    style: TextStyle(
-                      color: Colors.black54,
-                      fontSize: 10,
-                    ),
-                  )
-                ],
-              ),
-              ListTile(
-                title: Text(data['message']),
-                onTap: () async {
-                  if (isComment) {
-                    return;
-                  }
-                  isComment = true;
-                  post = document.id;
-
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (context) => Feed()),
-                  );
-                  ;
-                },
-              ),
-              Container(
-                //width: MediaQuery.of(context).size.width,
-                //padding: EdgeInsets.all(5.0),
-                alignment: Alignment.centerRight,
-                child: Row(
-                  children: [
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.6,
-                    ),
-                    Icon(
-                      Icons.comment,
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(5.0),
-                    ),
-                    checkIfLiked(document.id, data),
-                    Padding(
-                      padding: EdgeInsets.all(3.0),
-                    ),
-                    Text(data['likes'].toString())
-                  ],
-                ),
-              ),
-              Row(
-                children: [
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.16,
-                  ),
-                  //  commentStream(getCommentStream(document.id)),
-                ],
-              ),
-            ],
-          );
-        }).toList();
-      });
-} */
