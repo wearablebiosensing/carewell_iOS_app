@@ -15,7 +15,8 @@ import 'package:intl/intl.dart';
 
 String selection = 'General';
 String post = '';
-String about = 'Post about general topics.';
+String about =
+    "Comments/questions about Alzheimer's disease or dementia or questions that do not fall into other categories";
 bool isComment = false;
 List<String> dates = [];
 
@@ -75,7 +76,7 @@ StreamBuilder<QuerySnapshot> messageStream(
                           decoration: BoxDecoration(
                             border: Border(
                               bottom:
-                                  BorderSide(width: 1.0, color: Colors.black54),
+                                  BorderSide(width: 1.0, color: Colors.black12),
                             ),
                           ),
                           child: SizedBox(
@@ -83,12 +84,12 @@ StreamBuilder<QuerySnapshot> messageStream(
                           ),
                         ),
                         Container(
-                            padding: EdgeInsets.all(5),
+                            padding: EdgeInsets.all(3),
                             alignment: Alignment.center,
                             width: MediaQuery.of(context).size.width * 0.16,
-                            height: MediaQuery.of(context).size.height * 0.03,
+                            height: MediaQuery.of(context).size.height * 0.031,
                             decoration: BoxDecoration(
-                                border: Border.all(color: Colors.black54),
+                                border: Border.all(color: Colors.black12),
                                 borderRadius: BorderRadius.circular(30)),
                             child: DateFormat('EEEE')
                                             .format(data["time"].toDate())
@@ -98,7 +99,13 @@ StreamBuilder<QuerySnapshot> messageStream(
                                             .format(data["time"].toDate())
                                             .toString() ==
                                     currentDate
-                                ? Text("Today")
+                                ? Text(
+                                    "Today",
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 15,
+                                    ),
+                                  )
                                 : Text(
                                     //  Header format below
                                     DateFormat('EEEE')
@@ -119,7 +126,7 @@ StreamBuilder<QuerySnapshot> messageStream(
                           decoration: BoxDecoration(
                             border: Border(
                               bottom:
-                                  BorderSide(width: 1.0, color: Colors.black54),
+                                  BorderSide(width: 1.0, color: Colors.black12),
                             ),
                           ),
                           child: SizedBox(
@@ -280,10 +287,10 @@ Container feed(
                           alignment: Alignment.centerLeft,
                           child: Container(
                             child: Text(
-                              isComment ? "Comments" : selection,
+                              selection,
                               textAlign: TextAlign.left,
                               style: TextStyle(
-                                  fontSize: 25, fontWeight: FontWeight.bold),
+                                  fontSize: 24, fontWeight: FontWeight.bold),
                             ),
                           ),
                         ),
@@ -295,7 +302,7 @@ Container feed(
                               "About : " + about,
                               textAlign: TextAlign.left,
                               style: TextStyle(
-                                  fontSize: 25, color: Colors.black54),
+                                  fontSize: 24, color: Colors.black54),
                             ),
                           ),
                         ),
@@ -646,7 +653,6 @@ bool isInDates(Map<String, dynamic> data) {
       return true;
     }
   }
-  print("the length of dates is " + dates.length.toString());
   dates.add(date);
   return false;
 }
