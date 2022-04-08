@@ -83,6 +83,7 @@ StreamBuilder<QuerySnapshot> messageStream(
                           ),
                         ),
                         Container(
+                            padding: EdgeInsets.all(5),
                             alignment: Alignment.center,
                             width: MediaQuery.of(context).size.width * 0.16,
                             height: MediaQuery.of(context).size.height * 0.03,
@@ -186,52 +187,57 @@ StreamBuilder<QuerySnapshot> messageStream(
 
           List<Widget> showComments() {
             return [
-              Row(
-                children: [
-                  Text(
-                    ' ' + data["user"],
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 17,
-                    ),
-                  ),
-                  Text(
-                    //  Header format below
-                    '\n ' +
-                        DateFormat('MMMMd')
-                            .format(data["time"].toDate())
-                            .toString() +
-                        " @" +
-                        DateFormat('jm')
-                            .format(data["time"].toDate())
-                            .toString(),
-                    style: TextStyle(
-                      color: Colors.black54,
-                      fontSize: 10,
-                    ),
-                  )
-                ],
-              ),
-              ListTile(
-                title: Text(data['message']),
-              ),
               Container(
-                  //width: MediaQuery.of(context).size.width,
-                  //padding: EdgeInsets.all(5.0),
-                  alignment: Alignment.centerRight,
-                  child: Row(children: [
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.6,
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(5.0),
-                    ),
-                    checkIfLiked(document.id, data),
-                    Padding(
-                      padding: EdgeInsets.all(3.0),
-                    ),
-                    Text(data['likes'].toString())
-                  ]))
+                color: Colors.grey,
+                child: Column(children: [
+                  Row(
+                    children: [
+                      Text(
+                        ' ' + data["user"],
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 17,
+                        ),
+                      ),
+                      Text(
+                        //  Header format below
+                        '\n ' +
+                            DateFormat('MMMMd')
+                                .format(data["time"].toDate())
+                                .toString() +
+                            " @" +
+                            DateFormat('jm')
+                                .format(data["time"].toDate())
+                                .toString(),
+                        style: TextStyle(
+                          color: Colors.black54,
+                          fontSize: 10,
+                        ),
+                      )
+                    ],
+                  ),
+                  ListTile(
+                    title: Text(data['message']),
+                  ),
+                  Container(
+                      //width: MediaQuery.of(context).size.width,
+                      //padding: EdgeInsets.all(5.0),
+                      alignment: Alignment.centerRight,
+                      child: Row(children: [
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width * 0.6,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.all(5.0),
+                        ),
+                        checkIfLiked(document.id, data),
+                        Padding(
+                          padding: EdgeInsets.all(3.0),
+                        ),
+                        Text(data['likes'].toString())
+                      ]))
+                ]),
+              )
             ];
           }
 

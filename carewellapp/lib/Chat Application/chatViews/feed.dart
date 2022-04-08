@@ -67,10 +67,11 @@ class _FeedState extends State<Feed> {
                 Container(
                   color: Colors.black,
                   padding: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.height * 0.01,
+                    top: MediaQuery.of(context).size.height * 0.02,
+                    bottom: MediaQuery.of(context).size.height * 0.02,
                   ),
                   width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height * 0.09,
+                  height: MediaQuery.of(context).size.height * 0.10,
                   child: ListTile(
                     title: Text("Chat Topics",
                         textAlign: TextAlign.center,
@@ -88,9 +89,8 @@ class _FeedState extends State<Feed> {
                         physics: AlwaysScrollableScrollPhysics(),
                         separatorBuilder: (BuildContext context, int index) =>
                             Divider(
-                              color: Colors.white,
-                              height:
-                                  MediaQuery.of(context).size.height * 0.001,
+                              color: Colors.black,
+                              height: MediaQuery.of(context).size.height * 0.01,
                             ),
                         itemCount: channels.length,
                         shrinkWrap: true,
