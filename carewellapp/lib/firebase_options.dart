@@ -48,7 +48,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyCNHNTIyuDUS-q1aahg71mVNc_kBHhuQYs',
-    appId: '1:937529806462:android:345e53b304b57f2b69922f',
+    appId: '1:937529806462:android:43bd1851ae386ad369922f',
     messagingSenderId: '937529806462',
     projectId: 'chat-app-cce2e',
     storageBucket: 'chat-app-cce2e.appspot.com',
@@ -56,11 +56,11 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyBb6I77uisVYCBwyeMVl6d_LEpJ8gVsg80',
-    appId: '1:937529806462:ios:8b1b7a1969869b4e69922f',
+    appId: '1:937529806462:ios:61601b7b1f1dd64169922f',
     messagingSenderId: '937529806462',
     projectId: 'chat-app-cce2e',
     storageBucket: 'chat-app-cce2e.appspot.com',
-    iosClientId: '937529806462-ebu3gt65joph655mno9eolh6caoedkmu.apps.googleusercontent.com',
-    iosBundleId: 'com.chatapp.app',
+    iosClientId: '937529806462-3kqu55u289smtabeu2hcqvs5to7uu21j.apps.googleusercontent.com',
+    iosBundleId: 'com.wbl.carewellapp',
   );
 }
