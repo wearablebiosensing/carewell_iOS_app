@@ -100,6 +100,19 @@ class _SignInState extends State<SignIn> {
                                 .instance
                                 .signInWithEmailAndPassword(
                                     email: email, password: password);
+
+                            if (user == null) {
+                              print('User is currently signed out!');
+                            } else {
+                              print('User is signed in!');
+
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        init_question_controller() /*Feed()*/),
+                              );
+                            }
                           } on FirebaseAuthException catch (e) {
                             if (e.code == 'user-not-found') {
                               print('No user found for that email.');
@@ -107,45 +120,9 @@ class _SignInState extends State<SignIn> {
                               print('Wrong password provided for that user.');
                             }
                           }
-
-                          if (user == null) {
-                            print('User is currently signed out!');
-                          } else {
-                            print('User is signed in!');
-
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      //init_question_controller())
-                                      Feed()),
-                            );
-                          }
                         });
-
-                        /* context
-                            .read<AuthService>()
-                            .login(email, password)
-                            .then((value) async {
-                          chatuser = FirebaseAuth.instance;
-
-                          await FirebaseFirestore.instance
-                              .collection('Users')
-                              .doc(chatuser.currentUser?.uid)
-                              .set({
-                            'uid': chatuser.currentUser?.uid,
-                            'email': email,
-                            'password': password,
-                          });
-                        }); */
-
-                        /*  FirebaseFirestore.instance
-                            .collection('Users')
-                            .add({'username': email});
-                        username = email; */
                       }
                     }
-                    // ChatRoom();
                   },
                   child: Container(
                     alignment: Alignment.center,
