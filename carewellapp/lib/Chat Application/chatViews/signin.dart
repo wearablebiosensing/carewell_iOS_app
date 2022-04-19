@@ -4,6 +4,8 @@ import 'package:carewellapp/Chat%20Application/chatViews/feed_widgets.dart';
 import 'package:carewellapp/Chat%20Application/chatViews/signup.dart';
 import 'package:carewellapp/Chat%20Application/chatViews/userinfo.dart';
 import 'package:carewellapp/Chat%20Application/widgets/widget.dart';
+import 'package:carewellapp/navigation_elements/dashboard.dart';
+import 'package:carewellapp/navigation_elements/home.dart';
 import 'package:carewellapp/questionnaire/initial_questionnaire_controller.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -110,7 +112,8 @@ class _SignInState extends State<SignIn> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        init_question_controller() /*Feed()*/),
+                                        /*  init_question_controller()*/ /*Feed() */ MyHome1Page(
+                                            "TITLE")),
                               );
                             }
                           } on FirebaseAuthException catch (e) {

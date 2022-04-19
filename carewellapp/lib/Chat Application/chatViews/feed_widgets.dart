@@ -167,7 +167,7 @@ StreamBuilder<QuerySnapshot> messageStream(
                   alignment: Alignment.centerRight,
                   child: Row(children: [
                     SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.6,
+                      width: MediaQuery.of(context).size.width * 0.55,
                     ),
                     IconButton(
                       icon: new Icon(Icons.comment),
@@ -184,9 +184,9 @@ StreamBuilder<QuerySnapshot> messageStream(
                       },
                     ),
                     checkIfLiked(document.id, data),
-                    Padding(
-                      padding: EdgeInsets.all(3.0),
-                    ),
+                    /* Padding(
+                    padding: EdgeInsets.all(3.0),
+                    ), */
                     Text(data['likes'].toString())
                   ]))
             ];
@@ -197,6 +197,7 @@ StreamBuilder<QuerySnapshot> messageStream(
               Container(
                 color: Colors.grey,
                 child: Column(children: [
+                  Text('\n'),
                   Row(
                     children: [
                       Text(
@@ -418,170 +419,180 @@ Container feed(
               ),
             )
           : Scaffold(
-              body: Column(
-              children: [
-                Container(
-                  //  height: MediaQuery.of(context).size.height * 0.4,
-                  width: MediaQuery.of(context).size.width,
-                  // padding: EdgeInsets.fromLTRB(8, 8, 0, 0),
-                  child: Column(
-                    children: [
-                      Row(
+              resizeToAvoidBottomInset: true,
+              body: SingleChildScrollView(
+                physics: NeverScrollableScrollPhysics(),
+                child: Column(
+                  children: [
+                    Container(
+                      //  height: MediaQuery.of(context).size.height * 0.4,
+                      width: MediaQuery.of(context).size.width,
+                      // padding: EdgeInsets.fromLTRB(8, 8, 0, 0),
+                      child: Column(
                         children: [
-                          Align(
-                            alignment: Alignment.centerLeft,
-                            child: Container(
-                              height: MediaQuery.of(context).size.height * 0.08,
-                              child: IconButton(
-                                icon: new Icon(Icons.arrow_back,
-                                    color: Colors.blue),
-                                onPressed: () {
-                                  isComment = false;
+                          Row(
+                            children: [
+                              Align(
+                                alignment: Alignment.centerLeft,
+                                child: Container(
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.08,
+                                  child: IconButton(
+                                    icon: new Icon(Icons.arrow_back,
+                                        color: Colors.blue),
+                                    onPressed: () {
+                                      isComment = false;
 
-                                  Navigator.push(
-                                    context,
-                                    PageRouteBuilder(
-                                      pageBuilder: (c, a1, a2) => Feed(),
-                                      transitionsBuilder: (c, anim, a2,
-                                              child) =>
-                                          SlideTransition(
-                                              position: anim.drive(Tween(
-                                                      begin: Offset(-1.0, 0.0),
-                                                      end: Offset.zero)
-                                                  .chain(CurveTween(
-                                                      curve: Curves.ease))),
-                                              child: child),
-                                      transitionDuration:
-                                          Duration(milliseconds: 500),
-                                    ),
-                                  ); //Use pageroutebuilder and transitions to make the page come in from the other side
-                                },
-                              ),
-                            ),
-                          ),
-                          Text("Back", style: TextStyle(fontSize: 19)),
-                        ],
-                      ),
-
-                      //  Expanded(
-                      Container(
-                        //  constraints: const BoxConstraints(
-                        //  maxHeight: 250,
-                        //  ),
-                        // height: MediaQuery.of(context).size.height * 0.3,
-                        child: Column(
-                          children: [
-                            Text(currentUser,
-                                style: TextStyle(
-                                    fontWeight: FontWeight.bold, fontSize: 20)),
-                            Container(
-                              padding: EdgeInsets.only(top: 5),
-                              height: MediaQuery.of(context).size.height * 0.15,
-                              child: Expanded(
-                                child: SingleChildScrollView(
-                                  child: Text(
-                                    currentMessage,
-                                    // maxLines: 3,
-                                    style: TextStyle(
-                                      color: Colors.black54,
-                                      fontSize: 16,
-                                    ),
+                                      Navigator.push(
+                                        context,
+                                        PageRouteBuilder(
+                                          pageBuilder: (c, a1, a2) => Feed(),
+                                          transitionsBuilder: (c, anim, a2,
+                                                  child) =>
+                                              SlideTransition(
+                                                  position: anim.drive(Tween(
+                                                          begin:
+                                                              Offset(-1.0, 0.0),
+                                                          end: Offset.zero)
+                                                      .chain(CurveTween(
+                                                          curve: Curves.ease))),
+                                                  child: child),
+                                          transitionDuration:
+                                              Duration(milliseconds: 500),
+                                        ),
+                                      ); //Use pageroutebuilder and transitions to make the page come in from the other side
+                                    },
                                   ),
                                 ),
                               ),
-                            ),
-                            Divider(color: Colors.black),
-                          ],
-                        ),
-                      ),
-                      //  ),
-                    ],
-                  ),
-                ),
-                Container(
-                  height: MediaQuery.of(context).size.height * 0.42,
-                  child: Expanded(
-                      child: SingleChildScrollView(
-                          child: Expanded(child: messageStream(_usersStream)))),
-                ),
-                Container(
-                  height: MediaQuery.of(context).size.height * 0.17,
-                  width: MediaQuery.of(context).size.width * 0.9,
-                  padding: EdgeInsets.all(10.0),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    border: Border.all(color: Colors.black54),
-                  ),
-                  child: Column(
-                    //mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Expanded(
-                        child: TextField(
-                          minLines: 1,
-                          maxLines:
-                              5, // allow user to enter 5 line in textfield
-                          keyboardType: TextInputType
-                              .multiline, // user keyboard will have a button to move cursor to next line
-
-                          controller: messageTextEditingController,
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                            hintText: " Add comment",
+                              Text("Back", style: TextStyle(fontSize: 19)),
+                            ],
                           ),
-                        ),
+
+                          //  Expanded(
+                          Container(
+                            //  constraints: const BoxConstraints(
+                            //  maxHeight: 250,
+                            //  ),
+                            // height: MediaQuery.of(context).size.height * 0.3,
+                            child: Column(
+                              children: [
+                                Text(currentUser,
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20)),
+                                Container(
+                                  padding: EdgeInsets.only(top: 5),
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.15,
+                                  child: Expanded(
+                                    child: SingleChildScrollView(
+                                      child: Text(
+                                        currentMessage,
+                                        // maxLines: 3,
+                                        style: TextStyle(
+                                          color: Colors.black54,
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Divider(color: Colors.black),
+                              ],
+                            ),
+                          ),
+                          //  ),
+                        ],
                       ),
-                      Row(
+                    ),
+                    Container(
+                      height: MediaQuery.of(context).size.height * 0.45,
+                      child: Expanded(
+                          child: SingleChildScrollView(
+                              child: Expanded(
+                                  child: messageStream(_usersStream)))),
+                    ),
+                    Container(
+                      height: MediaQuery.of(context).size.height * 0.17,
+                      width: MediaQuery.of(context).size.width * 0.9,
+                      padding: EdgeInsets.all(10.0),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        border: Border.all(color: Colors.black54),
+                      ),
+                      child: Column(
+                        //mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          SizedBox(
-                            width: MediaQuery.of(context).size.width * 0.62,
-                          ),
-                          GestureDetector(
-                            onTap: () async {
-                              String message =
-                                  messageTextEditingController.text.trim();
+                          Expanded(
+                            child: TextField(
+                              minLines: 1,
+                              maxLines:
+                                  5, // allow user to enter 5 line in textfield
+                              keyboardType: TextInputType
+                                  .multiline, // user keyboard will have a button to move cursor to next line
 
-                              if (message.isEmpty) {
-                                print("Message is empty");
-                              } else {
-                                List<String> likedBy = [];
-
-                                //Map<String, int> likedBy = {};
-
-                                FirebaseFirestore.instance
-                                    .collection(selection)
-                                    .doc(post)
-                                    .collection("comments")
-                                    .add({
-                                  'message': message,
-                                  'time': new Timestamp.now(),
-                                  'user': email,
-                                  'likes': 0,
-                                  'likedBy': likedBy,
-                                });
-                              }
-                              dates = [];
-                              messageTextEditingController.clear();
-                            },
-                            child: Container(
-                              alignment: Alignment.center,
-                              width: MediaQuery.of(context).size.width * 0.05,
-                              padding: EdgeInsets.all(8.0),
-                              decoration: BoxDecoration(
-                                  // ignore: prefer_const_constructors
-                                  color: Colors.black,
-                                  borderRadius: BorderRadius.circular(5)),
-                              child: Text("Post",
-                                  style: new TextStyle(
-                                      color: Colors.white, fontSize: 14)),
+                              controller: messageTextEditingController,
+                              decoration: InputDecoration(
+                                border: InputBorder.none,
+                                hintText: " Add comment",
+                              ),
                             ),
+                          ),
+                          Row(
+                            children: [
+                              SizedBox(
+                                width: MediaQuery.of(context).size.width * 0.62,
+                              ),
+                              GestureDetector(
+                                onTap: () async {
+                                  String message =
+                                      messageTextEditingController.text.trim();
+
+                                  if (message.isEmpty) {
+                                    print("Message is empty");
+                                  } else {
+                                    List<String> likedBy = [];
+
+                                    //Map<String, int> likedBy = {};
+
+                                    FirebaseFirestore.instance
+                                        .collection(selection)
+                                        .doc(post)
+                                        .collection("comments")
+                                        .add({
+                                      'message': message,
+                                      'time': new Timestamp.now(),
+                                      'user': email,
+                                      'likes': 0,
+                                      'likedBy': likedBy,
+                                    });
+                                  }
+                                  dates = [];
+                                  messageTextEditingController.clear();
+                                },
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.05,
+                                  padding: EdgeInsets.all(8.0),
+                                  decoration: BoxDecoration(
+                                      // ignore: prefer_const_constructors
+                                      color: Colors.black,
+                                      borderRadius: BorderRadius.circular(5)),
+                                  child: Text("Post",
+                                      style: new TextStyle(
+                                          color: Colors.white, fontSize: 14)),
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
-                    ],
-                  ),
-                )
-              ],
-            )));
+                    )
+                  ],
+                ),
+              )));
 }
 
 Stream<QuerySnapshot> getStream() {
