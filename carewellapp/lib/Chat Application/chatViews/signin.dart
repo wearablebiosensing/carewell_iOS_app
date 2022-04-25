@@ -104,7 +104,8 @@ class _SignInState extends State<SignIn> {
                               Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => MyHome1Page("TITLE")),
+                                    builder: (context) =>
+                                        init_question_controller() /*MyHome1Page("TITLE")*/),
                               );
                             }
                           } on FirebaseAuthException catch (e) {
