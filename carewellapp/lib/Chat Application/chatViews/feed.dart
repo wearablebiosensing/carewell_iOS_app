@@ -4,8 +4,11 @@ import 'package:carewellapp/Chat%20Application/chatViews/feed_widgets.dart';
 import 'package:carewellapp/navigation_elements/dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:carewellapp/Chat%20Application/chatViews/userinfo.dart';
 
 import '../../main.dart';
+
+//This file displays the chat feed
 
 List<String> messageList = [];
 
@@ -21,6 +24,7 @@ class _FeedState extends State<Feed> {
   ScrollController listScrollController = ScrollController();
   Widget build(BuildContext context) {
     dates = [];
+    //Left column topic list
     List<Channel> channelNames = [
       Channel("Care Options-Transitions",
           'Comments/questions about different care settings (adult day, assisted living, nursing home) or other care transitions'),
@@ -46,9 +50,7 @@ class _FeedState extends State<Feed> {
         color: selection == topic.name ? Colors.blue[900] : Colors.black,
         child: ListTile(
           title: Text(topic.name,
-              style: TextStyle(
-                  color: Colors.white70,
-                  fontSize: 25 /*/ deviceTextScaleFactor + 2*/)),
+              style: TextStyle(color: Colors.white70, fontSize: 25)),
           selectedTileColor: Colors.blue[900],
           onTap: () async {
             setState(() {
@@ -67,9 +69,6 @@ class _FeedState extends State<Feed> {
           physics: NeverScrollableScrollPhysics(),
           child: Row(
             children: [
-              /*SingleChildScrollView(
-            physics: NeverScrollableScrollPhysics(), //ScrollPhysics(),
-            //  child: */
               Expanded(
                 child: Container(
                   color: Colors.black,
@@ -97,7 +96,6 @@ class _FeedState extends State<Feed> {
                       SingleChildScrollView(
                         physics: ScrollPhysics(),
                         child: Container(
-                          //height: MediaQuery.of(context).size.height * 0.85,
                           child: ListView.separated(
                               physics: AlwaysScrollableScrollPhysics(),
                               separatorBuilder:
@@ -117,7 +115,6 @@ class _FeedState extends State<Feed> {
                     ],
                   ),
                 ),
-                // ),
               ),
               feed(context, getStream(), listScrollController),
             ],
