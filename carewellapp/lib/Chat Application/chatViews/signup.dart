@@ -1,5 +1,3 @@
-import 'package:carewellapp/Chat%20Application/chatViews/chat_info.dart';
-import 'package:carewellapp/Chat%20Application/chatViews/feed_widgets.dart';
 import 'package:carewellapp/Chat%20Application/chatViews/signin.dart';
 import 'package:carewellapp/Chat%20Application/widgets/widget.dart';
 import 'package:carewellapp/questionnaire/initial_questionnaire_controller.dart';
@@ -7,6 +5,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:carewellapp/Chat%20Application/chatViews/userinfo.dart';
+
+//This file is used to register a new user. It will create a new user in firebase auth and will add them as a user
 
 FirebaseAuth chatuser = FirebaseAuth.instance;
 //String username = '';
@@ -136,21 +137,7 @@ class _SignUpState extends State<SignUp> {
                           }
                         });
 
-                        /* context
-                            .read<AuthService>()
-                            .login(email, password)
-                            .then((value) async {
-                          chatuser = FirebaseAuth.instance;
-
-                          await FirebaseFirestore.instance
-                              .collection('Users')
-                              .doc(chatuser.currentUser?.uid)
-                              .set({
-                            'uid': chatuser.currentUser?.uid,
-                            'email': email,
-                            'password': password,
-                          });
-                        }); */
+                        //Adds user to firebase Users collection
                         FirebaseFirestore.instance
                             .collection('Users')
                             .add({'username': email});
