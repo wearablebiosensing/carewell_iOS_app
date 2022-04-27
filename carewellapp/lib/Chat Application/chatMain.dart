@@ -49,11 +49,11 @@ class MyApp extends StatelessWidget {
           title: 'Flutter Demo',
           debugShowCheckedModeBanner: false,
           // theme: ThemeData(
-          //   //primaryColor: Color(0xff145C9E),
-          //   primaryColor: Colors.blue[800],
-          //   scaffoldBackgroundColor: Colors.blue[100],
-          //   primarySwatch: Colors.blue,
-          // ),
+          //primaryColor: Color(0xff145C9E),
+          //  primaryColor: Colors.blue[800],
+          // scaffoldBackgroundColor: Colors.blue[100],
+          // primarySwatch: Colors.blue,
+          //   ),
           home: AuthWrapper(),
         ));
   }

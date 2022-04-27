@@ -1,18 +1,19 @@
-import 'package:carewellapp/Chat%20Application/chatViews/chat_info.dart';
 import 'package:carewellapp/Chat%20Application/chatViews/feed.dart';
 import 'package:carewellapp/Chat%20Application/chatViews/feed_widgets.dart';
 import 'package:carewellapp/Chat%20Application/chatViews/signup.dart';
 import 'package:carewellapp/Chat%20Application/chatViews/userinfo.dart';
 import 'package:carewellapp/Chat%20Application/widgets/widget.dart';
+import 'package:carewellapp/navigation_elements/dashboard.dart';
+import 'package:carewellapp/navigation_elements/home.dart';
 import 'package:carewellapp/questionnaire/initial_questionnaire_controller.dart';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-
 import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
+
+//Used to sign a user into the application. Confirms username and password w/ firebase and firebase auth.
 
 FirebaseAuth chatuser = FirebaseAuth.instance;
 String username = '';
@@ -26,9 +27,6 @@ class SignIn extends StatefulWidget {
 }
 
 class _SignInState extends State<SignIn> {
-  // TextEditingController userNameTextEditingController =
-  //  new TextEditingController();
-
   TextEditingController emailTextEditingController =
       new TextEditingController();
 
@@ -44,7 +42,6 @@ class _SignInState extends State<SignIn> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                //Make these all have controller: properties
                 TextField(
                   controller: emailTextEditingController,
                   decoration: InputDecoration(
@@ -58,8 +55,6 @@ class _SignInState extends State<SignIn> {
                       hintText: "Password",
                       hintStyle: TextStyle(color: Colors.grey[500])),
                 ),
-                //textField("email"),
-                //textField("password"),
 
                 SizedBox(
                   height: 8,
@@ -110,7 +105,7 @@ class _SignInState extends State<SignIn> {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        init_question_controller() /*Feed()*/),
+                                        init_question_controller() /*MyHome1Page("TITLE")*/),
                               );
                             }
                           } on FirebaseAuthException catch (e) {
@@ -129,9 +124,7 @@ class _SignInState extends State<SignIn> {
                     width: MediaQuery.of(context).size.width,
                     padding: EdgeInsets.symmetric(vertical: 20),
                     decoration: BoxDecoration(
-                        // ignore: prefer_const_constructors
                         gradient: LinearGradient(
-                            //blue color background
                             colors: [Color(0xff007EF4), Color(0xff2A75BC)]),
                         borderRadius: BorderRadius.circular(30)),
                     child: Text("Sign In",
@@ -142,7 +135,7 @@ class _SignInState extends State<SignIn> {
                 SizedBox(
                   height: 16,
                 ),
-
+//Checks username and password
                 GestureDetector(
                   onTap: () {
                     email = emailTextEditingController.text.trim();
@@ -168,6 +161,7 @@ class _SignInState extends State<SignIn> {
                     decoration: BoxDecoration(
                         color: Colors.white70,
                         borderRadius: BorderRadius.circular(30)),
+                    //Google sign up not implemented yet
                     child: Text("Sign Up with Google",
                         style:
                             new TextStyle(color: Colors.black87, fontSize: 17)),
