@@ -39,22 +39,26 @@ class _FeedState extends State<Feed> {
       Channel("General",
           "Comments/questions about Alzheimer's disease or dementia or questions that do not fall into other categories"),
     ];
-    List<ListTile> channels = [];
-
+    // List<ListTile> channels = [];
+    List<Container> channels = [];
     for (Channel topic in channelNames) {
-      channels.add(ListTile(
-        title: Text(topic.name,
-            style: TextStyle(
-                color: Colors.white70,
-                fontSize: 25 /*/ deviceTextScaleFactor + 2*/)),
-        tileColor: selection == topic ? Colors.blue[900] : Colors.black,
-        onTap: () async {
-          setState(() {
-            isComment = false;
-            selection = topic.name;
-            about = topic.about;
-          });
-        },
+      channels.add(Container(
+        color: selection == topic.name ? Colors.blue[900] : Colors.black,
+        child: ListTile(
+          title: Text(topic.name,
+              style: TextStyle(
+                  color: Colors.white70,
+                  fontSize: 25 /*/ deviceTextScaleFactor + 2*/)),
+          //   selectedTileColor: Colors.blue[900],
+          //   tileColor: selection == topic.name ? Colors.blue[900] : Colors.black,
+          onTap: () async {
+            setState(() {
+              isComment = false;
+              selection = topic.name;
+              about = topic.about;
+            });
+          },
+        ),
       ));
     }
 
